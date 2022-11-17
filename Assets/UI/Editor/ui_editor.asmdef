@@ -1,0 +1,16 @@
+{
+    "name": "ui_editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:f1840033b44467344803baf17dfa0509"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
