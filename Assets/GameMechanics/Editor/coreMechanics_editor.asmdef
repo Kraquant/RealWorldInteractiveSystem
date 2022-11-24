@@ -1,0 +1,16 @@
+{
+    "name": "coreMechanics_editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:a479a05d501fdba44bc57eab3f4be1c4"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
