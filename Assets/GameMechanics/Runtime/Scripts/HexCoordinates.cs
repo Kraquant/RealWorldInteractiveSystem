@@ -76,9 +76,10 @@ public class HexCoordinates : IEquatable<HexCoordinates>
 
     public Vector3 GetVector3Position()
     {
+        float fac = Mathf.Sqrt(3.0f) * 0.5f;
         return
-            R_Direction * R +
-            Q_Direction * Q;
+            R_Direction * R * fac +
+            Q_Direction * Q * fac;
     }
 
     #region Static Methods
@@ -109,30 +110,29 @@ public class HexCoordinates : IEquatable<HexCoordinates>
     }
     public static HexCoordinates VectorToPointyHex(Vector3 point, float cellSize) // The z coordinate is not used
     {
-        float q = (Mathf.Sqrt(3) / 3 * point.x - 1.0f/ 3.0f * point.y) / cellSize;
-        float r = (2.0f/ 3.0f * point.y) / cellSize;
+        float q = (1/Mathf.Sqrt(3) * point.x + 1.0f/ 3.0f * point.y) / cellSize;
+        float r = -(2.0f/ 3.0f * point.y) / cellSize;
 
-        Vector3 coords = new Vector3(q, r, -q - r);
-
-        return CubeRound(coords);
+        return CubeRound(new Vector3(r, q, -q - r));
     }
 
 
-    public static HexCoordinates CubeRound(Vector3 coord)
+    private static HexCoordinates CubeRound(Vector3 coord)
     {
-        float q = Mathf.Round(coord.x);
-        float r = Mathf.Round(coord.y);
+
+        float r = Mathf.Round(coord.x);
+        float q = Mathf.Round(coord.y)  ;
         float s = Mathf.Round(coord.z);
 
-        float qDiff = Mathf.Abs(q - coord.x);
-        float rDiff = Mathf.Abs(r - coord.y);
+        float rDiff = Mathf.Abs(r - coord.x);
+        float qDiff = Mathf.Abs(q - coord.y);
         float sDiff = Mathf.Abs(s - coord.z);
 
-        if (qDiff > rDiff || qDiff > sDiff) q = -r - s;
+        if (qDiff > rDiff && qDiff > sDiff) q = -r - s;
         else if (rDiff > sDiff) r = -q - s;
         else s = -q - r;
 
-        return new HexCoordinates((int)r, (int)q);
+        return new HexCoordinates((int)r, (int)q, (int)s);
 
     }
 
