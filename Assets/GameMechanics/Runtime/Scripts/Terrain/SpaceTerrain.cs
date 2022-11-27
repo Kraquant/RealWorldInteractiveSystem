@@ -1,7 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEditor.TerrainTools;
 using UnityEngine;
 
 public class SpaceTerrain : MonoBehaviour
@@ -10,7 +7,15 @@ public class SpaceTerrain : MonoBehaviour
     [SerializeField] float _cellSize; // In meters
     [SerializeField] int radius;
 
-    public HashSet<HexCoordinates> TerrainShape { get => _terrainShape; }
+    public HashSet<HexCoordinates> TerrainShape
+    {
+        get => _terrainShape;
+        set
+        {
+            if (Application.isPlaying) throw new System.Exception("Can't edit terrain at runtime");
+            _terrainShape = value;
+        }
+    }
     public float CellSize { get => _cellSize; }
 
     // Start is called before the first frame update
@@ -25,7 +30,7 @@ public class SpaceTerrain : MonoBehaviour
         terrainList.AddRange(HexCoordinates.GetHexCircle(3));
 
         foreach (HexCoordinates coord in terrainList) _terrainShape.Add(coord);
-        
+
     }
 
     private void OnDrawGizmosSelected()
@@ -38,16 +43,16 @@ public class SpaceTerrain : MonoBehaviour
     {
         foreach (HexCoordinates coord in _terrainShape)
         {
-            DrawGizmosHexagon(coord.GetVector3Position()*_cellSize, _cellSize/2.0f);
+            DrawGizmosHexagon(coord.GetVector3Position() * _cellSize, _cellSize / 2.0f);
         }
     }
 
     private void DrawGizmosHexagon(Vector3 center, float radius)
     {
-        float cosp6 = Mathf.Sqrt(3)/2;
+        float cosp6 = Mathf.Sqrt(3) / 2;
         float sinp6 = 0.5f;
 
-        Vector3 P0 = new Vector3(cosp6, sinp6, 0)*radius + center;
+        Vector3 P0 = new Vector3(cosp6, sinp6, 0) * radius + center;
         Vector3 P1 = new Vector3(0.0f, 1.0f, 0) * radius + center;
         Vector3 P2 = new Vector3(-cosp6, sinp6, 0) * radius + center;
         Vector3 P3 = new Vector3(-cosp6, -sinp6, 0) * radius + center;

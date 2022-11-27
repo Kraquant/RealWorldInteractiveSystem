@@ -110,6 +110,7 @@ public class HexCoordinates : IEquatable<HexCoordinates>
     }
     public static HexCoordinates VectorToPointyHex(Vector3 point, float cellSize) // The z coordinate is not used
     {
+        if (cellSize == 0) throw new System.Exception("Cellsize cannot be null");
         float q = (1/Mathf.Sqrt(3) * point.x + 1.0f/ 3.0f * point.y) / cellSize;
         float r = -(2.0f/ 3.0f * point.y) / cellSize;
 
@@ -165,6 +166,10 @@ public class HexCoordinates : IEquatable<HexCoordinates>
 
     public static bool operator !=(HexCoordinates A, HexCoordinates B)
     {
+        if (A is null)
+            return B is not null;
+        if (B is null)
+            return A is not null;
         return A.R != B.R || A.Q != B.Q;
     }
 

@@ -1,22 +1,19 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [CustomEditor(typeof(HexShapeCreator))]
 public class HexShapeCreatorEditor : Editor
 {
-    
     public bool isSelecting;
+    SerializedProperty e_writeToVariable;
+
     private void Awake()
     {
         isSelecting = false;
+        e_writeToVariable = serializedObject.FindProperty("writeToVariable");
     }
-
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
-    }
-
     private void OnEnable()
     {
         SceneView.beforeSceneGui += OnSceneViewBeforeSceneGUI;
@@ -27,14 +24,32 @@ public class HexShapeCreatorEditor : Editor
         SceneView.beforeSceneGui -= OnSceneViewBeforeSceneGUI;
     }
 
+    public override void OnInspectorGUI()
+    {
+        HexShapeCreator script = (HexShapeCreator)target;
+
+        WriteTitle("----------HEX SHAPE CREATOR----------", 18);
+        ToggleButton(ref script.isActive);
+        if (GUILayout.Button("Create new shape"))
+        {
+            script.cellList.Clear();
+            isSelecting = false;
+            script.AddNewCells();
+        }    
+        script.cellSize = EditorGUILayout.Slider(new GUIContent("Cell size"), script.CellSize, 0.1f, 100);
+    }
+
+    
+
     private void OnSceneViewBeforeSceneGUI(SceneView sceneView)
     {
         if (Application.isPlaying) return; // Do not use this script when application is playing
-
+        HexShapeCreator script = (HexShapeCreator)target;
+        if (!script.isActive) return;
         //Prevent from unselecting the object
         HandleUtility.AddDefaultControl(GUIUtility.GetControlID(FocusType.Passive));
 
-        HexShapeCreator script = (HexShapeCreator)target;
+        
         //Update targeted position
         script.VectorTarget = ProjectMouseOnGround();
 
@@ -69,4 +84,35 @@ public class HexShapeCreatorEditor : Editor
         return ray.origin + lambda * ray.direction;
 
     }
+
+    private void WriteTitle(string title, int size)
+    {
+        GUIStyle labelStyle = GUI.skin.GetStyle("Label");
+        var currentAlign = labelStyle.alignment;
+        var currentFontSize = labelStyle.fontSize;
+
+        labelStyle.alignment = TextAnchor.UpperCenter;
+        labelStyle.fontSize = size;
+        GUILayout.Label(new GUIContent(title));
+        labelStyle.alignment = currentAlign;
+        labelStyle.fontSize = currentFontSize;
+    }
+    private void ToggleButton(ref bool toggle)
+    {
+        if (toggle)
+        {
+            if (GUILayout.Button("Disable"))
+            {
+                toggle = false;
+            }
+        }
+        else
+        {
+            if (GUILayout.Button("Enable"))
+            {
+                toggle = true;
+            }
+        }
+    }
+
 }
