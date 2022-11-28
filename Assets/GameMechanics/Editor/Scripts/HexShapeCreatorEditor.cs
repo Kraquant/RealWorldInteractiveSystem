@@ -7,12 +7,10 @@ using UnityEngine.UIElements;
 public class HexShapeCreatorEditor : Editor
 {
     public bool isSelecting;
-    SerializedProperty e_writeToVariable;
 
     private void Awake()
     {
         isSelecting = false;
-        e_writeToVariable = serializedObject.FindProperty("writeToVariable");
     }
     private void OnEnable()
     {

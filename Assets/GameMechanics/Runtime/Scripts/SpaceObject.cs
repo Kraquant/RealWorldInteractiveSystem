@@ -25,29 +25,35 @@ public class SpaceObject : MonoBehaviour
         Hold,
     }
 
-    #region Private Fields
-    [SerializeField] HexCoordinates[] _shape;
-    private HexCoordinates _center;
-    private Orientation _objectOrientation;
+    #region Attributes
+    private HashSet<HexCoordinates> _shape;
     #endregion
 
     #region Properties
-    public HexCoordinates[] Shape { get => _shape; }
-    public HexCoordinates Center { get => _center; }
-    public Orientation ObjectOrientation { get => _objectOrientation; }
+    public HashSet<HexCoordinates> Shape
+    {
+        get
+        {
+            if (_shape is null) return new HashSet<HexCoordinates> { HexCoordinates.zero};
+            if (_shape.Count == 0) return new HashSet<HexCoordinates> { HexCoordinates.zero };
+            return _shape;
+        }
+    }
+    public HexCoordinates Center { get; set; }
+    public Orientation ObjectOrientation { get; set; }
     #endregion
 
     protected void Awake()
     {
-        _center = new HexCoordinates();
-        _objectOrientation = Orientation.E;
+        Center = new HexCoordinates();
+        ObjectOrientation = Orientation.E;
     }
 
     public void MoveCoordinate(Action direction)
     {
         Tuple<HexCoordinates, Orientation> newCoords = PreviewNextCoordinate(direction);
-        _center = newCoords.Item1;
-        _objectOrientation = newCoords.Item2;
+        Center = newCoords.Item1;
+        ObjectOrientation = newCoords.Item2;
     }
 
     public Tuple<HexCoordinates, Orientation> PreviewNextCoordinate(Action direction)
@@ -57,24 +63,24 @@ public class SpaceObject : MonoBehaviour
         switch (direction)
         {
             case Action.Front:
-                orient = _objectOrientation;
-                coord = _center + HexCoordinates.direction_vectors[(int)orient];
+                orient = ObjectOrientation;
+                coord = Center + HexCoordinates.direction_vectors[(int)orient];
                 break;
             case Action.Left:
-                orient = (Orientation)(((int)_objectOrientation + 1 + 6) % 6);
-                coord = _center + HexCoordinates.direction_vectors[(int)orient];
+                orient = (Orientation)(((int)ObjectOrientation + 1 + 6) % 6);
+                coord = Center + HexCoordinates.direction_vectors[(int)orient];
                 break;
             case Action.Right:
-                orient = (Orientation)(((int)_objectOrientation - 1 + 6) % 6);
-                coord = _center + HexCoordinates.direction_vectors[(int)orient];
+                orient = (Orientation)(((int)ObjectOrientation - 1 + 6) % 6);
+                coord = Center + HexCoordinates.direction_vectors[(int)orient];
                 break;
             case Action.Turn:
-                orient = (Orientation)(((int)_objectOrientation + 3) % 6);
-                coord = _center;
+                orient = (Orientation)(((int)ObjectOrientation + 3) % 6);
+                coord = Center;
                 break;
             case Action.Hold:
-                orient = _objectOrientation;
-                coord = _center;
+                orient = ObjectOrientation;
+                coord = Center;
                 break;
             default:
                 throw new System.Exception("Direction cannot be null");
@@ -85,9 +91,24 @@ public class SpaceObject : MonoBehaviour
 
     public void UpdateSpaceObjectTransform(float cellSize)
     {
-        Vector3 lookToVec = HexCoordinates.direction_vectors[(int)_objectOrientation].GetVector3Position();
+        Vector3 lookToVec = HexCoordinates.direction_vectors[(int)ObjectOrientation].GetVector3Position();
 
-        transform.position = _center.GetVector3Position()*cellSize;
+        transform.position = Center.GetVector3Position()*cellSize;
         transform.right = lookToVec;
+    }
+
+    public static Quaternion OrientationToQuaternion(Orientation orient)
+    {
+        float angle = orient switch
+        {
+            Orientation.E => 0,
+            Orientation.NE => 60,
+            Orientation.NW => 120,
+            Orientation.W => 180,
+            Orientation.SW => 240,
+            Orientation.SE => 300,
+            _ => throw new NotImplementedException(),
+        };
+        return Quaternion.AngleAxis(angle, Vector3.forward);
     }
 }

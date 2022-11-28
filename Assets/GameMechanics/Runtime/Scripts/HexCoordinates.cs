@@ -15,8 +15,7 @@ public class HexCoordinates : IEquatable<HexCoordinates>
         new HexCoordinates(+1, -1, 0), //South West Vector
         new HexCoordinates(+1, 0, -1), //South East Vector
     };
-
-
+    public static readonly HexCoordinates zero = new HexCoordinates(0,0,0);
 
     public static Vector3 R_Direction = new Vector3(Mathf.Cos(5.0f / 3.0f * Mathf.PI), Mathf.Sin(5.0f / 3.0f * Mathf.PI), 0.0f);
     public static readonly Vector3 Q_Direction = new Vector3(1.0f, 0.0f, 0.0f);
@@ -116,8 +115,6 @@ public class HexCoordinates : IEquatable<HexCoordinates>
 
         return CubeRound(new Vector3(r, q, -q - r));
     }
-
-
     private static HexCoordinates CubeRound(Vector3 coord)
     {
 
@@ -135,6 +132,10 @@ public class HexCoordinates : IEquatable<HexCoordinates>
 
         return new HexCoordinates((int)r, (int)q, (int)s);
 
+    }
+    public override string ToString() 
+    { 
+        return "(" + R.ToString() + "; " + Q.ToString() + "; " + S.ToString() + ")";
     }
 
 

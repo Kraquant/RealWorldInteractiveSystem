@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System;
+using UnityEngine.UIElements;
+using UnityEditor.PackageManager.UI;
 
 [CustomEditor(typeof(LevelCreator))]
 public class LevelCreatorEditor : Editor
@@ -30,56 +32,9 @@ public class LevelCreatorEditor : Editor
         SceneView.beforeSceneGui -= OnSceneViewBeforeSceneGUI;
     }
 
-    public override void OnInspectorGUI()
-    {
-        LevelCreator script = (LevelCreator)target;
 
-        WriteTitle("----------LEVEL CREATOR----------", 18);
 
-        //Terrain properties
-        EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
-
-        CreateFoldout("Terrain", 18, ref _terrainFoldout);
-        if (_terrainFoldout)
-        {
-            GUILayout.Space(20);
-            if (GUILayout.Button("Get terrain from creator")) script.GetTerrainFromCreator();
-            EditorGUILayout.PropertyField(e_vizualizeTerrain, new GUIContent("Vizualize terrain"));
-            GUILayout.TextField("Terrain size: " + script.CurrentTerrainSize().ToString());
-            EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
-        }
-
-        //Objects List
-        CreateFoldout("Space Objects", 18, ref _spaceObjectsFoldout);
-        
-        if (_spaceObjectsFoldout)
-        {
-            GUILayout.Space(20);
-            switch (script.placingState)
-            {
-                case LevelCreator.PlacingState.None:
-                    DisplayObjects(ref script);
-                    break;
-                case LevelCreator.PlacingState.Placing:
-                    GUILayout.Label("Now placing: " + "ObjectName");
-                    GUILayout.Label("Right Click to cancel");
-                    break;
-                case LevelCreator.PlacingState.Orienting:
-                    GUILayout.Label("Now orienting: " + "ObjectName");
-                    GUILayout.Label("Right Click to cancel");
-                    break;
-                case LevelCreator.PlacingState.Deleting:
-                    break;
-                default:
-                    break;
-            }
-            EditorGUILayout.PropertyField(e_objectsList, new GUIContent("Objects list"));
-            EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
-        }
-
-        serializedObject.ApplyModifiedProperties();
-    }
-
+    #region SceneGUI
     private void OnSceneViewBeforeSceneGUI(SceneView sceneView)
     {
         if (Application.isPlaying) return; // Do not use this script when application is playing
@@ -129,8 +84,82 @@ public class LevelCreatorEditor : Editor
                 break;
         }
     }
+    private Vector3 ProjectMouseOnGround()
+    {
+        //Casting mouse ray
+        Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
+        if (Vector3.Dot(ray.direction, Vector3.forward) == 0) return Vector3.zero;
+        Vector3 n = Vector3.forward;
+        Vector3 D = Vector3.zero;
+        float lambda = Vector3.Dot(D - ray.origin, n) / Vector3.Dot(ray.direction, n);
 
-    private void DisplayObjects(ref LevelCreator script)
+        return ray.origin + lambda * ray.direction;
+
+    } 
+    #endregion
+    #region InspectorGUI
+    public override void OnInspectorGUI()
+    {
+        LevelCreator script = (LevelCreator)target;
+
+        WriteTitle("----------LEVEL CREATOR----------", 18);
+
+        //Terrain properties
+        EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
+
+        CreateFoldout("Terrain", 18, ref _terrainFoldout);
+        if (_terrainFoldout)
+        {
+            GUILayout.Space(20);
+            if (GUILayout.Button("Get terrain from creator")) script.GetTerrainFromCreator();
+            EditorGUILayout.PropertyField(e_vizualizeTerrain, new GUIContent("Vizualize terrain"));
+            GUILayout.TextField("Terrain size: " + script.CurrentTerrainSize().ToString());
+            EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
+        }
+
+        //Objects List
+        CreateFoldout("Space Objects", 18, ref _spaceObjectsFoldout);
+
+        if (_spaceObjectsFoldout)
+        {
+            GUILayout.Space(20);
+            GUILayout.Label("• Placed Space Objects", EditorStyles.largeLabel);
+            GUILayout.Space(5);
+            ShowPlacedObjectsList(ref script);
+
+            GUILayout.Space(20);
+            GUILayout.Label("• Placeable Space Objects", EditorStyles.largeLabel);
+            GUILayout.Space(5);
+            switch (script.placingState)
+            {
+                case LevelCreator.PlacingState.None:
+                    ShowPlacableObjectsList(ref script);
+                    break;
+                case LevelCreator.PlacingState.Placing:
+                    EditorGUILayout.HelpBox("Now placing | Right Click to cancel", MessageType.Info);
+                    break;
+                case LevelCreator.PlacingState.Orienting:
+                    EditorGUILayout.HelpBox("Now orienting | Right Click to cancel", MessageType.Info);
+                    break;
+                case LevelCreator.PlacingState.Deleting:
+                    break;
+                default:
+                    break;
+            }
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Clean deleted elements")) script.CleanDeletedElements();
+            if (GUILayout.Button("Check terrain changes")) script.CheckTerrainChanges();
+            if (GUILayout.Button("Remove incompatible objects")) script.RemoveIncompatibleObjects();
+            GUILayout.EndHorizontal();
+
+            GUILayout.Space(5);
+            EditorGUILayout.PropertyField(e_objectsList, new GUIContent("Objects list"));
+            EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
+        }
+
+        serializedObject.ApplyModifiedProperties();
+    }
+    private void ShowPlacableObjectsList(ref LevelCreator script, bool tab = false)
     {
         if (script.objectsList == null) return;
         bool terrainIsSet = script.CurrentTerrainSize() > 0;
@@ -138,20 +167,53 @@ public class LevelCreatorEditor : Editor
 
         foreach (SpaceObjectList objectList in script.objectsList)
         {
-            if (objectList == null) continue;   
-            GUILayout.Label(objectList.name);
+            if (objectList == null) continue;
+            string tabText = tab ? "\t" : "";
+            GUILayout.Label(" - " + objectList.name, EditorStyles.boldLabel);
             foreach (GameObject spaceObject in objectList.prefabs)
             {
                 GUILayout.BeginHorizontal();
-                GUILayout.TextField(spaceObject.name);
+                GUILayout.Label(tabText + spaceObject.name);
 
-                
+
                 if (GUILayout.Button(buttonText))
                 {
                     if (terrainIsSet)
                     {
-                        script.PlaceObject();
+                        script.PlaceObject(spaceObject);
                     }
+                }
+                GUILayout.EndHorizontal();
+            }
+        }
+    }
+    private void ShowPlacedObjectsList(ref LevelCreator script, bool tab = false)
+    {
+        if (script.placedObjects is null) return;
+        string tabText = tab ? "\t" : "";
+        foreach ((GameObject,bool) placedGO in script.placedObjects)
+        {
+            if (placedGO.Item1 == null)
+            {
+                EditorGUILayout.HelpBox(tabText + "Deleted Game Object", MessageType.Warning);
+            }
+            else if (!placedGO.Item2)
+            {
+                EditorGUILayout.HelpBox(tabText + "The object position is no longer compatible with the terrain", MessageType.Error);
+            }
+            else
+            {
+                SpaceObject spaceObjScript = placedGO.Item1.GetComponent<SpaceObject>();
+
+                GUILayout.BeginHorizontal();
+                GUILayout.Label(
+                    tabText +
+                    spaceObjScript.name +
+                    " - Coord: " + spaceObjScript.Center.ToString() +
+                    " - Orient: " + spaceObjScript.ObjectOrientation.ToString());
+                if (GUILayout.Button("Destroy"))
+                {
+                    DestroyImmediate(placedGO.Item1);
                 }
                 GUILayout.EndHorizontal();
             }
@@ -176,17 +238,6 @@ public class LevelCreatorEditor : Editor
         labelStyle.fontSize = fontsize;
         toggleRef = EditorGUILayout.Foldout(toggleRef, new GUIContent(title));
         labelStyle.fontSize = currentFontSize;
-    }
-    private Vector3 ProjectMouseOnGround()
-    {
-        //Casting mouse ray
-        Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
-        if (Vector3.Dot(ray.direction, Vector3.forward) == 0) return Vector3.zero;
-        Vector3 n = Vector3.forward;
-        Vector3 D = Vector3.zero;
-        float lambda = Vector3.Dot(D - ray.origin, n) / Vector3.Dot(ray.direction, n);
-
-        return ray.origin + lambda * ray.direction;
-
-    }
+    } 
+    #endregion
 }
