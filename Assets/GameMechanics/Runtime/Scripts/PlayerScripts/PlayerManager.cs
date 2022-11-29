@@ -1,7 +1,3 @@
-using Codice.CM.Client.Differences;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour

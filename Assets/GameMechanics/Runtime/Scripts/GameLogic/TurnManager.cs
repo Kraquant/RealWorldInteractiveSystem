@@ -13,10 +13,11 @@ public class TurnManager : MonoBehaviour
     }
 
     [SerializeField] SpaceTerrain _terrain;
-    [SerializeField] List<ITurnBasedObject> _objects;
-    public List<ITurnBasedObject> Objects { get => _objects; }
+    [SerializeField] List<ITurnBasedObject> _objects = new List<ITurnBasedObject>();
+    public List<ITurnBasedObject> Objects { get => _objects; set => _objects = value; }
+    
     public bool IsPlayingTurn { get; private set; }
-    public SpaceTerrain Terrain { get => _terrain; }
+    public SpaceTerrain Terrain { get => _terrain; set => _terrain = value; }
 
     private void Start()
     {

@@ -65,7 +65,32 @@ public class LevelCreator : MonoBehaviour
     {
         placedObjects ??= new List<(GameObject, bool)>();
     }
+    public void BuildLevel()
+    {
+        GameObject levelGO = new GameObject();
+        GameObject levelObjGO = new GameObject();
+        levelObjGO.transform.parent = levelGO.transform;
+        levelGO.name = "New level";
+        levelObjGO.name = "Space Objects";
 
+        TurnManager levelTurnManager = levelGO.AddComponent<TurnManager>();
+        SpaceTerrain levelTerrain = levelGO.AddComponent<SpaceTerrain>();
+        PlayerManager levelPlayerManager = levelGO.AddComponent<PlayerManager>();
+
+        levelTerrain.TerrainShape = _terrainShape;
+        levelTerrain.CellSize = _cellSize;
+        levelTurnManager.Terrain = levelTerrain;
+        foreach ((GameObject,bool) placedSO in placedObjects)
+        {
+            if (placedSO.Item1 != null && placedSO.Item2)
+            {
+                ITurnBasedObject placedSOTurnInterface = placedSO.Item1.GetComponent<ITurnBasedObject>();
+                if (placedSOTurnInterface != null) levelTurnManager.Objects.Add(placedSOTurnInterface);
+                placedSO.Item1.transform.parent = levelObjGO.transform;
+            }
+        }
+
+    }
     public void CleanDeletedElements()
     {
         placedObjects.RemoveAll(item => item.Item1 == null);
@@ -158,10 +183,7 @@ public class LevelCreator : MonoBehaviour
         if (_vizualizeTerrain && _terrainShape != null)
         {
             Gizmos.color = Color.magenta;
-            foreach (HexCoordinates cell in _terrainShape)
-            {
-                DrawGizmosHexagon(2 * CellSize * cell.GetVector3Position(), CellSize);
-            }
+            HexCoordinatesUtilities.GizmosDrawHexCoordinates(_terrainShape, CellSize);
             Gizmos.color = Color.white;
         }
 
@@ -198,30 +220,11 @@ public class LevelCreator : MonoBehaviour
         Gizmos.color = color;
         if (HexTarget != null)
         {
-            Vector3 hexCenter = 2 * CellSize * HexTarget.GetVector3Position();
-            DrawGizmosHexagon(hexCenter, CellSize);
+            HexCoordinatesUtilities.GizmosDrawHexCoordinates(HexTarget, CellSize);
         }
         Gizmos.color = currentColor;
     }
-    private void DrawGizmosHexagon(Vector3 center, float radius)
-    {
-        float cosp6 = Mathf.Sqrt(3) / 2;
-        float sinp6 = 0.5f;
-
-        Vector3 P0 = new Vector3(cosp6, sinp6, 0) * radius + center;
-        Vector3 P1 = new Vector3(0.0f, 1.0f, 0) * radius + center;
-        Vector3 P2 = new Vector3(-cosp6, sinp6, 0) * radius + center;
-        Vector3 P3 = new Vector3(-cosp6, -sinp6, 0) * radius + center;
-        Vector3 P4 = new Vector3(0, -1.0f, 0) * radius + center;
-        Vector3 P5 = new Vector3(cosp6, -sinp6, 0) * radius + center;
-
-        Gizmos.DrawLine(P0, P1);
-        Gizmos.DrawLine(P1, P2);
-        Gizmos.DrawLine(P2, P3);
-        Gizmos.DrawLine(P3, P4);
-        Gizmos.DrawLine(P4, P5);
-        Gizmos.DrawLine(P5, P0);
-    }
+    
     private void DrawOrientationTriangle(Vector3 center, float radius, SpaceObject.Orientation orientation)
     {
         float cosp6 = Mathf.Sqrt(3) / 2;
