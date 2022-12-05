@@ -4,20 +4,19 @@ using UnityEngine;
 
 public class SpaceTerrain : MonoBehaviour
 {
-    SerializableHashSet<HexCoordinates> _terrainShape2;
-    HashSet<HexCoordinates> _terrainShape;
+    SerializableHashSet<HexCoordinates> _terrainShape;
     [SerializeField] float _cellSize; // In meters
 
     public HashSet<HexCoordinates> TerrainShape
     {
-        get => _terrainShape;
+        get => _terrainShape.HashSet;
         set
         {
             if (Application.isPlaying) throw new System.Exception("Can't edit terrain at runtime");
-            _terrainShape = value;
+            _terrainShape.HashSet = value;
         }
     }
-    public int Size { get => _terrainShape.Count; }
+    public int Size { get => _terrainShape == null ? 0 : _terrainShape.Count; }
 
     public float CellSize { get => _cellSize; set => _cellSize = value; }
 
@@ -25,6 +24,6 @@ public class SpaceTerrain : MonoBehaviour
     {
         if (_terrainShape == null) return;
         //Preview terrain
-        HexCoordinatesUtilities.GizmosDrawHexCoordinates(_terrainShape, CellSize);
+        HexCoordinatesUtilities.GizmosDrawHexCoordinates(_terrainShape.HashSet, CellSize);
     }
 }

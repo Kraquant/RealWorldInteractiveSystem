@@ -4,7 +4,7 @@ using UnityEngine;
 
 // https://forum.unity.com/threads/how-to-serialize-a-hashset.371230/
 
-public class SerializableHashSet<T> : ScriptableObject, ISerializationCallbackReceiver
+public class SerializableHashSet<T> : ISerializationCallbackReceiver
 {
     private HashSet<T> hashSet = new HashSet<T>();
 
@@ -29,6 +29,9 @@ public class SerializableHashSet<T> : ScriptableObject, ISerializationCallbackRe
 
     public bool Add(T item) => this.hashSet.Add(item);
     public bool Contains(T item) => this.hashSet.Contains(item);
+    public int Count => this.hashSet.Count;
+    public bool Remove(T item) => this.hashSet.Remove(item);
+    public void Clear() => this.hashSet.Clear();
 
     public HashSet<T> HashSet
     {
@@ -43,4 +46,6 @@ public class SerializableHashSet<T> : ScriptableObject, ISerializationCallbackRe
             else if (value != null) serializableItems = new List<T>(value);
         }
     }
+
+    public static implicit operator HashSet<T>(SerializableHashSet<T> hs) => hs.hashSet;
 }
