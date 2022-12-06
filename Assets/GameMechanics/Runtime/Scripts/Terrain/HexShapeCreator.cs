@@ -63,48 +63,20 @@ public class HexShapeCreator : MonoBehaviour
 
         //Draw current terrain
         Gizmos.color = Color.white;
-        foreach (HexCoordinates cell in cellList)
-        {
-            DrawGizmosHexagon(2 * CellSize * cell.GetVector3Position(), CellSize);
-        }
+        HexCoordinatesUtilities.GizmosDrawHexCoordinates(cellList, CellSize);
 
         //Draw cell currently added
         Gizmos.color = !addStatus ? Color.red : Color.green;
-        foreach (HexCoordinates cell in addList)
-        {
-            DrawGizmosHexagon(2 * CellSize * cell.GetVector3Position(), CellSize);
-        }
+        HexCoordinatesUtilities.GizmosDrawHexCoordinates(addList, CellSize);
 
         // Draw current target
         if (VectorTarget != null)
         {
-            Vector3 hexCenter = 2 * CellSize * HexTarget.GetVector3Position();
-
             Gizmos.color = cellList.Contains(HexTarget) ? Color.red : Color.green;
-            DrawGizmosHexagon(hexCenter, CellSize);     
+            HexCoordinatesUtilities.GizmosDrawHexCoordinates(HexTarget, CellSize);
         }
 
         SceneView.RepaintAll();
-    }
-
-    private void DrawGizmosHexagon(Vector3 center, float radius)
-    {
-        float cosp6 = Mathf.Sqrt(3) / 2;
-        float sinp6 = 0.5f;
-
-        Vector3 P0 = new Vector3(cosp6, sinp6, 0) * radius + center;
-        Vector3 P1 = new Vector3(0.0f, 1.0f, 0) * radius + center;
-        Vector3 P2 = new Vector3(-cosp6, sinp6, 0) * radius + center;
-        Vector3 P3 = new Vector3(-cosp6, -sinp6, 0) * radius + center;
-        Vector3 P4 = new Vector3(0, -1.0f, 0) * radius + center;
-        Vector3 P5 = new Vector3(cosp6, -sinp6, 0) * radius + center;
-
-        Gizmos.DrawLine(P0, P1);
-        Gizmos.DrawLine(P1, P2);
-        Gizmos.DrawLine(P2, P3);
-        Gizmos.DrawLine(P3, P4);
-        Gizmos.DrawLine(P4, P5);
-        Gizmos.DrawLine(P5, P0);
     }
 
     public void AddNewCells()

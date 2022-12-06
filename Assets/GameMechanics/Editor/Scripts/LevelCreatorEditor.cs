@@ -104,6 +104,11 @@ public class LevelCreatorEditor : Editor
 
         WriteTitle("----------LEVEL CREATOR----------", 18);
 
+        if (GUILayout.Button("Build level"))
+        {
+            script.BuildLevel();
+        }
+
         //Terrain properties
         EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
 
