@@ -27,6 +27,8 @@ public class SpaceObject : MonoBehaviour
 
     #region Attributes
     private HashSet<HexCoordinates> _shape;
+    [SerializeField] HexCoordinates _center;
+    [SerializeField] Orientation _orientation;
     #endregion
 
     #region Properties
@@ -39,15 +41,10 @@ public class SpaceObject : MonoBehaviour
             return _shape;
         }
     }
-    public HexCoordinates Center { get; set; }
-    public Orientation ObjectOrientation { get; set; }
+    public HexCoordinates Center { get => _center; set => _center = value; }
+    public Orientation ObjectOrientation { get => _orientation; set => _orientation = value; }
     #endregion
 
-    protected void Awake()
-    {
-        Center = new HexCoordinates();
-        ObjectOrientation = Orientation.E;
-    }
 
     public void MoveCoordinate(Action direction)
     {

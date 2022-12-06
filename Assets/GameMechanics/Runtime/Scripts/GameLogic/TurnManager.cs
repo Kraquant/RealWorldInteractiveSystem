@@ -2,9 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TurnManager : MonoBehaviour
 {
+    //TBO : Turn Based Object
     public enum CollisionType
     {
         None,
@@ -13,16 +15,18 @@ public class TurnManager : MonoBehaviour
     }
 
     [SerializeField] SpaceTerrain _terrain;
-    [SerializeField] List<ITurnBasedObject> _objects = new List<ITurnBasedObject>();
-    public List<ITurnBasedObject> Objects { get => _objects; set => _objects = value; }
+    [SerializeField] List<GameObject> _objectsGO;
+    private ITurnBasedObject[] _objects; //Can't be serialized
+    public ITurnBasedObject[] Objects { get => _objects;}
     
     public bool IsPlayingTurn { get; private set; }
     public SpaceTerrain Terrain { get => _terrain; set => _terrain = value; }
 
     private void Start()
     {
-        _objects = FindObjectsOfType<MonoBehaviour>().OfType<ITurnBasedObject>().ToList();
-        Debug.Log("Number of objects: " + _objects.Count);
+        //Creating the interface list
+        CreateInterfaceList();
+        Debug.Log("Number of objects: " + _objects.Length);
     }
 
     public async void PlayTurnAsync()
@@ -40,9 +44,14 @@ public class TurnManager : MonoBehaviour
         {
             IEnumerable<Task> tasks = itemsList.Select(async item =>
             {
-                // some pre stuff
-                await item.PlayTurnAsync(this);
-                // some post stuff
+                try
+                {
+                    await item.PlayTurnAsync(this);
+                }
+                catch (System.Exception e)
+                {
+                    Debug.LogError(e.Message);
+                }
             });
             await Task.WhenAll(tasks);
         }
@@ -101,4 +110,26 @@ public class TurnManager : MonoBehaviour
         collision = CollisionType.None;
         collidedObject=null;
     }
+
+    #region Serialization Deserialization
+    public void SetTurnBasedObjects(ITurnBasedObject[] objects)
+    {
+        _objectsGO = new List<GameObject>();
+        if (Application.isPlaying) throw new System.Exception("Can't edit objects at runtime");
+        foreach (ITurnBasedObject objInterface in objects)
+        {
+            if (objInterface != null) _objectsGO.Add(objInterface.gameObject);
+        }
+    }
+    public void CreateInterfaceList()
+    {
+        List<ITurnBasedObject> TBOInterfaces = new List<ITurnBasedObject>();
+        foreach (GameObject TBOGO in _objectsGO)
+        {
+            ITurnBasedObject TBOInterface = TBOGO.GetComponent<ITurnBasedObject>();
+            if (TBOInterface != null) TBOInterfaces.Add(TBOInterface);
+        }
+        _objects = TBOInterfaces.ToArray();
+    }
+    #endregion
 }

@@ -14,7 +14,7 @@ public class HexShapeCreator : MonoBehaviour
     private HexCoordinates _hexTarget;
 
     // Public attributes
-    public List<HexCoordinates> cellList;
+    public List<HexCoordinates> cellList = new List<HexCoordinates>();
     public HashSet<HexCoordinates> addList;
     public bool isActive;
     public bool addStatus; // True for add, false for remove

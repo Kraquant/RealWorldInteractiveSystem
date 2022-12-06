@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEditor.TerrainTools;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -25,7 +26,7 @@ public class LevelCreator : MonoBehaviour
     private SpaceObject.Orientation _placementOrientation;
     private Vector3 _vectorTarget;
     private HexCoordinates _hexTarget;
-    [SerializeField] HashSet<HexCoordinates> _terrainShape;
+    [SerializeField] List<HexCoordinates> _terrainShape;
     [SerializeField] float _cellSize = 1.0f;
     [SerializeField] bool _vizualizeTerrain = true;
 
@@ -77,18 +78,25 @@ public class LevelCreator : MonoBehaviour
         SpaceTerrain levelTerrain = levelGO.AddComponent<SpaceTerrain>();
         PlayerManager levelPlayerManager = levelGO.AddComponent<PlayerManager>();
 
-        levelTerrain.TerrainShape = _terrainShape;
-        levelTerrain.CellSize = _cellSize;
+        levelTerrain.SetTerrain(new HashSet<HexCoordinates>(_terrainShape), _cellSize);
         levelTurnManager.Terrain = levelTerrain;
+        
+        //Adding the objects
+        List<ITurnBasedObject> turnBasedObjects = new List<ITurnBasedObject>(); 
         foreach ((GameObject,bool) placedSO in placedObjects)
         {
             if (placedSO.Item1 != null && placedSO.Item2)
             {
-                ITurnBasedObject placedSOTurnInterface = placedSO.Item1.GetComponent<ITurnBasedObject>();
-                if (placedSOTurnInterface != null) levelTurnManager.Objects.Add(placedSOTurnInterface);
-                placedSO.Item1.transform.parent = levelObjGO.transform;
+                ITurnBasedObject placedSOInterface = placedSO.Item1.GetComponent<ITurnBasedObject>();
+                if (placedSOInterface != null)
+                {
+                    turnBasedObjects.Add(placedSOInterface);
+                    placedSO.Item1.transform.parent = levelObjGO.transform;
+                }
+
             }
         }
+        levelTurnManager.SetTurnBasedObjects(turnBasedObjects.ToArray());
 
     }
     public void CleanDeletedElements()
@@ -144,7 +152,7 @@ public class LevelCreator : MonoBehaviour
     public void GetTerrainFromCreator()
     {
         HexShapeCreator creator = GetComponent<HexShapeCreator>();
-        _terrainShape = new HashSet<HexCoordinates>(creator.HexShape);
+        _terrainShape = new List<HexCoordinates>(creator.HexShape);
         CellSize = creator.CellSize;
         creator.isActive = false;
     }
@@ -313,8 +321,10 @@ public class LevelCreator : MonoBehaviour
             this.transform);
         SpaceObject spaceObjScript = newSpaceObject.GetComponent<SpaceObject>();
         spaceObjScript.Center = _placementCoord;
+        spaceObjScript.ObjectOrientation = _placementOrientation;
 
         placedObjects.Add((newSpaceObject,true));
+        EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
     }
     public void CancelPlacement()
     {

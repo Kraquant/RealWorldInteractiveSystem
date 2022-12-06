@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -19,6 +20,7 @@ public class Spaceship : SpaceObject, ITurnBasedObject
     {
         //Check for possible movement
         turnManager.CheckCollision(PreviewNextCoordinate(NextAction).Item1, out TurnManager.CollisionType collision, out SpaceObject collided);
+        if (collision == TurnManager.CollisionType.Object && collided == this) collision = TurnManager.CollisionType.None;
 
         switch (collision)
         {
@@ -58,7 +60,7 @@ public class Spaceship : SpaceObject, ITurnBasedObject
     {
         if (_spaceshipMoving)
         {
-            Vector3 targetPos = base.Center.GetVector3Position() * _cellSize;
+            Vector3 targetPos = 2 * _cellSize * Center.GetVector3Position();
             if (transform.position != targetPos)
             {
                 transform.position = Vector3.MoveTowards(transform.position, targetPos, _speed * Time.deltaTime);
