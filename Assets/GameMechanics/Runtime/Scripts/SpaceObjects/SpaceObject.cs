@@ -22,6 +22,8 @@ public class SpaceObject : MonoBehaviour
         Left,
         Right,
         Turn,
+        LeftBehind,
+        RightBehind,
         Hold,
     }
 
@@ -74,6 +76,14 @@ public class SpaceObject : MonoBehaviour
             case Action.Turn:
                 orient = (Orientation)(((int)ObjectOrientation + 3) % 6);
                 coord = Center;
+                break;
+            case Action.LeftBehind:
+                orient = (Orientation)(((int)ObjectOrientation + 2 + 6) % 6);
+                coord = Center + HexCoordinates.direction_vectors[(int)orient];
+                break;
+            case Action.RightBehind:
+                orient = (Orientation)(((int)ObjectOrientation - 2 + 6) % 6);
+                coord = Center + HexCoordinates.direction_vectors[(int)orient];
                 break;
             case Action.Hold:
                 orient = ObjectOrientation;

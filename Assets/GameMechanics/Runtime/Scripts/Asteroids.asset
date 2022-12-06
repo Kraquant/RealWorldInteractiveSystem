@@ -10,9 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 84436979a43fd9046a067b4f6bd63019, type: 3}
-  m_Name: SpaceObjectList
+  m_Name: Asteroids
   m_EditorClassIdentifier: 
-  listName: Liste des vaisseaux
-  prefabs:
-  - {fileID: 798698954457690578, guid: 78feb8ee9626c9b4f86b020b8b5ab0d2, type: 3}
-  - {fileID: 798698954457690578, guid: 78feb8ee9626c9b4f86b020b8b5ab0d2, type: 3}
+  listName: Asteroids
+  prefabs: []

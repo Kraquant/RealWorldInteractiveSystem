@@ -1,9 +1,11 @@
+using Codice.CM.Common;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
 
 public class Spaceship : SpaceObject, ITurnBasedObject
@@ -12,8 +14,10 @@ public class Spaceship : SpaceObject, ITurnBasedObject
     public SpaceObject.Action NextAction { get; set; }
 
     private bool _spaceshipMoving;
-    private float _cellSize;
-    private float _speed;
+    private float _targetPosSpeed;
+    private float _targetRotSpeed;
+    private Vector3 _targetPos;
+    private Quaternion _targetRot;
 
 
     public async Task<bool> PlayTurnAsync(TurnManager turnManager)
@@ -27,7 +31,7 @@ public class Spaceship : SpaceObject, ITurnBasedObject
             case TurnManager.CollisionType.None:
 
                 MoveCoordinate(NextAction);
-                await UpdateSpaceObjectTransformAsync(turnManager.Terrain.CellSize, 10f); // CellSizeToDefine;
+                await UpdateSpaceObjectTransformAsync(turnManager.Terrain.CellSize, .5f); // CellSizeToDefine;
                 break;
             case TurnManager.CollisionType.Terrain:
                 break;
@@ -36,22 +40,22 @@ public class Spaceship : SpaceObject, ITurnBasedObject
             default:
                 break;
         }
-
         return true;
     }
 
-    public async Task<bool> UpdateSpaceObjectTransformAsync(float cellSize, float speed)
+    public async Task<bool> UpdateSpaceObjectTransformAsync(float cellSize, float moveTime)
     {
-        _cellSize = cellSize;
-        _speed = speed;
+        _targetPos = 2 * cellSize * Center.GetVector3Position();
+        _targetRot = Quaternion.FromToRotation(Vector3.right, HexCoordinates.direction_vectors[(int)ObjectOrientation].GetVector3Position());
 
-        Vector3 lookToVec = HexCoordinates.direction_vectors[(int)ObjectOrientation].GetVector3Position();
-        transform.right = lookToVec;
+        _targetPosSpeed = Vector3.Distance(this.transform.position, _targetPos) / moveTime;
+        _targetRotSpeed = Quaternion.Angle(this.transform.rotation, _targetRot) / moveTime;
+
 
         CancellationTokenSource cts = new CancellationTokenSource();
         _spaceshipMoving = true;
 
-        await WaitUntilAsync(() => _spaceshipMoving == false, 100, cts.Token);
+        await SpaceUtilities.WaitUntilAsync(() => _spaceshipMoving == false, 100, cts.Token);
 
         return true;
     }
@@ -60,24 +64,13 @@ public class Spaceship : SpaceObject, ITurnBasedObject
     {
         if (_spaceshipMoving)
         {
-            Vector3 targetPos = 2 * _cellSize * Center.GetVector3Position();
-            if (transform.position != targetPos)
+            if (transform.position != _targetPos || transform.rotation != _targetRot)
             {
-                transform.position = Vector3.MoveTowards(transform.position, targetPos, _speed * Time.deltaTime);
+                transform.SetPositionAndRotation(
+                    Vector3.MoveTowards(transform.position, _targetPos, _targetPosSpeed * Time.deltaTime),
+                    Quaternion.RotateTowards(transform.rotation, _targetRot, _targetRotSpeed * Time.deltaTime));
             }
             else _spaceshipMoving = false;
-        }
-    }
-
-    public async Task WaitUntilAsync(Func<bool> cond, int checkPeriod, CancellationToken token)
-    {
-        while (true)
-        {
-            if (cond() || token.IsCancellationRequested)
-            {
-                break;
-            }
-            await Task.Delay(checkPeriod, token);
         }
     }
 }
