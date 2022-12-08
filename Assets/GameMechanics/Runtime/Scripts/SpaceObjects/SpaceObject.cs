@@ -24,6 +24,7 @@ public class SpaceObject : MonoBehaviour
         Turn,
         LeftBehind,
         RightBehind,
+        Back,
         Hold,
     }
 
@@ -89,19 +90,15 @@ public class SpaceObject : MonoBehaviour
                 orient = ObjectOrientation;
                 coord = Center;
                 break;
+            case Action.Back:
+                orient = (Orientation)(((int)ObjectOrientation + 3) % 6);
+                coord = Center + HexCoordinates.direction_vectors[(int)orient];
+                break;
             default:
                 throw new System.Exception("Direction cannot be null");
         }
 
         return new Tuple<HexCoordinates, Orientation>(coord, orient);
-    }
-
-    public void UpdateSpaceObjectTransform(float cellSize)
-    {
-        Vector3 lookToVec = HexCoordinates.direction_vectors[(int)ObjectOrientation].GetVector3Position();
-
-        transform.position = Center.GetVector3Position()*cellSize;
-        transform.right = lookToVec;
     }
 
     public static Quaternion OrientationToQuaternion(Orientation orient)

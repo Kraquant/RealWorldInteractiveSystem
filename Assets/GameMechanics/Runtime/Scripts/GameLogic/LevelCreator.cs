@@ -314,11 +314,12 @@ public class LevelCreator : MonoBehaviour
         _placementOrientation = GetTargetOrientation();
         placingState = PlacingState.None;
         Debug.Log("Space object added");
-        GameObject newSpaceObject = GameObject.Instantiate(
-            _placementPrefab,
+        GameObject newSpaceObject = (GameObject)PrefabUtility.InstantiatePrefab(_placementPrefab);
+        newSpaceObject.transform.SetPositionAndRotation(
             2 * CellSize * _placementCoord.GetVector3Position(),
-            SpaceObject.OrientationToQuaternion(_placementOrientation),
-            this.transform);
+            SpaceObject.OrientationToQuaternion(_placementOrientation));
+        newSpaceObject.transform.parent = this.transform;
+
         SpaceObject spaceObjScript = newSpaceObject.GetComponent<SpaceObject>();
         spaceObjScript.Center = _placementCoord;
         spaceObjScript.ObjectOrientation = _placementOrientation;

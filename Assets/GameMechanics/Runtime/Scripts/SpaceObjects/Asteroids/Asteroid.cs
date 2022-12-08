@@ -9,10 +9,12 @@ public class Asteroid : SpaceObject, ITurnBasedObject
 {
     private int _nextAsteroidAction = 1;
 
-    private bool _asteroidMoving;
-    private float _targetPosSpeed;
-    private Vector3 _targetPos;
+    protected bool _asteroidMoving;
+    protected float _targetPosSpeed;
+    protected Vector3 _targetPos;
 
+    protected float _currentTerrainCellsize;
+    protected float _asteroidSpeed = 0.5f; //Time that it takes for the asteroid to move
 
     public int TurnPriority { get => 1; set => throw new System.NotImplementedException(); }
     public int NextAsteroidAction
@@ -27,31 +29,29 @@ public class Asteroid : SpaceObject, ITurnBasedObject
 
     public async Task<bool> PlayTurnAsync(TurnManager turnManager)
     {
+        _currentTerrainCellsize = turnManager.Terrain.CellSize;
+
         Action spaceAction = AsteroidActionToSpaceAction(NextAsteroidAction);
         turnManager.CheckCollision(PreviewNextCoordinate(spaceAction).Item1, out TurnManager.CollisionType collision, out SpaceObject collided);
 
-        if (collision != TurnManager.CollisionType.Terrain)
+        if (collision == TurnManager.CollisionType.Terrain)
         {
-            Center = PreviewNextCoordinate(spaceAction).Item1;
-            await UpdateSpaceObjectTransformAsync(turnManager.Terrain.CellSize, .5f);
+            return true;
         }
-        return true;
-    }
 
-    public async Task<bool> UpdateSpaceObjectTransformAsync(float cellSize, float moveTime)
-    {
-
-        _targetPos = 2 * cellSize * Center.GetVector3Position();
-       
-        _targetPosSpeed = Vector3.Distance(this.transform.position, _targetPos) / moveTime;
-        
-
+        Center = PreviewNextCoordinate(spaceAction).Item1;
         CancellationTokenSource cts = new CancellationTokenSource();
-        _asteroidMoving = true;
-
+        UpdateAsteroidTransform(_currentTerrainCellsize, _asteroidSpeed);
         await SpaceUtilities.WaitUntilAsync(() => _asteroidMoving == false, 100, cts.Token);
 
         return true;
+    }
+
+    protected void UpdateAsteroidTransform(float cellSize, float moveTime)
+    {
+        _targetPos = 2 * cellSize * Center.GetVector3Position();
+        _targetPosSpeed = Vector3.Distance(this.transform.position, _targetPos) / moveTime;
+        _asteroidMoving = true;
     }
     private void Update()
     {
@@ -65,17 +65,16 @@ public class Asteroid : SpaceObject, ITurnBasedObject
             else _asteroidMoving = false;
         }
     }
-
-    private Action AsteroidActionToSpaceAction(int asteroidAction)
+    protected Action AsteroidActionToSpaceAction(int asteroidAction)
     {
         return asteroidAction switch
         {
             1 => Action.Front,
-            2 => Action.Left,
-            3 => Action.LeftBehind,
-            4 => Action.Turn,
-            5 => Action.RightBehind,
-            6 => Action.Right,
+            2 => Action.Right,
+            3 => Action.RightBehind,
+            4 => Action.Back,
+            5 => Action.LeftBehind,
+            6 => Action.Left,
             _ => throw new System.NotImplementedException(),
         };
     }
