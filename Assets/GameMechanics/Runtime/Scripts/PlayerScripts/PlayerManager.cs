@@ -28,7 +28,7 @@ public class PlayerManager : MonoBehaviour
         SpaceTerrain terrain = GetComponent<SpaceTerrain>();
         Bounds terrainBounds = HexCoordinatesUtilities.GetBoundingBox(terrain.TerrainShape, terrain.CellSize);
         terrainBounds.Expand(0.0f);
-        cameraManager.AdaptCameraToTerrain(terrainBounds);
+        cameraManager.AdaptCameraToTerrain(terrainBounds, 0.5f);
     }
 
     private void OnEnable()
