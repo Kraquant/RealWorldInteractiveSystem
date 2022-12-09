@@ -22,11 +22,16 @@ public class SpaceObject : MonoBehaviour
         Left,
         Right,
         Turn,
+        LeftBehind,
+        RightBehind,
+        Back,
         Hold,
     }
 
     #region Attributes
     private HashSet<HexCoordinates> _shape;
+    [SerializeField] HexCoordinates _center;
+    [SerializeField] Orientation _orientation;
     #endregion
 
     #region Properties
@@ -39,15 +44,10 @@ public class SpaceObject : MonoBehaviour
             return _shape;
         }
     }
-    public HexCoordinates Center { get; set; }
-    public Orientation ObjectOrientation { get; set; }
+    public HexCoordinates Center { get => _center; set => _center = value; }
+    public Orientation ObjectOrientation { get => _orientation; set => _orientation = value; }
     #endregion
 
-    protected void Awake()
-    {
-        Center = new HexCoordinates();
-        ObjectOrientation = Orientation.E;
-    }
 
     public void MoveCoordinate(Action direction)
     {
@@ -78,23 +78,27 @@ public class SpaceObject : MonoBehaviour
                 orient = (Orientation)(((int)ObjectOrientation + 3) % 6);
                 coord = Center;
                 break;
+            case Action.LeftBehind:
+                orient = (Orientation)(((int)ObjectOrientation + 2 + 6) % 6);
+                coord = Center + HexCoordinates.direction_vectors[(int)orient];
+                break;
+            case Action.RightBehind:
+                orient = (Orientation)(((int)ObjectOrientation - 2 + 6) % 6);
+                coord = Center + HexCoordinates.direction_vectors[(int)orient];
+                break;
             case Action.Hold:
                 orient = ObjectOrientation;
                 coord = Center;
+                break;
+            case Action.Back:
+                orient = (Orientation)(((int)ObjectOrientation + 3) % 6);
+                coord = Center + HexCoordinates.direction_vectors[(int)orient];
                 break;
             default:
                 throw new System.Exception("Direction cannot be null");
         }
 
         return new Tuple<HexCoordinates, Orientation>(coord, orient);
-    }
-
-    public void UpdateSpaceObjectTransform(float cellSize)
-    {
-        Vector3 lookToVec = HexCoordinates.direction_vectors[(int)ObjectOrientation].GetVector3Position();
-
-        transform.position = Center.GetVector3Position()*cellSize;
-        transform.right = lookToVec;
     }
 
     public static Quaternion OrientationToQuaternion(Orientation orient)

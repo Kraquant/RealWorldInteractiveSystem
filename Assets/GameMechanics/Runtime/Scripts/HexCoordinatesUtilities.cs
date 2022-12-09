@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
@@ -17,7 +18,6 @@ public static class HexCoordinatesUtilities
         Vector3 hexCenter = 2 * cellSize * coord.GetVector3Position();
         DrawGizmosHexagon(hexCenter, cellSize);
     }
-
     public static void DrawGizmosHexagon(Vector3 center, float radius)
     {
         float cosp6 = Mathf.Sqrt(3) / 2;
@@ -36,5 +36,36 @@ public static class HexCoordinatesUtilities
         Gizmos.DrawLine(P3, P4);
         Gizmos.DrawLine(P4, P5);
         Gizmos.DrawLine(P5, P0);
+    }
+
+    public static Bounds GetBoundingBox(IEnumerable<HexCoordinates> hexCoordList, float cellSize)
+    {
+        float minX, maxX, minY, maxY;
+        Vector3 firstElement = hexCoordList.First().GetVector3Position();
+        minX = firstElement.x;
+        maxX = firstElement.x;
+        minY = firstElement.y;
+        maxY = firstElement.y;
+
+        foreach (HexCoordinates coord in hexCoordList)
+        {
+            Vector3 coordPos = coord.GetVector3Position();
+            if (coordPos.x < minX) minX = coordPos.x;   
+            if (coordPos.x > maxX) maxX = coordPos.x; 
+            if (coordPos.y < minY) minY = coordPos.y; 
+            if (coordPos.y > maxY) maxY = coordPos.y; 
+        }
+        Vector3 center = new Vector3(
+            cellSize * (minX + maxX),
+            cellSize * (minY + maxY),
+            0);
+
+        Vector3 size = new Vector3(
+            2 * cellSize * (maxX - minX) + Mathf.Sqrt(3.0f) * cellSize,
+            2 *cellSize*(maxY - minY + 1),
+            0);
+
+        return new Bounds(center, size);
+
     }
 }

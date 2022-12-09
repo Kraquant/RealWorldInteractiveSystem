@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -35,6 +36,8 @@ public class HexShapeCreatorEditor : Editor
             script.AddNewCells();
         }    
         script.cellSize = EditorGUILayout.Slider(new GUIContent("Cell size"), script.CellSize, 0.1f, 100);
+
+        serializedObject.ApplyModifiedProperties();
     }
 
     
@@ -55,13 +58,14 @@ public class HexShapeCreatorEditor : Editor
         if (Event.current.type == EventType.MouseDown && Event.current.button == 0)
         {
             isSelecting = true;
-            script.addStatus = !script.cellList.Contains(script.HexTarget);
+            script.addStatus = !script.HexShape.Contains(script.HexTarget);
         }
 
         if (Event.current.type == EventType.MouseUp && Event.current.button == 0)
         {
             isSelecting = false;
             script.AddNewCells();
+            EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
         }
 
         if (isSelecting)
