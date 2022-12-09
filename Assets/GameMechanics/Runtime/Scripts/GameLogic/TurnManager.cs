@@ -15,7 +15,7 @@ public class TurnManager : MonoBehaviour
     }
 
     [SerializeField] SpaceTerrain _terrain;
-    [SerializeField] List<GameObject> _objectsGO;
+    [SerializeField] List<GameObject> _objectsGO; //Can be serialized
     private ITurnBasedObject[] _objects; //Can't be serialized
     public ITurnBasedObject[] Objects { get => _objects;}
     
@@ -24,23 +24,22 @@ public class TurnManager : MonoBehaviour
 
     private void Start()
     {
-        //Creating the interface list
         CreateInterfaceList();
         Debug.Log("Number of objects: " + _objects.Length);
     }
 
-    public async void PlayTurnAsync()
+    public async Task<bool> PlayTurnAsync()
     {
         if (IsPlayingTurn)
         {
             Debug.LogError("Already playing a turn");
-            return;
+            return false;
         }
         IsPlayingTurn = true;
 
-        List<List<ITurnBasedObject>> itemsByPriority = SortItemsByPriority();
+        ITurnBasedObject[][] itemsByPriority = SortItemsByPriority();
 
-        foreach (List<ITurnBasedObject> itemsList in itemsByPriority)
+        foreach (ITurnBasedObject[] itemsList in itemsByPriority)
         {
             IEnumerable<Task> tasks = itemsList.Select(async item =>
             {
@@ -58,25 +57,8 @@ public class TurnManager : MonoBehaviour
 
         IsPlayingTurn = false;
         Debug.Log("Turn is over");
+        return true;
     }
-
-    private List<List<ITurnBasedObject>> SortItemsByPriority()
-    {
-        List<List<ITurnBasedObject>> itemsByPriority = new List<List<ITurnBasedObject>>();
-        itemsByPriority.Add(new List<ITurnBasedObject>());
-
-        IOrderedEnumerable<ITurnBasedObject> sortedObjects = _objects.OrderBy(i => i.TurnPriority);
-
-        int currentOrder = sortedObjects.First().TurnPriority;
-        foreach (ITurnBasedObject item in sortedObjects)
-        {
-            if (item.TurnPriority != currentOrder) itemsByPriority.Add(new List<ITurnBasedObject>());
-            itemsByPriority.Last().Add(item);
-        }
-
-        return itemsByPriority;
-    }
-
     public void CheckCollision(HexCoordinates coords, out CollisionType collision, out SpaceObject collidedObject)
     {
         //Check collision with terrain
@@ -131,5 +113,34 @@ public class TurnManager : MonoBehaviour
         }
         _objects = TBOInterfaces.ToArray();
     }
+    #endregion
+
+    #region Private utility methods
+    private ITurnBasedObject[][] SortItemsByPriority()
+    {
+        _objects = _objects.Where(c => c != null).ToArray(); //Clean list
+
+        List<List<ITurnBasedObject>> itemsByPriority = new List<List<ITurnBasedObject>>();
+        itemsByPriority.Add(new List<ITurnBasedObject>());
+
+        IOrderedEnumerable<ITurnBasedObject> sortedObjects = _objects.OrderBy(i => i.TurnPriority);
+
+        int currentOrder = sortedObjects.First().TurnPriority;
+        foreach (ITurnBasedObject item in sortedObjects)
+        {
+            if (item.TurnPriority != currentOrder) itemsByPriority.Add(new List<ITurnBasedObject>());
+            itemsByPriority.Last().Add(item);
+        }
+        return ToArrayArray(itemsByPriority);
+    }
+    private T[][] ToArrayArray<T>(List<List<T>> list)
+    {
+        T[][] res = new T[list.Count][];
+        for (int i = 0; i < list.Count; i++)
+        {
+            res[i] = list[i].ToArray();
+        }
+        return res;
+    } 
     #endregion
 }

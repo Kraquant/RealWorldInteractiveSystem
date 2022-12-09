@@ -11,10 +11,7 @@ public static class SpaceUtilities
     {
         while (true)
         {
-            if (cond() || token.IsCancellationRequested)
-            {
-                break;
-            }
+            if (cond() || token.IsCancellationRequested) break;
             await Task.Delay(checkPeriod, token);
         }
     }

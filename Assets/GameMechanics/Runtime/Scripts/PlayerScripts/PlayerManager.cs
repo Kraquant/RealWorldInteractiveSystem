@@ -3,8 +3,9 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     private PlayerControl controls;
-    [SerializeField] Spaceship player;
-    [SerializeField] TurnManager turnManager;
+    [SerializeField] GameManager gameManager;
+    [SerializeField] ResponsiveCamera cameraManager;
+    
 
     private void Awake()
     {
@@ -13,26 +14,21 @@ public class PlayerManager : MonoBehaviour
 
     private void Start()
     {
-        controls.SpaceshipControl.Movement.performed += ctx => Move(ctx.ReadValue<Vector2>());
-        controls.SpaceshipControl.PlayTurn.performed += ctx => PlayTurn();
+        controls.SpaceshipControl.PlayTurn.performed += ctx => PlayGame();
+        controls.SpaceshipControl.AdaptCamera.performed += ctx => AdaptCam();
     }
 
-    private void Move(Vector2 direction)
+    private void PlayGame()
     {
-        SpaceObject.Action action;
-        if (direction.x > 0) action = SpaceObject.Action.Right;
-        else if (direction.x < 0) action = SpaceObject.Action.Left;
-        else if (direction.y > 0) action = SpaceObject.Action.Front;
-        else if (direction.y < 0) action = SpaceObject.Action.Turn;
-        else throw new System.NotImplementedException();
-        player.NextAction = action;
-
-        Debug.Log("New action set");
+        gameManager.PlayGameAsync();
     }
-
-    private void PlayTurn()
+    private void AdaptCam()
     {
-        turnManager.PlayTurnAsync();
+        Debug.Log("Adapting camera");
+        SpaceTerrain terrain = GetComponent<SpaceTerrain>();
+        Bounds terrainBounds = HexCoordinatesUtilities.GetBoundingBox(terrain.TerrainShape, terrain.CellSize);
+        terrainBounds.Expand(0.0f);
+        cameraManager.AdaptCameraToTerrain(terrainBounds);
     }
 
     private void OnEnable()

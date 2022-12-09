@@ -1,25 +1,36 @@
-using Codice.CM.Common;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
 
-public class Spaceship : SpaceObject, ITurnBasedObject
+public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer
 {
+    public event IPlayer.playerStateEvent OnPlayerDeath;
+    public event IPlayer.playerStateEvent OnPlayerWin;
+
+    #region Public Properties
     public int TurnPriority { get => 10; set => throw new System.NotImplementedException(); }
     public SpaceObject.Action NextAction { get; set; }
+    public bool IsAlive => _isAlive;
+    public bool HasWon => _hasWon;
+    #endregion
 
+    #region Private Attributes
+    //State attributes
+    private bool _isAlive;
+    private bool _hasWon;
+
+    //Spaceship movement
     private bool _spaceshipMoving;
     private float _targetPosSpeed;
     private float _targetRotSpeed;
     private Vector3 _targetPos;
     private Quaternion _targetRot;
-
-
+    #endregion
+    private void Awake()
+    {
+        _hasWon = false;
+        _isAlive = true;
+    }
     public async Task<bool> PlayTurnAsync(TurnManager turnManager)
     {
         //Check for possible movement
@@ -29,14 +40,13 @@ public class Spaceship : SpaceObject, ITurnBasedObject
         switch (collision)
         {
             case TurnManager.CollisionType.None:
-
+            case TurnManager.CollisionType.Object:
                 MoveCoordinate(NextAction);
                 await UpdateSpaceObjectTransformAsync(turnManager.Terrain.CellSize, .5f); // CellSizeToDefine;
                 break;
-            case TurnManager.CollisionType.Terrain:
+            case TurnManager.CollisionType.Terrain: //The space ship does not move
                 break;
-            case TurnManager.CollisionType.Object:
-                throw new System.NotImplementedException();
+            
             default:
                 break;
         }
@@ -71,6 +81,21 @@ public class Spaceship : SpaceObject, ITurnBasedObject
                     Quaternion.RotateTowards(transform.rotation, _targetRot, _targetRotSpeed * Time.deltaTime));
             }
             else _spaceshipMoving = false;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Goal"))
+        {
+            _hasWon = true;
+            OnPlayerWin?.Invoke();
+        }
+
+        else if (collision.gameObject.CompareTag("Goal"))
+        {
+            _hasWon = true;
+            OnPlayerDeath?.Invoke();
         }
     }
 }
