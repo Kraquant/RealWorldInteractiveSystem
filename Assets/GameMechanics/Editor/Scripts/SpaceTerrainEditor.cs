@@ -9,7 +9,8 @@ public class SpaceTerrainEditor : Editor
     public override void OnInspectorGUI()
     {
         SpaceTerrain script = (SpaceTerrain)target;
-        base.OnInspectorGUI();
         GUILayout.TextField("Terrain size: " + script.Size.ToString());
+        GUILayout.TextField("Cell size: " + script.CellSize.ToString());
+        serializedObject.Update();
     }
 }

@@ -44,6 +44,15 @@ public partial class @PlayerControl : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Press"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AdaptCamera"",
+                    ""type"": ""Button"",
+                    ""id"": ""f72b0a9a-b723-4d46-af09-222c2dd12aaa"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -112,6 +121,17 @@ public partial class @PlayerControl : IInputActionCollection2, IDisposable
                     ""action"": ""PlayTurn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""11d1b30a-e3b9-4742-9081-02c2c4a9fd2e"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AdaptCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -122,6 +142,7 @@ public partial class @PlayerControl : IInputActionCollection2, IDisposable
         m_SpaceshipControl = asset.FindActionMap("SpaceshipControl", throwIfNotFound: true);
         m_SpaceshipControl_Movement = m_SpaceshipControl.FindAction("Movement", throwIfNotFound: true);
         m_SpaceshipControl_PlayTurn = m_SpaceshipControl.FindAction("PlayTurn", throwIfNotFound: true);
+        m_SpaceshipControl_AdaptCamera = m_SpaceshipControl.FindAction("AdaptCamera", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -183,12 +204,14 @@ public partial class @PlayerControl : IInputActionCollection2, IDisposable
     private ISpaceshipControlActions m_SpaceshipControlActionsCallbackInterface;
     private readonly InputAction m_SpaceshipControl_Movement;
     private readonly InputAction m_SpaceshipControl_PlayTurn;
+    private readonly InputAction m_SpaceshipControl_AdaptCamera;
     public struct SpaceshipControlActions
     {
         private @PlayerControl m_Wrapper;
         public SpaceshipControlActions(@PlayerControl wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_SpaceshipControl_Movement;
         public InputAction @PlayTurn => m_Wrapper.m_SpaceshipControl_PlayTurn;
+        public InputAction @AdaptCamera => m_Wrapper.m_SpaceshipControl_AdaptCamera;
         public InputActionMap Get() { return m_Wrapper.m_SpaceshipControl; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -204,6 +227,9 @@ public partial class @PlayerControl : IInputActionCollection2, IDisposable
                 @PlayTurn.started -= m_Wrapper.m_SpaceshipControlActionsCallbackInterface.OnPlayTurn;
                 @PlayTurn.performed -= m_Wrapper.m_SpaceshipControlActionsCallbackInterface.OnPlayTurn;
                 @PlayTurn.canceled -= m_Wrapper.m_SpaceshipControlActionsCallbackInterface.OnPlayTurn;
+                @AdaptCamera.started -= m_Wrapper.m_SpaceshipControlActionsCallbackInterface.OnAdaptCamera;
+                @AdaptCamera.performed -= m_Wrapper.m_SpaceshipControlActionsCallbackInterface.OnAdaptCamera;
+                @AdaptCamera.canceled -= m_Wrapper.m_SpaceshipControlActionsCallbackInterface.OnAdaptCamera;
             }
             m_Wrapper.m_SpaceshipControlActionsCallbackInterface = instance;
             if (instance != null)
@@ -214,6 +240,9 @@ public partial class @PlayerControl : IInputActionCollection2, IDisposable
                 @PlayTurn.started += instance.OnPlayTurn;
                 @PlayTurn.performed += instance.OnPlayTurn;
                 @PlayTurn.canceled += instance.OnPlayTurn;
+                @AdaptCamera.started += instance.OnAdaptCamera;
+                @AdaptCamera.performed += instance.OnAdaptCamera;
+                @AdaptCamera.canceled += instance.OnAdaptCamera;
             }
         }
     }
@@ -222,5 +251,6 @@ public partial class @PlayerControl : IInputActionCollection2, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnPlayTurn(InputAction.CallbackContext context);
+        void OnAdaptCamera(InputAction.CallbackContext context);
     }
 }
