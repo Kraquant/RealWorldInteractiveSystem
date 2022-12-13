@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Unity.Plastic.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +18,11 @@ public class TurnManager : MonoBehaviour
     [SerializeField] SpaceTerrain _terrain;
     [SerializeField] List<GameObject> _objectsGO; //Can be serialized
     private ITurnBasedObject[] _objects; //Can't be serialized
+    private GameObject _visualizerGO;
+    private HexVisualizer _visualizerScript;
+
+    [Range(0, 2000)] public int turnCellTime;
+    public Material turnCellMat;
     public ITurnBasedObject[] Objects { get => _objects;}
     
     public bool IsPlayingTurn { get; private set; }
@@ -26,6 +32,13 @@ public class TurnManager : MonoBehaviour
     {
         CreateInterfaceList();
         Debug.Log("Number of objects: " + _objects.Length);
+
+        _visualizerGO = new GameObject();
+        _visualizerGO.name = "Turn Manager Visualizer";
+        _visualizerGO.transform.parent = this.transform;
+        _visualizerScript = _visualizerGO.AddComponent<HexVisualizer>();
+        _visualizerScript.displayMat = turnCellMat;
+
     }
 
     public async Task<bool> PlayTurnAsync()
@@ -41,11 +54,14 @@ public class TurnManager : MonoBehaviour
 
         foreach (ITurnBasedObject[] itemsList in itemsByPriority)
         {
+            await ShowSpacePositionAsync(itemsList, turnCellTime);
+
             IEnumerable<Task> tasks = itemsList.Select(async item =>
             {
                 try
                 {
                     await item.PlayTurnAsync(this);
+
                 }
                 catch (System.Exception e)
                 {
@@ -91,6 +107,26 @@ public class TurnManager : MonoBehaviour
         //No collision found
         collision = CollisionType.None;
         collidedObject=null;
+    }
+
+    private async Task<bool> ShowSpacePositionAsync(ITurnBasedObject[] items, int time)
+    {
+        if (time == 0) return true;
+
+        HashSet<HexCoordinates> coords = new HashSet<HexCoordinates>();
+        foreach (ITurnBasedObject tbo in items)
+        {
+            SpaceObject tboCast = (SpaceObject)tbo;    
+            if (tboCast != null)
+            {
+                coords.Add(tboCast.Center);
+            }
+        }
+
+        _visualizerScript.CreateShape(coords, Terrain.CellSize);
+        await Task.Delay(time);
+        _visualizerScript.ClearShape();
+        return true;
     }
 
     #region Serialization Deserialization

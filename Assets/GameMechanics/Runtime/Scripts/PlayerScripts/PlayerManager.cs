@@ -25,7 +25,7 @@ public class PlayerManager : MonoBehaviour
     private void AdaptCam()
     {
         Debug.Log("Adapting camera");
-        SpaceTerrain terrain = GetComponent<SpaceTerrain>();
+        SpaceTerrain terrain = GetComponentInChildren<SpaceTerrain>();
         Bounds terrainBounds = HexCoordinatesUtilities.GetBoundingBox(terrain.TerrainShape, terrain.CellSize);
         terrainBounds.Expand(0.0f);
         cameraManager.AdaptCameraToTerrain(terrainBounds, 0.5f);

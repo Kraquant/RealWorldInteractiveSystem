@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using UnityEditor.TerrainTools;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -24,7 +25,7 @@ public class GameManager : MonoBehaviour
     [Range(1, 20)][SerializeField] int TurnNumber;
     [Range(0, 1000)] public int delayBetweenTurns;
     public List<SpaceObject.Action> userAction;
-    public TurnManager turnManager; 
+    public TurnManager turnManager;
     #endregion
     #region Properties
     public int CurrentTurn { get; private set; }
@@ -77,6 +78,9 @@ public class GameManager : MonoBehaviour
         IsPlaying = false;
         CurrentTurn = 0;
         _isPaused = false;
+
+        HexVisualizer terrainVisualizer = GetComponentInChildren<HexVisualizer>();
+        terrainVisualizer.CreateShape(turnManager.Terrain.TerrainShape, turnManager.Terrain.CellSize);
     } 
     #endregion
 

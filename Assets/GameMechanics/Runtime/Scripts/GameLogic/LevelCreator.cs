@@ -68,18 +68,45 @@ public class LevelCreator : MonoBehaviour
     }
     public void BuildLevel()
     {
-        GameObject levelGO = new GameObject();
-        GameObject levelObjGO = new GameObject();
-        levelObjGO.transform.parent = levelGO.transform;
-        levelGO.name = "New level";
-        levelObjGO.name = "Space Objects";
 
+        // ********************************************     CREATING GAME OBJECTS       ********************************************
+        //Creating Game Objects to hold scripts
+        GameObject levelGO = new GameObject();
+        GameObject levelSOGO = new GameObject();
+        GameObject levelTerrainGO = new GameObject();
+
+        //Setting parents for Game Objects
+        levelSOGO.transform.parent = levelGO.transform;
+        levelTerrainGO.transform.parent = levelGO.transform;
+
+        //Adding names
+        levelGO.name = "New level";
+        levelSOGO.name = "Space Objects";
+        levelTerrainGO.name = "Terrain";
+
+
+        // ********************************************     ADDING SCRIPTS               ********************************************
+
+        // Adding LevelScripts
+        GameManager levelGameManager = levelGO.AddComponent<GameManager>();
         TurnManager levelTurnManager = levelGO.AddComponent<TurnManager>();
-        SpaceTerrain levelTerrain = levelGO.AddComponent<SpaceTerrain>();
         PlayerManager levelPlayerManager = levelGO.AddComponent<PlayerManager>();
 
-        levelTerrain.SetTerrain(new HashSet<HexCoordinates>(_terrainShape), _cellSize);
+        //Adding Terrain Scripts
+        SpaceTerrain levelTerrain = levelTerrainGO.AddComponent<SpaceTerrain>();
+        HexVisualizer levelTerrainVisualizer = levelTerrainGO.AddComponent<HexVisualizer>();
+
+
+
+        // ********************************************     CONFIGURING SCRIPTS         ********************************************
+
+        //Setting Level Scripts
+        levelGameManager.turnManager = levelTurnManager;
         levelTurnManager.Terrain = levelTerrain;
+
+        //Setting Terrain Scripts
+        levelTerrain.SetTerrain(new HashSet<HexCoordinates>(_terrainShape), _cellSize);
+        
         
         //Adding the objects
         List<ITurnBasedObject> turnBasedObjects = new List<ITurnBasedObject>(); 
@@ -91,7 +118,7 @@ public class LevelCreator : MonoBehaviour
                 if (placedSOInterface != null)
                 {
                     turnBasedObjects.Add(placedSOInterface);
-                    placedSO.Item1.transform.parent = levelObjGO.transform;
+                    placedSO.Item1.transform.parent = levelSOGO.transform;
                 }
 
             }
