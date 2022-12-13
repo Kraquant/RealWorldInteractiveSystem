@@ -1,0 +1,9 @@
+diff a/Assets/UI/images/gui_gradient.png.meta b/Assets/UI/images/gui_gradient.png.meta	(rejected hunks)
+@@ -582,7 +582,6 @@
+       name: gui_gradient_30
+       rect:
+         serializedVersion: 2
+-        x: 246
+         x: 360
+         y: 245
+         width: 32

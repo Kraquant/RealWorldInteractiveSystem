@@ -120,8 +120,8 @@ TextureImporter:
       name: gui_gradient_0
       rect:
         serializedVersion: 2
-        x: 32
-        y: 224
+        x: 24
+        y: 227
         width: 96
         height: 96
       alignment: 0
@@ -162,8 +162,8 @@ TextureImporter:
       name: gui_gradient_4
       rect:
         serializedVersion: 2
-        x: 224
-        y: 288
+        x: 217
+        y: 289
         width: 32
         height: 32
       alignment: 0
@@ -180,32 +180,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gui_gradient_5
-      rect:
-        serializedVersion: 2
-        x: 288
-        y: 288
-        width: 96
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: dea259d028f4a774cac009a79929ba19
-      internalID: -825456290
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: gui_gradient_6
       rect:
         serializedVersion: 2
-        x: 320
-        y: 288
+        x: 458
+        y: 264
         width: 32
         height: 32
       alignment: 0
@@ -225,8 +204,8 @@ TextureImporter:
       name: gui_gradient_7
       rect:
         serializedVersion: 2
-        x: 352
-        y: 288
+        x: 468
+        y: 224
         width: 32
         height: 32
       alignment: 0
@@ -246,8 +225,8 @@ TextureImporter:
       name: gui_gradient_8
       rect:
         serializedVersion: 2
-        x: 416
-        y: 288
+        x: 456
+        y: 303
         width: 32
         height: 32
       alignment: 0
@@ -288,8 +267,8 @@ TextureImporter:
       name: gui_gradient_13
       rect:
         serializedVersion: 2
-        x: 224
-        y: 256
+        x: 217
+        y: 257
         width: 32
         height: 32
       alignment: 0
@@ -330,8 +309,8 @@ TextureImporter:
       name: gui_gradient_18
       rect:
         serializedVersion: 2
-        x: 224
-        y: 224
+        x: 217
+        y: 225
         width: 32
         height: 32
       alignment: 0
@@ -351,8 +330,8 @@ TextureImporter:
       name: gui_gradient_19
       rect:
         serializedVersion: 2
-        x: 288
-        y: 224
+        x: 281
+        y: 248
         width: 32
         height: 32
       alignment: 0
@@ -372,8 +351,8 @@ TextureImporter:
       name: gui_gradient_20
       rect:
         serializedVersion: 2
-        x: 352
-        y: 224
+        x: 317
+        y: 248
         width: 32
         height: 32
       alignment: 0
@@ -393,8 +372,8 @@ TextureImporter:
       name: gui_gradient_21
       rect:
         serializedVersion: 2
-        x: 416
-        y: 224
+        x: 360
+        y: 245
         width: 32
         height: 32
       alignment: 0
@@ -414,8 +393,8 @@ TextureImporter:
       name: gui_gradient_22
       rect:
         serializedVersion: 2
-        x: 448
-        y: 224
+        x: 395
+        y: 245
         width: 32
         height: 32
       alignment: 0
@@ -435,8 +414,8 @@ TextureImporter:
       name: gui_gradient_23
       rect:
         serializedVersion: 2
-        x: 32
-        y: 160
+        x: 84
+        y: 181
         width: 32
         height: 32
       alignment: 0
@@ -456,8 +435,8 @@ TextureImporter:
       name: gui_gradient_24
       rect:
         serializedVersion: 2
-        x: 64
-        y: 160
+        x: 105
+        y: 177
         width: 32
         height: 32
       alignment: 0
@@ -477,8 +456,8 @@ TextureImporter:
       name: gui_gradient_25
       rect:
         serializedVersion: 2
-        x: 96
-        y: 160
+        x: 120
+        y: 184
         width: 32
         height: 32
       alignment: 0
@@ -498,8 +477,8 @@ TextureImporter:
       name: gui_gradient_26
       rect:
         serializedVersion: 2
-        x: 160
-        y: 160
+        x: 152
+        y: 162
         width: 32
         height: 32
       alignment: 0
@@ -519,8 +498,8 @@ TextureImporter:
       name: gui_gradient_27
       rect:
         serializedVersion: 2
-        x: 224
-        y: 160
+        x: 239
+        y: 128
         width: 32
         height: 32
       alignment: 0
@@ -540,8 +519,8 @@ TextureImporter:
       name: gui_gradient_28
       rect:
         serializedVersion: 2
-        x: 288
-        y: 160
+        x: 279
+        y: 162
         width: 32
         height: 32
       alignment: 0
@@ -561,8 +540,8 @@ TextureImporter:
       name: gui_gradient_29
       rect:
         serializedVersion: 2
-        x: 320
-        y: 160
+        x: 314
+        y: 162
         width: 32
         height: 32
       alignment: 0
@@ -582,8 +561,8 @@ TextureImporter:
       name: gui_gradient_30
       rect:
         serializedVersion: 2
-        x: 352
-        y: 160
+        x: 246
+        y: 198
         width: 32
         height: 32
       alignment: 0
@@ -603,8 +582,8 @@ TextureImporter:
       name: gui_gradient_31
       rect:
         serializedVersion: 2
-        x: 384
-        y: 160
+        x: 376
+        y: 161
         width: 32
         height: 32
       alignment: 0
@@ -666,8 +645,8 @@ TextureImporter:
       name: gui_gradient_34
       rect:
         serializedVersion: 2
-        x: 288
-        y: 128
+        x: 282
+        y: 130
         width: 32
         height: 32
       alignment: 0
@@ -687,8 +666,8 @@ TextureImporter:
       name: gui_gradient_35
       rect:
         serializedVersion: 2
-        x: 320
-        y: 128
+        x: 314
+        y: 130
         width: 32
         height: 32
       alignment: 0
@@ -708,8 +687,8 @@ TextureImporter:
       name: gui_gradient_36
       rect:
         serializedVersion: 2
-        x: 352
-        y: 128
+        x: 319
+        y: 21
         width: 32
         height: 32
       alignment: 0
@@ -729,8 +708,8 @@ TextureImporter:
       name: gui_gradient_37
       rect:
         serializedVersion: 2
-        x: 384
-        y: 128
+        x: 376
+        y: 131
         width: 32
         height: 32
       alignment: 0
@@ -771,8 +750,8 @@ TextureImporter:
       name: gui_gradient_39
       rect:
         serializedVersion: 2
-        x: 32
-        y: 32
+        x: 24
+        y: 35
         width: 96
         height: 96
       alignment: 0
@@ -792,8 +771,8 @@ TextureImporter:
       name: gui_gradient_42
       rect:
         serializedVersion: 2
-        x: 160
-        y: 64
+        x: 152
+        y: 67
         width: 64
         height: 64
       alignment: 0
@@ -813,8 +792,8 @@ TextureImporter:
       name: gui_gradient_44
       rect:
         serializedVersion: 2
-        x: 288
-        y: 96
+        x: 282
+        y: 98
         width: 32
         height: 32
       alignment: 0
@@ -834,8 +813,8 @@ TextureImporter:
       name: gui_gradient_45
       rect:
         serializedVersion: 2
-        x: 320
-        y: 96
+        x: 314
+        y: 98
         width: 32
         height: 32
       alignment: 0
@@ -855,8 +834,8 @@ TextureImporter:
       name: gui_gradient_46
       rect:
         serializedVersion: 2
-        x: 352
-        y: 96
+        x: 281
+        y: 21
         width: 32
         height: 32
       alignment: 0
@@ -876,8 +855,8 @@ TextureImporter:
       name: gui_gradient_47
       rect:
         serializedVersion: 2
-        x: 448
-        y: 96
+        x: 240
+        y: 58
         width: 32
         height: 32
       alignment: 0
@@ -897,8 +876,8 @@ TextureImporter:
       name: gui_gradient_52
       rect:
         serializedVersion: 2
-        x: 416
-        y: 64
+        x: 162
+        y: 21
         width: 32
         height: 32
       alignment: 0
@@ -918,8 +897,8 @@ TextureImporter:
       name: gui_gradient_53
       rect:
         serializedVersion: 2
-        x: 448
-        y: 64
+        x: 240
+        y: 21
         width: 32
         height: 32
       alignment: 0
@@ -939,8 +918,8 @@ TextureImporter:
       name: gui_gradient_57
       rect:
         serializedVersion: 2
-        x: 384
-        y: 32
+        x: 281
+        y: 58
         width: 32
         height: 32
       alignment: 0
@@ -960,8 +939,8 @@ TextureImporter:
       name: gui_gradient_58
       rect:
         serializedVersion: 2
-        x: 416
-        y: 32
+        x: 319
+        y: 58
         width: 32
         height: 32
       alignment: 0
@@ -981,8 +960,8 @@ TextureImporter:
       name: gui_gradient_59
       rect:
         serializedVersion: 2
-        x: 448
-        y: 32
+        x: 200
+        y: 21
         width: 32
         height: 32
       alignment: 0
@@ -1007,7 +986,7 @@ TextureImporter:
         width: 5
         height: 3
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
