@@ -11,7 +11,7 @@ public class ActivatePanel : MonoBehaviour
 
     public void activateScene()
     {
-        scene.SetActive(true);
+        scene.SetActive(false);
     }
 
     public void desactivateScene()

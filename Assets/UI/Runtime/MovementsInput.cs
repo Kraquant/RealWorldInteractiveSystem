@@ -18,6 +18,7 @@ public class MovementsInput : MonoBehaviour
     public Entry entry;
     private double max;
 
+
     private void Update()
     {
         if(Input.touchCount>0 && Input.GetTouch(0).phase == TouchPhase.Began)
