@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class LevelLoader : MonoBehaviour
 {
     public Animator transition;
-    public float transitionTime = 1f;
+    public float transitionTime = 0.3f;
     public string sceneName;
     public Button button;
     bool pressed = false;
@@ -42,7 +42,17 @@ public class LevelLoader : MonoBehaviour
         yield return new WaitForSeconds(transitionTime);
 
         // Load Scene
-        SceneManager.LoadScene(sceneName);
+        if (PlayerPrefs.GetInt("LoadSaved") == 1)
+        {
+            if (button.name == "Start Button")
+            {
+                SceneManager.LoadScene(PlayerPrefs.GetInt("SavedScene"));
+            }
+        }
+        else
+        {
+            SceneManager.LoadScene(sceneName);
+        }
     }
 
 }

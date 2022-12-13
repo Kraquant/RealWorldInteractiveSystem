@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class DisplaceTextButton : MonoBehaviour
 {
-    public int offsetX = 0, offsetY = 20, offsetYpressed = 10;
+    public int offsetX = 0, offsetY = 20;
     [SerializeField] RectTransform textRect;
     Vector3 pos;
     
@@ -23,6 +23,6 @@ public class DisplaceTextButton : MonoBehaviour
 
     public void Up()
     {
-        textRect.localPosition = new Vector3(pos.x + (float)offsetX, pos.y - (float)offsetYpressed, pos.z);
+        textRect.localPosition = new Vector3(pos.x, pos.y, pos.z);
     }
 }
