@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
@@ -6,7 +7,6 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] GameManager gameManager;
     [SerializeField] ResponsiveCamera cameraManager;
     
-
     private void Awake()
     {
         controls = new PlayerControl();
