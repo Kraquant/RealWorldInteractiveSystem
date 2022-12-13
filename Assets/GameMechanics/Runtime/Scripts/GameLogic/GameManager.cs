@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using UnityEditor.TerrainTools;
 using UnityEngine;
 
+[RequireComponent(typeof(InputManager))]
+[RequireComponent(typeof(TurnManager))]
 public class GameManager : MonoBehaviour
 {
     #region Delegates Enum
@@ -19,13 +21,13 @@ public class GameManager : MonoBehaviour
     public delegate void GameStateEvent();
     #endregion
     #region Attributes
+    private InputManager _inputManager;
+    private TurnManager _turnManager;
     private bool _isPaused;
     private IPlayer _player;
 
-    [Range(1, 20)][SerializeField] int TurnNumber;
     [Range(0, 1000)] public int delayBetweenTurns;
-    public List<SpaceObject.Action> userAction;
-    public TurnManager turnManager;
+    
     #endregion
     #region Properties
     public int CurrentTurn { get; private set; }
@@ -73,6 +75,9 @@ public class GameManager : MonoBehaviour
     }
     private void Awake()
     {
+        _turnManager = GetComponent<TurnManager>();
+        _inputManager = GetComponent<InputManager>();
+
         //Initialize values
         IsGameOver = false;
         IsPlaying = false;
@@ -80,7 +85,7 @@ public class GameManager : MonoBehaviour
         _isPaused = false;
 
         HexVisualizer terrainVisualizer = GetComponentInChildren<HexVisualizer>();
-        terrainVisualizer.CreateShape(turnManager.Terrain.TerrainShape, turnManager.Terrain.CellSize);
+        terrainVisualizer.CreateShape(_turnManager.Terrain.TerrainShape, _turnManager.Terrain.CellSize);
     } 
     #endregion
 
@@ -94,9 +99,10 @@ public class GameManager : MonoBehaviour
         OnGameStarted?.Invoke();
         CancellationTokenSource cts = new CancellationTokenSource();
 
-        for (int i = 0; i < TurnNumber; i++)
+        for (int i = 0; i < _inputManager.TurnNumber; i++)
         {
             CurrentTurn = i;
+
             if (IsGameOver)
             {
                 IsPlaying = false;
@@ -104,7 +110,9 @@ public class GameManager : MonoBehaviour
                 return;
             }
 
-            await turnManager.PlayTurnAsync();
+            _inputManager.SetActions(CurrentTurn);
+
+            await _turnManager.PlayTurnAsync();
             OnTurnOver?.Invoke();
             await SpaceUtilities.WaitUntilAsync(() => !IsPaused, 100, cts.Token);
             await Task.Delay(delayBetweenTurns);
@@ -125,16 +133,12 @@ public class GameManager : MonoBehaviour
     #region Private methods
     private bool PlayableGame(out string message)
     {
-        if (turnManager == null)
+        if (_turnManager == null)
         {
             message = "Turn manager variable is not assigned";
             return false;
         }
-        if (userAction.Count != TurnNumber)
-        {
-            message = "The list of user actions does not match the number of turns";
-            return false;
-        }
+
         if (IsPlaying)
         {
             message = "The game is already being played";

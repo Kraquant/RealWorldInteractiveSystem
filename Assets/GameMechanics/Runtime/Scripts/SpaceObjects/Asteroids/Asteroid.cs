@@ -7,7 +7,17 @@ using UnityEngine;
 
 public class Asteroid : SpaceObject, ITurnBasedObject
 {
-    private int _nextAsteroidAction = 1;
+    public enum AsteroidAction
+    {
+        O1,
+        O2,
+        O3,
+        O4,
+        O5,
+        O6
+    };
+
+    private AsteroidAction _nextAsteroidAction = AsteroidAction.O1;
 
     protected bool _asteroidMoving;
     protected float _targetPosSpeed;
@@ -17,14 +27,10 @@ public class Asteroid : SpaceObject, ITurnBasedObject
     protected float _asteroidSpeed = 0.5f; //Time that it takes for the asteroid to move
 
     public int TurnPriority { get => 1; set => throw new System.NotImplementedException(); }
-    public int NextAsteroidAction
+    public AsteroidAction NextAsteroidAction
     {
         get => _nextAsteroidAction;
-        set
-        {
-            if (value > 6 || value < 1) throw new System.Exception("Next value must be between 1 and 6");
-            _nextAsteroidAction = value;
-        }
+        set => _nextAsteroidAction = value;
     }
 
     public async Task<bool> PlayTurnAsync(TurnManager turnManager)
@@ -78,4 +84,10 @@ public class Asteroid : SpaceObject, ITurnBasedObject
             _ => throw new System.NotImplementedException(),
         };
     }
+
+    protected Action AsteroidActionToSpaceAction(AsteroidAction asteroidAction)
+    {
+        return AsteroidActionToSpaceAction((int)asteroidAction + 1);
+    }
+
 }

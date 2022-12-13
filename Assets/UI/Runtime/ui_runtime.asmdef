@@ -1,7 +1,10 @@
 {
     "name": "ui_runtime",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "GUID:a479a05d501fdba44bc57eab3f4be1c4",
+        "GUID:75469ad4d38634e559750d17036d5f7c"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

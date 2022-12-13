@@ -90,7 +90,6 @@ public class LevelCreator : MonoBehaviour
         // Adding LevelScripts
         GameManager levelGameManager = levelGO.AddComponent<GameManager>();
         TurnManager levelTurnManager = levelGO.AddComponent<TurnManager>();
-        PlayerManager levelPlayerManager = levelGO.AddComponent<PlayerManager>();
 
         //Adding Terrain Scripts
         SpaceTerrain levelTerrain = levelTerrainGO.AddComponent<SpaceTerrain>();
@@ -101,7 +100,6 @@ public class LevelCreator : MonoBehaviour
         // ********************************************     CONFIGURING SCRIPTS         ********************************************
 
         //Setting Level Scripts
-        levelGameManager.turnManager = levelTurnManager;
         levelTurnManager.Terrain = levelTerrain;
 
         //Setting Terrain Scripts
