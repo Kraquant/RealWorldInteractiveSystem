@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlaySound : MonoBehaviour
 {
     [SerializeField] AudioSource buttonSound;
-
     public void playThisSoundEffect()
     {
         buttonSound.Play();

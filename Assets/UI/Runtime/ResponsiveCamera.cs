@@ -23,6 +23,7 @@ public class ResponsiveCamera : MonoBehaviour
         _camera = GetComponent<Camera>();
     }
 
+
     public void AdaptCameraToTerrain(Bounds terrainBounds)
     {
         var (center, size) = AdjustOrthoCamera(terrainBounds);
@@ -56,12 +57,15 @@ public class ResponsiveCamera : MonoBehaviour
 
     private void Update()
     {
-        if (_lerpFactor < 1.0f)
-        {
-            _camera.transform.position = Vector3.Lerp(_originPosition, _targetPosition, _lerpFactor);
-            _camera.orthographicSize = Mathf.Lerp(_originSize, _targetSize, _lerpFactor);
+        //if (_lerpFactor < 1.0f)
+        //{
+        //    _camera.transform.position = Vector3.Lerp(_originPosition, _targetPosition, _lerpFactor);
+        //    _camera.orthographicSize = Mathf.Lerp(_originSize, _targetSize, _lerpFactor);
 
-            _lerpFactor += Time.deltaTime / _adaptTime;
-        }
+        //    _lerpFactor += Time.deltaTime / _adaptTime;
+        //}
+
+        _camera.transform.position = _targetPosition;
+        _camera.orthographicSize = _targetSize;
     }
 }

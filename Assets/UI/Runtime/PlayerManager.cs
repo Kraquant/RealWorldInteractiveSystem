@@ -22,7 +22,7 @@ public class PlayerManager : MonoBehaviour
     {
         gameManager.PlayGameAsync();
     }
-    private void AdaptCam()
+    public void AdaptCam()
     {
         Debug.Log("Adapting camera");
         SpaceTerrain terrain = GetComponentInChildren<SpaceTerrain>();

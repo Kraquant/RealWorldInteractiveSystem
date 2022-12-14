@@ -1,11 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEditor.SceneManagement;
-using UnityEditor.TerrainTools;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 [RequireComponent(typeof(HexShapeCreator))]
 [ExecuteInEditMode]
