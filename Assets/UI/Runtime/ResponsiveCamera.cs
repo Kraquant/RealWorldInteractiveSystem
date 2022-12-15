@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.GameCenter;
 
 [RequireComponent(typeof(Camera))]
 public class ResponsiveCamera : MonoBehaviour
@@ -57,15 +54,12 @@ public class ResponsiveCamera : MonoBehaviour
 
     private void Update()
     {
-        //if (_lerpFactor < 1.0f)
-        //{
-        //    _camera.transform.position = Vector3.Lerp(_originPosition, _targetPosition, _lerpFactor);
-        //    _camera.orthographicSize = Mathf.Lerp(_originSize, _targetSize, _lerpFactor);
+        if (_lerpFactor < 1.0f)
+        {
+            _camera.transform.position = Vector3.Lerp(_originPosition, _targetPosition, _lerpFactor);
+            _camera.orthographicSize = Mathf.Lerp(_originSize, _targetSize, _lerpFactor);
 
-        //    _lerpFactor += Time.deltaTime / _adaptTime;
-        //}
-
-        _camera.transform.position = _targetPosition;
-        _camera.orthographicSize = _targetSize;
+            _lerpFactor += Time.deltaTime / _adaptTime;
+        }
     }
 }

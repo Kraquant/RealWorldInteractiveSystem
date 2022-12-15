@@ -1,9 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Unity.Plastic.Antlr3.Runtime;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class TurnManager : MonoBehaviour
 {

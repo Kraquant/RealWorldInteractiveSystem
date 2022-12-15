@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -100,8 +102,9 @@ public class LevelCreator : MonoBehaviour
 
         //Setting Terrain Scripts
         levelTerrain.SetTerrain(new HashSet<HexCoordinates>(_terrainShape), _cellSize);
-        
-        
+        EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+
+
         //Adding the objects
         List<ITurnBasedObject> turnBasedObjects = new List<ITurnBasedObject>(); 
         foreach ((GameObject,bool) placedSO in placedObjects)
@@ -358,3 +361,5 @@ public class LevelCreator : MonoBehaviour
     }
     #endregion
 }
+
+#endif

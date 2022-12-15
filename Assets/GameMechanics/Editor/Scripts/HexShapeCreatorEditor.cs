@@ -1,8 +1,6 @@
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 [CustomEditor(typeof(HexShapeCreator))]
 public class HexShapeCreatorEditor : Editor

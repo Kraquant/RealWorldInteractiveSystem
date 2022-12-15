@@ -1,6 +1,5 @@
-using System;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
+//using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class SpaceTerrain : MonoBehaviour
@@ -44,7 +43,6 @@ public class SpaceTerrain : MonoBehaviour
         _terrainShape = new List<HexCoordinates>(terrain);
 
         _cellSize = cellsize;
-        EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
     }
 
     void DrawBounds(Bounds b, float delay = 0)

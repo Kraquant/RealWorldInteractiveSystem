@@ -1,5 +1,4 @@
-using System;
-using System.Collections;
+#if UNITY_EDITOR
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
@@ -18,7 +17,7 @@ public class HexShapeCreator : MonoBehaviour
     public HashSet<HexCoordinates> addList;
     public bool isActive;
     public bool addStatus; // True for add, false for remove
-    public float cellSize; 
+    public float cellSize;
     #endregion
 
     #region Public Properties
@@ -99,3 +98,5 @@ public class HexShapeCreator : MonoBehaviour
         addList.Clear();
     }
 }
+
+#endif

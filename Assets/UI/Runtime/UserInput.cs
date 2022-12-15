@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEditor.Graphs;
+using Codice.Client.Common.GameUI;
+using UnityEngine.InputSystem.EnhancedTouch;
+using System;
 
 public class UserInput : MonoBehaviour
 {
@@ -14,9 +17,15 @@ public class UserInput : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI movementsList;
     private InputManager inputManager;
+    private BoxCollider2D box;
+    private Vector3 center, extents;
+    private Single minX, maxX, minY, maxY;
+
+    [SerializeField] GameObject Field;
 
     private void Start()
     {
+        movementsList.text.Remove(movementsList.text.Length - 2);
         inputManager = FindObjectOfType<InputManager>();
         if (inputManager == null) throw new System.Exception("Could not fetch the Input Manager");
 
@@ -25,7 +34,13 @@ public class UserInput : MonoBehaviour
         GameManager GM = FindObjectOfType<GameManager>();
         GM.OnGameEnded += GM_OnGameEnded;
         //GM.OnGameStarted 
-        //SetInputs();
+
+        // Swipe boundaries
+        box = GetComponent<BoxCollider2D>();
+        center = box.bounds.center;
+        extents = box.bounds.extents;
+        minY = center.y - extents.y;
+        maxY = center.y + extents.y;
     }
 
     private void GM_OnGameEnded(GameManager.EndGameCondition endCondition)
@@ -37,6 +52,11 @@ public class UserInput : MonoBehaviour
     {
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began){
             startTouchPosition = Input.GetTouch(0).position;
+
+            if (inTheBox(startTouchPosition))
+            {
+
+            }
         }
 
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended){
@@ -97,6 +117,22 @@ public class UserInput : MonoBehaviour
                 break;
             default:
                 break;
+        }
+    }
+
+    public void removeText()
+    {
+        //movementsList.text.Remove(movementsList.text.Length - 2);
+        Debug.Log("Removing Text");
+    }
+
+    private bool inTheBox(Vector2 position)
+    {
+        if(position.y < maxY && minY < position.y){
+            return true;
+        }
+        else{
+            return false;
         }
     }
 
