@@ -7,19 +7,21 @@ using UnityEditor.Graphs;
 using Codice.Client.Common.GameUI;
 using UnityEngine.InputSystem.EnhancedTouch;
 using System;
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 
 public class UserInput : MonoBehaviour
 {
     private Vector2 startTouchPosition;
     private Vector2 endTouchPosition;
 
+    private InputManager inputManager;
+    private LevelManager levelManager;
     public List<SpaceObject.Action>  playerInputs;
 
     [SerializeField] TextMeshProUGUI movementsList;
-    private InputManager inputManager;
     private BoxCollider2D box;
     private Vector3 center, extents;
-    private Single minX, maxX, minY, maxY;
+    private Single minY, maxY;
 
     [SerializeField] GameObject Field;
 
@@ -28,6 +30,8 @@ public class UserInput : MonoBehaviour
         movementsList.text.Remove(movementsList.text.Length - 2);
         inputManager = FindObjectOfType<InputManager>();
         if (inputManager == null) throw new System.Exception("Could not fetch the Input Manager");
+
+        levelManager = FindObjectOfType<LevelManager>();
 
         playerInputs = new List<SpaceObject.Action>(inputManager.TurnNumber);
 
@@ -50,26 +54,26 @@ public class UserInput : MonoBehaviour
 
     private void Update()
     {
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began){
-            startTouchPosition = Input.GetTouch(0).position;
-
-            if (inTheBox(startTouchPosition))
-            {
-
+        if (levelManager.swipeAllowed)
+        {
+            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began){
+                startTouchPosition = Input.GetTouch(0).position; 
             }
-        }
 
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended){
-            endTouchPosition = Input.GetTouch(0).position;
+            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended){
+                endTouchPosition = Input.GetTouch(0).position;
 
-            if(playerInputs.Count >= inputManager.TurnNumber)
-            {
-                // TBD Show error message to player.
-            }else
-            {
-                SpaceObject.Action playerAction = SwipeInputIs(startTouchPosition, endTouchPosition);
-                playerInputs.Add(playerAction);     // Add to actions list
-                addActionToText(playerAction);      // Add action to text
+                if (inTheBox(startTouchPosition))
+                {
+                    if (playerInputs.Count >= inputManager.TurnNumber){
+                        Debug.Log("Too much inputs");
+                    }
+                    else{
+                        SpaceObject.Action playerAction = SwipeInputIs(startTouchPosition, endTouchPosition);
+                        playerInputs.Add(playerAction);     // Add to actions list
+                        addActionToText(playerAction);      // Add action to text
+                    }
+                }
             }
         }
     }
@@ -122,8 +126,7 @@ public class UserInput : MonoBehaviour
 
     public void removeText()
     {
-        //movementsList.text.Remove(movementsList.text.Length - 2);
-        Debug.Log("Removing Text");
+        movementsList.text = movementsList.text.Substring(0, movementsList.text.Length - 12);
     }
 
     private bool inTheBox(Vector2 position)

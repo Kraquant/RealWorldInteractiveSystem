@@ -12,10 +12,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField] GameObject gameOverUI;
 
     // Turn On / Off Button
-    [SerializeField] GameObject swipeField;
     [SerializeField] List<Sprite> isOn;
     [SerializeField] List<Sprite> isOff;
-    private bool swipeAllowed = false;
+    public bool swipeAllowed;
 
     // Scripts
     [SerializeField] ResponsiveCamera cameraManager;
@@ -47,7 +46,7 @@ public class LevelManager : MonoBehaviour
             {
                 button.onClick.AddListener(() => allowSwipe(gameButtons.IndexOf(button)));
                 button.GetComponent<Image>().sprite = isOff[0];
-                swipeField.SetActive(false);
+                swipeAllowed = false;
             }
             else if (button.name.Contains("Edit") || button.name.Contains("Close")){
                 button.onClick.AddListener(editingScreen);
@@ -68,8 +67,8 @@ public class LevelManager : MonoBehaviour
         Debug.Log("Loading Level : Adapting Camera");
         SpaceTerrain terrain = FindObjectOfType<SpaceTerrain>();
         Bounds terrainBounds = HexCoordinatesUtilities.GetBoundingBox(terrain.TerrainShape, terrain.CellSize);
-        //float extent = Mathf.Max(terrainBounds.extents.x, terrainBounds.extents.y);
-        //terrainBounds.extents = new Vector3(extent, extent, 0.0f);
+        float extent = Mathf.Max(terrainBounds.extents.x, terrainBounds.extents.y);
+        terrainBounds.extents = new Vector3(extent, extent, 0.0f);
         terrainBounds.Expand(0.0f);
         cameraManager.AdaptCameraToTerrain(terrainBounds, 0.8f);
     }
@@ -89,13 +88,19 @@ public class LevelManager : MonoBehaviour
         Debug.Log("Launching Game");
         InputManager inputManager = FindObjectOfType<InputManager>();
         UserInput userInput = FindObjectOfType<UserInput>();
+
+        while(userInput.playerInputs.Count < inputManager.TurnNumber)
+        {
+            userInput.playerInputs.Add(SpaceObject.Action.Hold);
+        }
+
         inputManager.playerActions = userInput.playerInputs;
 
         gameManager.PlayGameAsync();
     }
 
     private void resetMovements(){
-
+        // Reset playerInputsList + Text
     }
     private void allowSwipe(int buttonNo)
     {
@@ -107,7 +112,6 @@ public class LevelManager : MonoBehaviour
             changeSpriteState(isOff, button);
         }
         swipeAllowed = !swipeAllowed;
-        swipeField.SetActive(!swipeField.activeSelf);
     }
 
     private void changeSpriteState(List<Sprite> sprites, Button button)
@@ -119,14 +123,13 @@ public class LevelManager : MonoBehaviour
     }
 
     private void cancelMovement(){
-        //UserInput userInput = FindObjectOfType<UserInput>();
+        UserInput userInput = FindObjectOfType<UserInput>();
 
-        //if(userInput.playerInputs.Count > 0){
-        //    Debug.Log("Removing Action");
-        //    Debug.Log(userInput.playerInputs.Count);
-        //    //userInput.playerInputs.RemoveAt(userInput.playerInputs.Count - 1);
-        //    //userInput.removeText();
-        //}
+        if (userInput.playerInputs.Count > 0)
+        {
+            userInput.playerInputs.RemoveAt(userInput.playerInputs.Count - 1);
+            userInput.removeText();
+        }
     }
 
 }
