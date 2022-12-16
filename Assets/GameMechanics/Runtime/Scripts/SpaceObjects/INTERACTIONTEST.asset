@@ -9,9 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84436979a43fd9046a067b4f6bd63019, type: 3}
-  m_Name: Asteroids
+  m_Script: {fileID: 11500000, guid: dc55b1d20932eea47b71be2b1fcb0cdb, type: 3}
+  m_Name: INTERACTIONTEST
   m_EditorClassIdentifier: 
-  listName: Asteroids
-  prefabs:
-  - {fileID: 798698954457690578, guid: d9c8aa8363495de4ab7ef853dc96d9d0, type: 3}
