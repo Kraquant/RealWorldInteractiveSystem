@@ -19,6 +19,10 @@ public class UserInput : MonoBehaviour
     public List<SpaceObject.Action>  playerInputs;
 
     [SerializeField] TextMeshProUGUI movementsList;
+    [SerializeField] TextMeshProUGUI moveNumberText;
+    private int movesLeft;
+
+    // Swipe area
     private BoxCollider2D box;
     private Vector3 center, extents;
     private Single minY, maxY;
@@ -27,13 +31,15 @@ public class UserInput : MonoBehaviour
 
     private void Start()
     {
-        movementsList.text.Remove(movementsList.text.Length - 2);
         inputManager = FindObjectOfType<InputManager>();
         if (inputManager == null) throw new System.Exception("Could not fetch the Input Manager");
 
         levelManager = FindObjectOfType<LevelManager>();
 
         playerInputs = new List<SpaceObject.Action>(inputManager.TurnNumber);
+
+        movesLeft = inputManager.TurnNumber;
+        moveNumberText.text = "Moves : " + movesLeft.ToString();
 
         GameManager GM = FindObjectOfType<GameManager>();
         GM.OnGameEnded += GM_OnGameEnded;
@@ -105,6 +111,8 @@ public class UserInput : MonoBehaviour
 
     private void addActionToText(SpaceObject.Action action)
     {
+        movesLeft -= 1;
+        moveNumberText.text = "Moves : " + movesLeft.ToString();
         switch (action)
         {
             case SpaceObject.Action.Right:
@@ -127,6 +135,8 @@ public class UserInput : MonoBehaviour
     public void removeText()
     {
         movementsList.text = movementsList.text.Substring(0, movementsList.text.Length - 12);
+        movesLeft += 1;
+        moveNumberText.text = "Moves : " + movesLeft.ToString();
     }
 
     private bool inTheBox(Vector2 position)

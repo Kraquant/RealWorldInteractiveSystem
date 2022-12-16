@@ -562,7 +562,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 383
-        y: 127
+        y: 128
         width: 32
         height: 32
       alignment: 0
@@ -887,10 +887,10 @@ TextureImporter:
       gui_gradient_52: -1370600144
       gui_gradient_4: 583813231
       gui_gradient_59: -634967322
-      gui_gradient_13: -618877109
+      gui_gradient_40: 696823896
       gui_gradient_29: 694783443
       gui_gradient_12: -505365536
-      gui_gradient_40: 696823896
+      gui_gradient_13: -618877109
       gui_gradient_32: -1142112498
       gui_gradient_58: -908527938
       gui_gradient_6: 1290592896
