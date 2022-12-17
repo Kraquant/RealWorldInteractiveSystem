@@ -15,16 +15,16 @@ public class SceneLoader : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        foreach (Button button in buttonList)
+        {
+            button.onClick.AddListener(() => ButtonClicked(buttonList.IndexOf(button)));
+        }
     }
 
     // Update is called once per frame
     private void Update()
     {
-        foreach (Button button in buttonList)
-        {
-            button.onClick.AddListener(() => ButtonClicked(buttonList.IndexOf(button)));
-        }
+        
     }
     void ButtonClicked(int buttonNo)
     {

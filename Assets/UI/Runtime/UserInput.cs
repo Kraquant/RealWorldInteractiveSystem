@@ -27,8 +27,6 @@ public class UserInput : MonoBehaviour
     private Vector3 center, extents;
     private Single minY, maxY;
 
-    [SerializeField] GameObject Field;
-
     private void Start()
     {
         inputManager = FindObjectOfType<InputManager>();
@@ -41,10 +39,6 @@ public class UserInput : MonoBehaviour
         movesLeft = inputManager.TurnNumber;
         moveNumberText.text = "Moves : " + movesLeft.ToString();
 
-        GameManager GM = FindObjectOfType<GameManager>();
-        GM.OnGameEnded += GM_OnGameEnded;
-        //GM.OnGameStarted 
-
         // Swipe boundaries
         box = GetComponent<BoxCollider2D>();
         center = box.bounds.center;
@@ -53,14 +47,9 @@ public class UserInput : MonoBehaviour
         maxY = center.y + extents.y;
     }
 
-    private void GM_OnGameEnded(GameManager.EndGameCondition endCondition)
-    {
-        throw new System.NotImplementedException();
-    }
-
     private void Update()
     {
-        if (levelManager.swipeAllowed)
+        if (levelManager.swipeAllowed && !levelManager.gameOnGoing)
         {
             if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began){
                 startTouchPosition = Input.GetTouch(0).position; 
