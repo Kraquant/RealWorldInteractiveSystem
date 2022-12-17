@@ -15,6 +15,7 @@ public class EditMoves : MonoBehaviour
     {
         var Movement = Instantiate<GameObject>(moveEditorPrefab, new Vector3(0, 50, 0), Quaternion.identity);
         Movement.transform.parent = GameObject.Find("Moves Panel").transform;
+        
     }
 
     // Update is called once per frame

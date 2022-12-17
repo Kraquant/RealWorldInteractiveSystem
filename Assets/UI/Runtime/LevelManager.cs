@@ -44,7 +44,7 @@ public class LevelManager : MonoBehaviour
 
         foreach (Button button in gameButtons)
         {
-            if (button.name.Contains("Play"))
+            if (button.name.Contains("Play Button"))
             {
                 button.onClick.AddListener(playGame);
             }
@@ -62,17 +62,21 @@ public class LevelManager : MonoBehaviour
                 button.GetComponent<Image>().sprite = isOff[0];
                 swipeAllowed = false;
             }
-            else if (button.name.Contains("Edit") || button.name.Contains("Close"))
+            else if (button.name.Contains("Edit") || button.name.Contains("CloseEdit"))
             {
                 button.onClick.AddListener(editingScreen);
             }
-            else if (button.name.Contains("Yes") || button.name.Contains("Retry"))
+            else if (button.name.Contains("Yes") || button.name.Contains("Retry tton"))
             {
                 button.onClick.AddListener(resetLevel);
             }
             else if (button.name.Contains("Continue"))
             {
                 button.onClick.AddListener(nextLevel);
+            }
+            else if (button.name.Contains("CloseGameOver"))
+            {
+                button.onClick.AddListener(closeGameOverScreen);
             }
             else
             {
@@ -130,6 +134,12 @@ public class LevelManager : MonoBehaviour
         gameOverUI.SetActive(true);
     }
 
+    private void closeGameOverScreen()
+    {
+        Debug.Log("Closing game over screen");
+        gameOverUI.SetActive(false);
+    }
+
     #endregion
 
     #region Loading & Resetting Level
@@ -164,6 +174,7 @@ public class LevelManager : MonoBehaviour
 
     #endregion
 
+
     private void editingScreen(){
         if (gameOnGoing)
         {
@@ -185,8 +196,7 @@ public class LevelManager : MonoBehaviour
         int turnRemaning = inputManager.TurnNumber - userInput.playerInputs.Count;
         for (int i = 0; i < turnRemaning; i++)
         {
-            Debug.Log("Removing Asteroid action");
-            inputManager.asteroidsActions.RemoveAt(inputManager.asteroidsActions.Count - 1); // TBD Morgan : Hold action for Asteroid
+            //inputManager.asteroidsActions.RemoveAt(inputManager.asteroidsActions.Count - 1); // TBD Morgan : Hold action for Asteroid
         }
 
         while (userInput.playerInputs.Count < inputManager.TurnNumber){
