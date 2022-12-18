@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using TMPro;
 using Unity.Android.Types;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
@@ -10,6 +12,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] GameObject victoryUI;
     [SerializeField] GameObject editingUI;
     [SerializeField] GameObject gameOverUI;
+    [SerializeField] GameObject resetUI;
 
     // Turn On / Off Button
     [SerializeField] List<Sprite> isOn;
@@ -20,8 +23,12 @@ public class LevelManager : MonoBehaviour
     [SerializeField] ResponsiveCamera cameraManager;
     [SerializeField] GameManager gameManager;
 
+    // gameOver text
+    [SerializeField] TextMeshProUGUI gameOverText;
+
     // Button
     public List<Button> gameButtons; // Play, cancel, reset (abort), activate swipe
+    public bool gameOnGoing;
 
 
     private void Awake()
@@ -31,16 +38,23 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
+        GameManager GM = FindObjectOfType<GameManager>();
+        GM.OnGameEnded += GM_OnGameEnded;
+        //GM.OnGameStarted 
+
         foreach (Button button in gameButtons)
         {
-            if (button.name.Contains("Play")){
+            if (button.name.Contains("Play Button"))
+            {
                 button.onClick.AddListener(playGame);
             }
-            else if (button.name.Contains("Cancel")){
+            else if (button.name.Contains("Cancel"))
+            {
                 button.onClick.AddListener(cancelMovement);
             }
-            else if (button.name.Contains("Reset")){
-                button.onClick.AddListener(resetMovements);
+            else if (button.name.Contains("Reset") || (button.name.Contains("No")))
+            {
+                button.onClick.AddListener(resetScreenOnOff);
             }
             else if (button.name.Contains("Activate"))
             {
@@ -48,12 +62,29 @@ public class LevelManager : MonoBehaviour
                 button.GetComponent<Image>().sprite = isOff[0];
                 swipeAllowed = false;
             }
-            else if (button.name.Contains("Edit") || button.name.Contains("Close")){
+            else if (button.name.Contains("Edit") || button.name.Contains("CloseEdit"))
+            {
                 button.onClick.AddListener(editingScreen);
-            }else{
+            }
+            else if (button.name.Contains("Yes") || button.name.Contains("Redo"))
+            {
+                button.onClick.AddListener(resetLevel);
+            }
+            else if (button.name.Contains("Continue"))
+            {
+                button.onClick.AddListener(nextLevel);
+            }
+            else if (button.name.Contains("CloseGameOver"))
+            {
+                button.onClick.AddListener(closeGameOverScreen);
+            }
+            else
+            {
                 Debug.Log("Cannot recognize button");
             }
         }
+
+        gameOnGoing = false;
     }
 
     private void Update()
@@ -61,7 +92,57 @@ public class LevelManager : MonoBehaviour
         
     }
 
+    #region GameEnded
 
+    private void GM_OnGameEnded(GameManager.EndGameCondition endCondition)
+    {
+        Debug.Log("Game Ended");
+        switch (endCondition)
+        {
+            case GameManager.EndGameCondition.playerDeath:
+                gameOver(endCondition);
+                break;
+            case GameManager.EndGameCondition.playerWin:
+                victory();
+                break;
+            case GameManager.EndGameCondition.playerMissedGoal:
+                gameOver(endCondition);
+                break;
+            case GameManager.EndGameCondition.levelAbort:
+                break;
+            default:
+                Debug.Log("Game Ended condition not found");
+                break;
+        }
+        //throw new System.NotImplementedException();
+    }
+
+    private void victory()
+    {
+        Debug.Log("Victory");
+        victoryUI.SetActive(!victoryUI.activeSelf);
+    }
+    private void gameOver(GameManager.EndGameCondition endCondition)
+    {
+        Debug.Log("Game Over");
+        if (endCondition == GameManager.EndGameCondition.playerMissedGoal){
+            gameOverText.text = "You missed the goal ! Better luck next time";
+        }
+        else{
+            gameOverText.text = "Are you alive ? The calculation were a bit odd";
+        }
+        gameOverUI.SetActive(true);
+    }
+
+    private void closeGameOverScreen()
+    {
+        Debug.Log("Closing game over screen");
+        gameOverUI.SetActive(false);
+    }
+
+    #endregion
+
+    #region Loading & Resetting Level
     private void loadLevel()
     {
         Debug.Log("Loading Level : Adapting Camera");
@@ -73,34 +154,71 @@ public class LevelManager : MonoBehaviour
         cameraManager.AdaptCameraToTerrain(terrainBounds, 0.8f);
     }
 
-    // Level related functions
-    private void editingScreen(){
-        editingUI.SetActive(!editingUI.activeSelf);
-    }
-    private void victoryScreen(){
-        victoryUI.SetActive(!victoryUI.activeSelf);
-    }
-    private void gameOver()
+    private void resetLevel()
     {
-        gameOverUI.SetActive(true);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+
+    private void nextLevel()
+    {
+        int nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        if(nextLevelIndex < SceneManager.sceneCountInBuildSettings)
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+        }
+    }
+
+    #endregion
+
+
+    private void editingScreen(){
+        if (gameOnGoing)
+        {
+            Debug.Log("Tried to edit movements but game is on going");
+        }
+        else
+        {
+            editingUI.SetActive(!editingUI.activeSelf);
+        }     
+    }
+
     private void playGame(){
+
         Debug.Log("Launching Game");
         InputManager inputManager = FindObjectOfType<InputManager>();
         UserInput userInput = FindObjectOfType<UserInput>();
 
-        while(userInput.playerInputs.Count < inputManager.TurnNumber)
+        // Remove asteroid remaining actions
+        int turnRemaning = inputManager.TurnNumber - userInput.playerInputs.Count;
+        for (int i = 0; i < turnRemaning; i++)
         {
-            userInput.playerInputs.Add(SpaceObject.Action.Hold);
+            //inputManager.asteroidsActions.RemoveAt(inputManager.asteroidsActions.Count - 1); // TBD Morgan : Hold action for Asteroid
         }
 
+        while (userInput.playerInputs.Count < inputManager.TurnNumber){
+            userInput.playerInputs.Add(SpaceObject.Action.Hold);
+        }
         inputManager.playerActions = userInput.playerInputs;
 
+        gameOnGoing = true;
         gameManager.PlayGameAsync();
+    }
+
+    private void resetScreenOnOff()
+    {
+        resetUI.SetActive(!resetUI.activeSelf);
     }
 
     private void resetMovements(){
         // Reset playerInputsList + Text
+        if (gameOnGoing)
+        {
+            Debug.Log("TBD");
+        }
     }
     private void allowSwipe(int buttonNo)
     {
@@ -124,12 +242,18 @@ public class LevelManager : MonoBehaviour
 
     private void cancelMovement(){
         UserInput userInput = FindObjectOfType<UserInput>();
-
-        if (userInput.playerInputs.Count > 0)
+        if(gameOnGoing)
         {
-            userInput.playerInputs.RemoveAt(userInput.playerInputs.Count - 1);
-            userInput.removeText();
+            Debug.Log("Tried to change inputs but game is on going");
         }
+        else
+        {
+            if (userInput.playerInputs.Count > 0)
+            {
+                userInput.playerInputs.RemoveAt(userInput.playerInputs.Count - 1);
+                userInput.removeText();
+            }
+        }
+        
     }
-
 }

@@ -19,15 +19,18 @@ public class UserInput : MonoBehaviour
     public List<SpaceObject.Action>  playerInputs;
 
     [SerializeField] TextMeshProUGUI movementsList;
+    [SerializeField] TextMeshProUGUI moveNumberText;
+    private int movesLeft;
+
+    // Swipe area
     private BoxCollider2D box;
     private Vector3 center, extents;
     private Single minY, maxY;
 
-    [SerializeField] GameObject Field;
+    private float startTime;
 
     private void Start()
     {
-        movementsList.text.Remove(movementsList.text.Length - 2);
         inputManager = FindObjectOfType<InputManager>();
         if (inputManager == null) throw new System.Exception("Could not fetch the Input Manager");
 
@@ -35,9 +38,8 @@ public class UserInput : MonoBehaviour
 
         playerInputs = new List<SpaceObject.Action>(inputManager.TurnNumber);
 
-        GameManager GM = FindObjectOfType<GameManager>();
-        GM.OnGameEnded += GM_OnGameEnded;
-        //GM.OnGameStarted 
+        movesLeft = inputManager.TurnNumber;
+        moveNumberText.text = "Moves : " + movesLeft.ToString();
 
         // Swipe boundaries
         box = GetComponent<BoxCollider2D>();
@@ -47,23 +49,19 @@ public class UserInput : MonoBehaviour
         maxY = center.y + extents.y;
     }
 
-    private void GM_OnGameEnded(GameManager.EndGameCondition endCondition)
-    {
-        throw new System.NotImplementedException();
-    }
-
     private void Update()
     {
-        if (levelManager.swipeAllowed)
+        if (levelManager.swipeAllowed && !levelManager.gameOnGoing)
         {
             if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began){
-                startTouchPosition = Input.GetTouch(0).position; 
+                startTouchPosition = Input.GetTouch(0).position;
+                startTime = Time.time;
             }
 
             if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended){
                 endTouchPosition = Input.GetTouch(0).position;
 
-                if (inTheBox(startTouchPosition))
+                if (inTheBox(startTouchPosition) && Time.time - startTime > 0.1 && (Mathf.Abs(startTouchPosition.x - endTouchPosition.x) > 50 || (startTouchPosition.y - endTouchPosition.y) > 50))
                 {
                     if (playerInputs.Count >= inputManager.TurnNumber){
                         Debug.Log("Too much inputs");
@@ -105,6 +103,8 @@ public class UserInput : MonoBehaviour
 
     private void addActionToText(SpaceObject.Action action)
     {
+        movesLeft -= 1;
+        moveNumberText.text = "Moves : " + movesLeft.ToString();
         switch (action)
         {
             case SpaceObject.Action.Right:
@@ -127,6 +127,8 @@ public class UserInput : MonoBehaviour
     public void removeText()
     {
         movementsList.text = movementsList.text.Substring(0, movementsList.text.Length - 12);
+        movesLeft += 1;
+        moveNumberText.text = "Moves : " + movesLeft.ToString();
     }
 
     private bool inTheBox(Vector2 position)
