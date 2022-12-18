@@ -2,10 +2,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class Asteroid : SpaceObject, ITurnBasedObject, IInteractiveSpaceObject
+public class Asteroid : SpaceObject, ITurnBasedObject
 {
     public enum AsteroidAction
     {
+        OO,
         O1,
         O2,
         O3,
@@ -15,7 +16,7 @@ public class Asteroid : SpaceObject, ITurnBasedObject, IInteractiveSpaceObject
     };
 
     #region Protected Attributes
-    [SerializeField] InteractionList _interactionList;
+    
     protected AsteroidAction _nextAsteroidAction = AsteroidAction.O1;
 
     protected bool _asteroidMoving;
@@ -33,8 +34,6 @@ public class Asteroid : SpaceObject, ITurnBasedObject, IInteractiveSpaceObject
         get => _nextAsteroidAction;
         set => _nextAsteroidAction = value;
     }
-    public InteractionList referencedList { get => _interactionList; set => _interactionList = value; }
-    public static string[] ReactionFunctions { get => new string[] { "Asteroid Stuff" ,  "Destroy" }; }
 
     public async Task<bool> PlayTurnAsync(TurnManager turnManager)
     {
@@ -80,6 +79,7 @@ public class Asteroid : SpaceObject, ITurnBasedObject, IInteractiveSpaceObject
     {
         return asteroidAction switch
         {
+            0 => Action.Hold,
             1 => Action.Front,
             2 => Action.Right,
             3 => Action.RightBehind,

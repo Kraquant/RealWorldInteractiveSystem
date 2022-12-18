@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,8 +8,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "InteractionList", menuName = "ScriptableObjects/InteractionList", order = 1)]
 public class InteractionList : ScriptableObject
 {
-    public List<Type> interactiveTypes;
-    public string[][] calledFunc;
+    [SerializeField] List<Type> _interactiveTypes;
+    [SerializeField] string[][] _calledFunc;
+    [SerializeField] string[][] _callOrder;
+
 
     public void Init()
     {
@@ -19,13 +22,73 @@ public class InteractionList : ScriptableObject
             .Where(t => t != type);
 
 
-        interactiveTypes= new List<Type>(types);
-        calledFunc = new string[interactiveTypes.Count][];
-        for (int i = 0; i < calledFunc.Length; i++)
+        InteractiveTypes= new List<Type>(types);
+        int ITCount = InteractiveTypes.Count;
+
+        CalledFunc = new string[ITCount][];
+        CallOrder = new string[ITCount][];
+
+        for (int i = 0; i < ITCount; i++)
         {
-            string[] reacFunc = new string[calledFunc.Length];
-            for (int j = 0; j < reacFunc.Length; j++) reacFunc[j] = "";
-            calledFunc[i] = reacFunc;
+            //For reaction Function
+            string[] reacFunc = new string[ITCount];
+            for (int j = 0; j < ITCount; j++) reacFunc[j] = "";
+            CalledFunc[i] = reacFunc;
+
+            //For reaction Order
+            string[] orderFunc= new string[ITCount];
+            for (int j = 0; j < ITCount; j++) orderFunc[j] = "Same";
+            CallOrder[i] = orderFunc;
+
+        }
+    }
+
+    public readonly Type[] knownTypes = new Type[]
+    {
+        typeof(BumpyAsteroid),
+        typeof(Spaceship),
+    };
+
+    public readonly string[][] knownTypesReactionFunctions = new string[][]
+    {
+        BumpyAsteroid.ReactionFunctions,
+        Spaceship.ReactionFunctions,
+    };
+
+    public List<Type> InteractiveTypes { get => _interactiveTypes; set => _interactiveTypes = value; }
+    public string[][] CalledFunc { get => _calledFunc; set => _calledFunc = value; }
+    public string[][] CallOrder { get => _callOrder; set => _callOrder = value; }
+
+    public string[] GetKnownTypeReactionFunctions(Type type)
+    {
+        int index = Array.FindIndex(knownTypes, t => t==type);
+        if (index == -1) return new string[0];
+        return knownTypesReactionFunctions[index];
+    }
+
+    public void ChangeCallOrder(Vector2Int index, string order)
+    {
+        if (index.x >= CallOrder.Length || index.y >= CallOrder.Length)
+            throw new System.NotImplementedException();
+
+        if (index.x == index.y) return;
+
+        switch (order)
+        {
+            case "First":
+                CallOrder[index.x][index.y] = "First";
+                CallOrder[index.y][index.x] = "Last";
+                break;
+            case "Last":
+                CallOrder[index.x][index.y] = "Last";
+                CallOrder[index.y][index.x] = "First";
+                break;
+            case "Same":
+                CallOrder[index.x][index.y] = "Same";
+                CallOrder[index.y][index.x] = "Same";
+                break;
+            default:
+                throw new System.NotImplementedException();
         }
     }
 }
