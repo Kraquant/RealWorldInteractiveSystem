@@ -2,7 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer
+public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer, IInteractiveSpaceObject
 {
     public event IPlayer.playerStateEvent OnPlayerDeath;
     public event IPlayer.playerStateEvent OnPlayerWin;
@@ -12,10 +12,15 @@ public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer
     public SpaceObject.Action NextAction { get; set; }
     public bool IsAlive => _isAlive;
     public bool HasWon => _hasWon;
+
+    public static string[] ReactionFunctions { get => new string[] { "Destroy" };}
+    public InteractionList referencedList { get => _interactionList; set => _interactionList = value; }
     #endregion
 
     #region Private Attributes
     //State attributes
+    [SerializeField] InteractionList _interactionList;
+
     private bool _isAlive;
     private bool _hasWon;
 
@@ -26,6 +31,8 @@ public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer
     private Vector3 _targetPos;
     private Quaternion _targetRot;
     #endregion
+
+
     private void Awake()
     {
         _hasWon = false;

@@ -2,7 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class Asteroid : SpaceObject, ITurnBasedObject
+public class Asteroid : SpaceObject, ITurnBasedObject, IInteractiveSpaceObject
 {
     public enum AsteroidAction
     {
@@ -14,21 +14,27 @@ public class Asteroid : SpaceObject, ITurnBasedObject
         O6
     };
 
-    private AsteroidAction _nextAsteroidAction = AsteroidAction.O1;
+    #region Protected Attributes
+    [SerializeField] InteractionList _interactionList;
+    protected AsteroidAction _nextAsteroidAction = AsteroidAction.O1;
 
     protected bool _asteroidMoving;
     protected float _targetPosSpeed;
     protected Vector3 _targetPos;
 
     protected float _currentTerrainCellsize;
-    protected float _asteroidSpeed = 0.5f; //Time that it takes for the asteroid to move
+    protected float _asteroidSpeed = 0.5f; //Time that it takes for the asteroid to move 
+    #endregion
 
     public int TurnPriority { get => 1; set => throw new System.NotImplementedException(); }
+
     public AsteroidAction NextAsteroidAction
     {
         get => _nextAsteroidAction;
         set => _nextAsteroidAction = value;
     }
+    public InteractionList referencedList { get => _interactionList; set => _interactionList = value; }
+    public static string[] ReactionFunctions { get => new string[] { "Asteroid Stuff" ,  "Destroy" }; }
 
     public async Task<bool> PlayTurnAsync(TurnManager turnManager)
     {
@@ -68,6 +74,8 @@ public class Asteroid : SpaceObject, ITurnBasedObject
             else _asteroidMoving = false;
         }
     }
+
+    #region ActionType Conversion
     protected Action AsteroidActionToSpaceAction(int asteroidAction)
     {
         return asteroidAction switch
@@ -85,6 +93,7 @@ public class Asteroid : SpaceObject, ITurnBasedObject
     protected Action AsteroidActionToSpaceAction(AsteroidAction asteroidAction)
     {
         return AsteroidActionToSpaceAction((int)asteroidAction + 1);
-    }
+    } 
+    #endregion
 
 }
