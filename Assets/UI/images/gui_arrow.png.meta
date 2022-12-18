@@ -117,85 +117,253 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: gui_arrow_4
+      name: gui_arrow_2
       rect:
         serializedVersion: 2
-        x: 77
-        y: 259
+        x: 51
+        y: 1986
         width: 32
         height: 32
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c7236fc3227335c4abf79b6ae34cdda0
-      internalID: -1084304382
+      spriteID: 99c8058d17f4f6d418deb4f9df1b0df4
+      internalID: -2043830959
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gui_arrow_9
+      name: gui_arrow_3
       rect:
         serializedVersion: 2
-        x: 44
-        y: 292
+        x: 51
+        y: 1953
         width: 32
         height: 32
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d05beb4f4e440394e9a7f1467a46c203
-      internalID: 898059308
+      spriteID: f7c0c04a8753620448558445f835d875
+      internalID: -361487430
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gui_arrow_12
+      name: gui_arrow_5
       rect:
         serializedVersion: 2
-        x: 44
-        y: 259
+        x: 84
+        y: 1953
         width: 32
         height: 32
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5c7d32e901ca4c748b11a1c54ee57ee0
-      internalID: 1078474565
+      spriteID: 51d89535d75884c4f8a63412bd28e433
+      internalID: -609742839
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gui_arrow_13
+      name: gui_arrow_6
       rect:
         serializedVersion: 2
-        x: 44
-        y: 226
+        x: 51
+        y: 1920
         width: 32
         height: 32
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 337dcff6e3e3e514fa64f99e30d865fd
-      internalID: 2137491441
+      spriteID: 6b6b2c45522c6ef4a816589aad74f8cb
+      internalID: 1377621539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_arrow_7
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 1920
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70ce5208f9454ad48a1952e8533c6a52
+      internalID: 1591868455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_arrow_8
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 1920
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8458977004f02a4984ac6858d06a609
+      internalID: 1016219101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_arrow_10
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 1920
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d5f5fe5cd0758a4ea6ca08dcffd9743
+      internalID: 686601841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_arrow_11
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 1887
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d799755a36cc45d4f90d30639c73dee3
+      internalID: -1423845826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_arrow_14
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 1887
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ac4bae208fdd4445851988cf14c0fdb
+      internalID: 1962728387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_arrow_15
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 1887
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45fa38be030ba3b49b26dbd93e2b1b19
+      internalID: 728730842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_arrow_16
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 1950
+        width: 86
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e2757077915f384693424bb112b06db
+      internalID: 1138303336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gui_arrow_17
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 833
+        width: 941
+        height: 907
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a91e148b24c0c4449947508c56d8370
+      internalID: -1262697239
       vertices: []
       indices: 
       edges: []
@@ -211,6 +379,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      gui_arrow_17: -1262697239
       gui_arrow_2: -2043830959
       gui_arrow_9: 898059308
       gui_arrow_4: -1084304382
@@ -220,11 +389,14 @@ TextureImporter:
       gui_arrow_12: 1078474565
       gui_arrow_11: -1423845826
       gui_arrow_13: 2137491441
+      gui_arrow_15: 728730842
       gui_arrow_10: 686601841
+      gui_arrow_16: 1138303336
       gui_arrow_7: 1591868455
       gui_arrow_0: -1610677858
       gui_arrow_3: -361487430
       gui_arrow_1: -1901345593
+      gui_arrow_14: 1962728387
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

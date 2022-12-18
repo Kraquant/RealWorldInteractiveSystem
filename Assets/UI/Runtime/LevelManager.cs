@@ -52,7 +52,7 @@ public class LevelManager : MonoBehaviour
             {
                 button.onClick.AddListener(cancelMovement);
             }
-            else if (button.name.Contains("Reset") || (button.name.Contains("No")) || (button.name.Contains("Redo")))
+            else if (button.name.Contains("Reset") || (button.name.Contains("No")))
             {
                 button.onClick.AddListener(resetScreenOnOff);
             }
@@ -66,7 +66,7 @@ public class LevelManager : MonoBehaviour
             {
                 button.onClick.AddListener(editingScreen);
             }
-            else if (button.name.Contains("Yes") || button.name.Contains("Retry tton"))
+            else if (button.name.Contains("Yes") || button.name.Contains("Redo"))
             {
                 button.onClick.AddListener(resetLevel);
             }
