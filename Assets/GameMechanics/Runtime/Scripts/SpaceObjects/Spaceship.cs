@@ -14,7 +14,7 @@ public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer, IInteractiveSpa
     public bool HasWon => _hasWon;
 
     public static string[] ReactionFunctions { get => new string[] { "Destroy" };}
-    public InteractionList referencedList { get => _interactionList; set => _interactionList = value; }
+    public InteractionList ReferencedList { get => _interactionList; set => _interactionList = value; }
     #endregion
 
     #region Private Attributes
