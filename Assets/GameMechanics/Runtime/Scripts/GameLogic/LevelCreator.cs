@@ -27,13 +27,16 @@ public class LevelCreator : MonoBehaviour
     [SerializeField] List<HexCoordinates> _terrainShape;
     [SerializeField] float _cellSize = 1.0f;
     [SerializeField] bool _vizualizeTerrain = true;
-
+    [SerializeField] Material turnCellMat;
+    [SerializeField] Material terrainDisplayMat;
+    [SerializeField] InteractionList interactionList;
 
 
     // Public attributes
     public List<SpaceObjectList> objectsList; 
     public List<(GameObject, bool)> placedObjects;
     public PlacingState placingState = PlacingState.None;
+   
     #endregion
 
     #region Properties
@@ -87,7 +90,7 @@ public class LevelCreator : MonoBehaviour
 
         // Adding LevelScripts
         GameManager levelGameManager = levelGO.AddComponent<GameManager>();
-        TurnManager levelTurnManager = levelGO.AddComponent<TurnManager>();
+        TurnManager levelTurnManager = levelGO.GetComponent<TurnManager>();
 
         //Adding Terrain Scripts
         SpaceTerrain levelTerrain = levelTerrainGO.AddComponent<SpaceTerrain>();
@@ -98,11 +101,16 @@ public class LevelCreator : MonoBehaviour
         // ********************************************     CONFIGURING SCRIPTS         ********************************************
 
         //Setting Level Scripts
+        levelGameManager.delayBetweenTurns = 100;
+        levelTurnManager.Terrain = levelTerrain;
+        levelTurnManager.turnCellTime = 100;
+        levelTurnManager.turnCellMat = turnCellMat;
         levelTurnManager.Terrain = levelTerrain;
 
         //Setting Terrain Scripts
         levelTerrain.SetTerrain(new HashSet<HexCoordinates>(_terrainShape), _cellSize);
         EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+        levelTerrainVisualizer.displayMat = terrainDisplayMat;
 
 
         //Adding the objects
@@ -111,11 +119,16 @@ public class LevelCreator : MonoBehaviour
         {
             if (placedSO.Item1 != null && placedSO.Item2)
             {
-                ITurnBasedObject placedSOInterface = placedSO.Item1.GetComponent<ITurnBasedObject>();
-                if (placedSOInterface != null)
+                placedSO.Item1.transform.parent = levelSOGO.transform;
+                ITurnBasedObject placedSOITurnBased = placedSO.Item1.GetComponent<ITurnBasedObject>();
+                if (placedSOITurnBased != null)
                 {
-                    turnBasedObjects.Add(placedSOInterface);
-                    placedSO.Item1.transform.parent = levelSOGO.transform;
+                    turnBasedObjects.Add(placedSOITurnBased);   
+                }
+                IInteractiveSpaceObject placedSOIInteractive = placedSO.Item1.GetComponent<IInteractiveSpaceObject>();
+                if (placedSOITurnBased != null)
+                {
+                    placedSOIInteractive.ReferencedList = interactionList;
                 }
 
             }
@@ -360,6 +373,13 @@ public class LevelCreator : MonoBehaviour
         placingState = PlacingState.None;
     }
     #endregion
+
+    private T GetOrAdd<T>() where T : Component
+    {
+        if (!TryGetComponent<T>(out var component))
+            component = gameObject.AddComponent<T>();
+        return component;
+    }
 }
 
 #endif

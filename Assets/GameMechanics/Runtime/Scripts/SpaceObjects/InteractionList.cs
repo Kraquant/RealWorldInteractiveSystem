@@ -1,6 +1,5 @@
-using JetBrains.Annotations;
+using SpaceUtilities;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -8,9 +7,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "InteractionList", menuName = "ScriptableObjects/InteractionList", order = 1)]
 public class InteractionList : ScriptableObject
 {
-    [SerializeField] List<Type> _interactiveTypes;
-    [SerializeField] string[][] _calledFunc;
-    [SerializeField] string[][] _callOrder;
+    [SerializeField] List<string> _interactiveTypes; // Contains Types
+    [SerializeField] Matrix<string> _calledFunc;
+    [SerializeField] Matrix<string> _callOrder;
 
 
     public void Init()
@@ -22,53 +21,62 @@ public class InteractionList : ScriptableObject
             .Where(t => t != type);
 
 
-        InteractiveTypes= new List<Type>(types);
+        InteractiveTypes = new List<string>(types.Select(t => t.FullName));
         int ITCount = InteractiveTypes.Count;
 
-        CalledFunc = new string[ITCount][];
-        CallOrder = new string[ITCount][];
-
-        for (int i = 0; i < ITCount; i++)
-        {
-            //For reaction Function
-            string[] reacFunc = new string[ITCount];
-            for (int j = 0; j < ITCount; j++) reacFunc[j] = "";
-            CalledFunc[i] = reacFunc;
-
-            //For reaction Order
-            string[] orderFunc= new string[ITCount];
-            for (int j = 0; j < ITCount; j++) orderFunc[j] = "Same";
-            CallOrder[i] = orderFunc;
-
-        }
+        CalledFunc = new Matrix<string>(ITCount, "");
+        CallOrder = new Matrix<string>(ITCount, "Same");
     }
 
-    public readonly Type[] knownTypes = new Type[]
+    public void RefreshForNewInteractiveObjects()
     {
-        typeof(BumpyAsteroid),
-        typeof(Spaceship),
+        Type type = typeof(IInteractiveSpaceObject);
+        IEnumerable<Type> types = AppDomain.CurrentDomain.GetAssemblies()
+            .SelectMany(s => s.GetTypes())
+            .Where(p => type.IsAssignableFrom(p))
+            .Where(t => t != type);
+
+        List<string> newInteractiveTypes = new List<string>(
+            types.Select(t => t.FullName)
+            .ToList()
+            .RemoveAll(x => !_interactiveTypes.Any(y => y == x)));
+
+        if (newInteractiveTypes.Count == 0) return;
+        
+        _interactiveTypes.AddRange(newInteractiveTypes);
+
+        CalledFunc.Expand(newInteractiveTypes.Count, "");
+        CallOrder.Expand(newInteractiveTypes.Count, "Same");
+    }
+
+    public readonly string[] knownTypes = new string[]
+    {
+        typeof(BumpyAsteroid).FullName,
+        typeof(Spaceship).FullName,
+        typeof(GhostAsteroid).FullName,
     };
 
     public readonly string[][] knownTypesReactionFunctions = new string[][]
     {
         BumpyAsteroid.ReactionFunctions,
         Spaceship.ReactionFunctions,
+        GhostAsteroid.ReactionFunctions,
     };
 
-    public List<Type> InteractiveTypes { get => _interactiveTypes; set => _interactiveTypes = value; }
-    public string[][] CalledFunc { get => _calledFunc; set => _calledFunc = value; }
-    public string[][] CallOrder { get => _callOrder; set => _callOrder = value; }
+    public List<string> InteractiveTypes { get => _interactiveTypes; set => _interactiveTypes = value; }
+    public Matrix<string> CalledFunc { get => _calledFunc; set => _calledFunc = value; }
+    public Matrix<string> CallOrder { get => _callOrder; set => _callOrder = value; }
 
-    public string[] GetKnownTypeReactionFunctions(Type type)
+    public string[] GetKnownTypeReactionFunctions(string type)
     {
-        int index = Array.FindIndex(knownTypes, t => t==type);
+        int index = Array.FindIndex(knownTypes, t => t == type);
         if (index == -1) return new string[0];
         return knownTypesReactionFunctions[index];
     }
 
     public void ChangeCallOrder(Vector2Int index, string order)
     {
-        if (index.x >= CallOrder.Length || index.y >= CallOrder.Length)
+        if (index.x >= CallOrder.Rows || index.y >= CallOrder.Rows)
             throw new System.NotImplementedException();
 
         if (index.x == index.y) return;
@@ -76,16 +84,16 @@ public class InteractionList : ScriptableObject
         switch (order)
         {
             case "First":
-                CallOrder[index.x][index.y] = "First";
-                CallOrder[index.y][index.x] = "Last";
+                CallOrder[index.x, index.y] = "First";
+                CallOrder[index.y, index.x] = "Last";
                 break;
             case "Last":
-                CallOrder[index.x][index.y] = "Last";
-                CallOrder[index.y][index.x] = "First";
+                CallOrder[index.x, index.y] = "Last";
+                CallOrder[index.y, index.x] = "First";
                 break;
             case "Same":
-                CallOrder[index.x][index.y] = "Same";
-                CallOrder[index.y][index.x] = "Same";
+                CallOrder[index.x, index.y] = "Same";
+                CallOrder[index.y, index.x] = "Same";
                 break;
             default:
                 throw new System.NotImplementedException();

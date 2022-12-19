@@ -38,6 +38,7 @@ public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer, IInteractiveSpa
         _hasWon = false;
         _isAlive = true;
     }
+    #region Play Turn
     public async Task<bool> PlayTurnAsync(TurnManager turnManager)
     {
         //Check for possible movement
@@ -53,7 +54,7 @@ public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer, IInteractiveSpa
                 break;
             case TurnManager.CollisionType.Terrain: //The space ship does not move
                 break;
-            
+
             default:
                 break;
         }
@@ -72,7 +73,7 @@ public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer, IInteractiveSpa
         CancellationTokenSource cts = new CancellationTokenSource();
         _spaceshipMoving = true;
 
-        await SpaceUtilities.WaitUntilAsync(() => _spaceshipMoving == false, 100, cts.Token);
+        await SpaceUtilities.Utilities.WaitUntilAsync(() => _spaceshipMoving == false, 100, cts.Token);
 
         return true;
     }
@@ -90,19 +91,27 @@ public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer, IInteractiveSpa
             else _spaceshipMoving = false;
         }
     }
+    #endregion
 
+    #region Collisions
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Goal"))
-        {
-            _hasWon = true;
-            OnPlayerWin?.Invoke();
-        }
+        (string, string) interaction = SpaceUtilities.Utilities.GetReaction(this, collision.gameObject.GetComponent<IInteractiveSpaceObject>());
 
-        else if (collision.gameObject.CompareTag("Goal"))
+        switch (interaction.Item1)
         {
-            _hasWon = true;
-            OnPlayerDeath?.Invoke();
+            case "Destroy":
+                Destroy();
+                break;
+            default:
+                throw new System.NotImplementedException();
         }
     }
+
+    private void Destroy()
+    {
+        OnPlayerDeath?.Invoke();
+        Destroy(gameObject);
+    }
+    #endregion
 }

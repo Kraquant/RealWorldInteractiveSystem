@@ -1,26 +1,14 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class BumpyAsteroid : Asteroid, IInteractiveSpaceObject
+public class GhostAsteroid : Asteroid, IInteractiveSpaceObject
 {
     [SerializeField] InteractionList _interactionList;
     public InteractionList ReferencedList { get => _interactionList; set => _interactionList = value; }
-    public static string[] ReactionFunctions { get => new string[] { "Bump", "Hold", "Destroy", "GetPushed" }; }
-    public override int TurnPriority { get => 2; set => throw new System.NotImplementedException(); }
+    public static string[] ReactionFunctions { get => new string[] { "DashThrough", "Hold", "Destroy", "GetPushed" }; }
 
-    private Action InvertAction(Action action)
-    {
-        return action switch
-        {
-            Action.Hold => Action.Hold,
-            Action.Front => Action.Back,
-            Action.Right => Action.LeftBehind,
-            Action.RightBehind => Action.Left,
-            Action.Back => Action.Front,
-            Action.LeftBehind => Action.Right,
-            Action.Left => Action.RightBehind,
-            _ => throw new System.NotImplementedException(),
-        };
-    }
+    public override int TurnPriority { get => 3; set => throw new System.NotImplementedException(); }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -28,8 +16,8 @@ public class BumpyAsteroid : Asteroid, IInteractiveSpaceObject
 
         switch (interaction.Item1)
         {
-            case "Bump":
-                Bump();
+            case "DashThrough":
+                DashThrough();
                 break;
             case "Hold":
                 break;
@@ -43,14 +31,13 @@ public class BumpyAsteroid : Asteroid, IInteractiveSpaceObject
             default:
                 throw new System.NotImplementedException();
         }
-        
+
     }
 
-    private void Bump()
+    private void DashThrough()
     {
-        Action spaceAction = InvertAction(AsteroidActionToSpaceAction(NextAsteroidAction));
-        Center = PreviewNextCoordinate(spaceAction).Item1;
+        if (!_asteroidMoving) return;
+        Center = PreviewNextCoordinate(AsteroidActionToSpaceAction(NextAsteroidAction)).Item1;
         UpdateAsteroidTransform(_currentTerrainCellsize, _asteroidSpeed);
     }
-
 }

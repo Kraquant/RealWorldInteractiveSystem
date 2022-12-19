@@ -12,9 +12,13 @@ public class LevelCreatorEditor : Editor
     SerializedProperty e_terrainShape;
     SerializedProperty e_objectsList;
     SerializedProperty e_vizualizeTerrain;
+    SerializedProperty e_turnCellMat;
+    SerializedProperty e_terrainDisplayMat;
+    SerializedProperty e_interactionList;
 
     private bool _terrainFoldout;
     private bool _spaceObjectsFoldout;
+    private bool _otherPropertiesFoldout;
 
     private void OnEnable()
     {
@@ -23,9 +27,13 @@ public class LevelCreatorEditor : Editor
         e_terrainShape = serializedObject.FindProperty("_terrainShape");
         e_vizualizeTerrain = serializedObject.FindProperty("_vizualizeTerrain");
         e_objectsList = serializedObject.FindProperty("objectsList");
+        e_turnCellMat = serializedObject.FindProperty("turnCellMat");
+        e_terrainDisplayMat = serializedObject.FindProperty("terrainDisplayMat");
+        e_interactionList = serializedObject.FindProperty("interactionList");
 
         _terrainFoldout = true;
         _spaceObjectsFoldout = true;
+        _otherPropertiesFoldout = true;
     }
     private void OnDisable()
     {
@@ -162,7 +170,16 @@ public class LevelCreatorEditor : Editor
             EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
         }
 
+        
+
+        //Other Settings
+        CreateFoldout("Other Properties", 18, ref _otherPropertiesFoldout);
+        EditorGUILayout.PropertyField(e_turnCellMat, new GUIContent("Turn cell Mat"));
+        EditorGUILayout.PropertyField(e_terrainDisplayMat, new GUIContent("Terrain Display Mat"));
+        EditorGUILayout.PropertyField(e_interactionList, new GUIContent("Interaction list"));
+
         serializedObject.ApplyModifiedProperties();
+
     }
     private void ShowPlacableObjectsList(ref LevelCreator script, bool tab = false)
     {

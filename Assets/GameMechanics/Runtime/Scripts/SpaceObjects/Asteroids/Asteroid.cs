@@ -27,7 +27,7 @@ public class Asteroid : SpaceObject, ITurnBasedObject
     protected float _asteroidSpeed = 0.5f; //Time that it takes for the asteroid to move 
     #endregion
 
-    public int TurnPriority { get => 1; set => throw new System.NotImplementedException(); }
+    public virtual int TurnPriority { get => 1; set => throw new System.NotImplementedException(); }
 
     public AsteroidAction NextAsteroidAction
     {
@@ -50,7 +50,7 @@ public class Asteroid : SpaceObject, ITurnBasedObject
         Center = PreviewNextCoordinate(spaceAction).Item1;
         CancellationTokenSource cts = new CancellationTokenSource();
         UpdateAsteroidTransform(_currentTerrainCellsize, _asteroidSpeed);
-        await SpaceUtilities.WaitUntilAsync(() => _asteroidMoving == false, 100, cts.Token);
+        await SpaceUtilities.Utilities.WaitUntilAsync(() => _asteroidMoving == false, 100, cts.Token);
 
         return true;
     }
@@ -74,6 +74,11 @@ public class Asteroid : SpaceObject, ITurnBasedObject
         }
     }
 
+    protected void DestroyAsteroid()
+    {
+        Destroy(gameObject);
+    }
+
     #region ActionType Conversion
     protected Action AsteroidActionToSpaceAction(int asteroidAction)
     {
@@ -92,7 +97,7 @@ public class Asteroid : SpaceObject, ITurnBasedObject
 
     protected Action AsteroidActionToSpaceAction(AsteroidAction asteroidAction)
     {
-        return AsteroidActionToSpaceAction((int)asteroidAction + 1);
+        return AsteroidActionToSpaceAction((int)asteroidAction);
     } 
     #endregion
 

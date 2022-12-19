@@ -11,7 +11,7 @@ public class InteractionListEditor : Editor
     private Vector2Int _reacFuncSelectedIndex;
     private string currentReacFuncOption;
 
-    private bool _isSelectingReacOrder;
+    private bool _isSelectingReacOrder = false;
     private Vector2Int _reacOrderSelectedIndex;
     private string _currentReacOrderOption;
 
@@ -35,7 +35,7 @@ public class InteractionListEditor : Editor
     {
         InteractionList script = (InteractionList)target;
 
-        if (script.InteractiveTypes == null)
+        if (script.InteractiveTypes == null || script.InteractiveTypes.Count == 0)
         {
             if (GUILayout.Button("Init"))
             {
@@ -43,6 +43,8 @@ public class InteractionListEditor : Editor
             }
             return;
         }
+
+        if (GUILayout.Button("Refresh")) script.RefreshForNewInteractiveObjects();
 
         _arrayWidth = GUILayout.HorizontalScrollbar(_arrayWidth, 1.0f, 10.0f, 100.0f);
         _arrayHeight = GUILayout.HorizontalScrollbar(_arrayHeight, 1.0f, 10.0f, 100.0f);
@@ -67,7 +69,7 @@ public class InteractionListEditor : Editor
                 _reacFuncSelectedIndex.x--;
                 _reacFuncSelectedIndex.y--;
 
-                currentReacFuncOption = script.CalledFunc[_reacFuncSelectedIndex.x][_reacFuncSelectedIndex.y];
+                currentReacFuncOption = script.CalledFunc[_reacFuncSelectedIndex.x, _reacFuncSelectedIndex.y];
             }
         }
         else
@@ -95,7 +97,7 @@ public class InteractionListEditor : Editor
             if (GUILayout.Button("Ok"))
             {
 
-                script.CalledFunc[_reacFuncSelectedIndex.x][_reacFuncSelectedIndex.y] = currentReacFuncOption;
+                script.CalledFunc[_reacFuncSelectedIndex.x, _reacFuncSelectedIndex.y] = currentReacFuncOption;
 
                 _reacFuncSelectedIndex = new Vector2Int(-1, -1);
                 _isSelectingReacFunc = false;
@@ -114,7 +116,7 @@ public class InteractionListEditor : Editor
                 _reacOrderSelectedIndex.x--;
                 _reacOrderSelectedIndex.y--;
 
-                _currentReacOrderOption = script.CallOrder[_reacOrderSelectedIndex.x][_reacOrderSelectedIndex.y];
+                _currentReacOrderOption = script.CallOrder[_reacOrderSelectedIndex.x, _reacOrderSelectedIndex.y];
             }
         }
         else
@@ -145,16 +147,16 @@ public class InteractionListEditor : Editor
         string[][] res = new string[arraySize][];
         res[0] = new string[arraySize];
         res[0][0] = "Line reaction to column";
-        for (int i = 1; i < arraySize; i++) res[0][i] = list.InteractiveTypes[i - 1].Name;
+        for (int i = 1; i < arraySize; i++) res[0][i] = list.InteractiveTypes[i - 1];
 
         for (int i = 1; i < arraySize; i++)
         {
             string[] line = new string[arraySize];
 
-            line[0] = list.InteractiveTypes[i - 1].Name;
+            line[0] = list.InteractiveTypes[i - 1];
             for (int j = 1; j < arraySize; j++)
             {
-                line[j] = list.CalledFunc[i - 1][j - 1];
+                line[j] = list.CalledFunc[i - 1, j - 1];
             }
             res[i] = line;
         }
@@ -168,16 +170,16 @@ public class InteractionListEditor : Editor
         string[][] res = new string[arraySize][];
         res[0] = new string[arraySize];
         res[0][0] = "Line reaction to column";
-        for (int i = 1; i < arraySize; i++) res[0][i] = list.InteractiveTypes[i - 1].Name;
+        for (int i = 1; i < arraySize; i++) res[0][i] = list.InteractiveTypes[i - 1];
 
         for (int i = 1; i < arraySize; i++)
         {
             string[] line = new string[arraySize];
 
-            line[0] = list.InteractiveTypes[i - 1].Name;
+            line[0] = list.InteractiveTypes[i - 1];
             for (int j = 1; j < arraySize; j++)
             {
-                line[j] = list.CallOrder[i - 1][j - 1];
+                line[j] = list.CallOrder[i - 1, j - 1];
             }
             res[i] = line;
         }

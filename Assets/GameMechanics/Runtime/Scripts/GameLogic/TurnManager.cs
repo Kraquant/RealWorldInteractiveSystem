@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
+using SpaceUtilities;
 
 public class TurnManager : MonoBehaviour
 {
@@ -165,16 +166,7 @@ public class TurnManager : MonoBehaviour
             if (item.TurnPriority != currentOrder) itemsByPriority.Add(new List<ITurnBasedObject>());
             itemsByPriority.Last().Add(item);
         }
-        return ToArrayArray(itemsByPriority);
-    }
-    private T[][] ToArrayArray<T>(List<List<T>> list)
-    {
-        T[][] res = new T[list.Count][];
-        for (int i = 0; i < list.Count; i++)
-        {
-            res[i] = list[i].ToArray();
-        }
-        return res;
+        return Utilities.ToArrayArray(itemsByPriority);
     } 
     #endregion
 }
