@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2fdebb1a20df2894b92376677973d173
+guid: 5fbd7300b9928bd46909af859b1b3ac3
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 0
@@ -117,106 +117,127 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: gui_arrow_4
+      name: AsteroidMoves_0
       rect:
         serializedVersion: 2
-        x: 77
-        y: 259
+        x: 0
+        y: 32
         width: 32
         height: 32
-      alignment: 6
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c7236fc3227335c4abf79b6ae34cdda0
-      internalID: -1084304382
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: gui_arrow_9
-      rect:
-        serializedVersion: 2
-        x: 44
-        y: 292
-        width: 32
-        height: 32
-      alignment: 6
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d05beb4f4e440394e9a7f1467a46c203
-      internalID: 898059308
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: gui_arrow_12
-      rect:
-        serializedVersion: 2
-        x: 44
-        y: 259
-        width: 32
-        height: 32
-      alignment: 6
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5c7d32e901ca4c748b11a1c54ee57ee0
-      internalID: 1078474565
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: gui_arrow_13
-      rect:
-        serializedVersion: 2
-        x: 44
-        y: 226
-        width: 32
-        height: 32
-      alignment: 6
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 337dcff6e3e3e514fa64f99e30d865fd
-      internalID: 2137491441
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: gui_arrow_0
-      rect:
-        serializedVersion: 2
-        x: 177
-        y: 231
-        width: 86
-        height: 94
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d84bd5feb6936e2479b0b9163d6e84f1
-      internalID: -1610677858
+      spriteID: 54c0bd00f6fb64b47b255d0c45ee1d63
+      internalID: -390681223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AsteroidMoves_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5afd8858ffdb0c44690696fa6a63004f
+      internalID: -2060508298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AsteroidMoves_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 077cde88a56f9164abbe7dbaedbada1d
+      internalID: 2034527398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AsteroidMoves_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc180bacdcb09e044a08d2b8af83d1f9
+      internalID: 1001264479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AsteroidMoves_4
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8182fc3748614f45b8fe2a793680e38
+      internalID: -1715161315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AsteroidMoves_5
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d63afe3bf10b68f48be97e99c7618722
+      internalID: -360097006
       vertices: []
       indices: 
       edges: []
@@ -224,7 +245,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 321fbda9e1a47b24689c2bfba237a9b2
+    spriteID: 84f0650649f14614e8d37f992194c818
     internalID: 0
     vertices: []
     indices: 
@@ -232,20 +253,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      gui_arrow_2: -2043830959
-      gui_arrow_9: 898059308
-      gui_arrow_4: -1084304382
-      gui_arrow_5: -609742839
-      gui_arrow_6: 1377621539
-      gui_arrow_8: 1016219101
-      gui_arrow_12: 1078474565
-      gui_arrow_11: -1423845826
-      gui_arrow_13: 2137491441
-      gui_arrow_10: 686601841
-      gui_arrow_7: 1591868455
-      gui_arrow_0: -1610677858
-      gui_arrow_3: -361487430
-      gui_arrow_1: -1901345593
+      AsteroidMoves_3: 1001264479
+      AsteroidMoves_2: 2034527398
+      AsteroidMoves_4: -1715161315
+      AsteroidMoves_1: -2060508298
+      AsteroidMoves_5: -360097006
+      AsteroidMoves_0: -390681223
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

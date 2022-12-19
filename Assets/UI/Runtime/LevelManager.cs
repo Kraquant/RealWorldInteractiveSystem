@@ -22,9 +22,11 @@ public class LevelManager : MonoBehaviour
     // Scripts
     [SerializeField] ResponsiveCamera cameraManager;
     [SerializeField] GameManager gameManager;
+    private InputManager inputManager;
 
-    // gameOver text
+    // text
     [SerializeField] TextMeshProUGUI gameOverText;
+    [SerializeField] TextMeshProUGUI asteroidMovesText;
 
     // Button
     public List<Button> gameButtons; // Play, cancel, reset (abort), activate swipe
@@ -38,6 +40,7 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
+        InputManager inputManager = FindObjectOfType<InputManager>();
         GameManager GM = FindObjectOfType<GameManager>();
         GM.OnGameEnded += GM_OnGameEnded;
         //GM.OnGameStarted 
@@ -84,6 +87,8 @@ public class LevelManager : MonoBehaviour
             }
         }
 
+        putAsteroidMovements(inputManager.asteroidsActions);
+
         gameOnGoing = false;
     }
 
@@ -91,6 +96,41 @@ public class LevelManager : MonoBehaviour
     {
         
     }
+
+    private void putAsteroidMovements(List<Asteroid.AsteroidAction> asteroidActions)
+    {
+        asteroidMovesText.text = "<sprite=\"Asteroids\" index=0>:";
+
+        foreach (Asteroid.AsteroidAction action in asteroidActions)
+        {
+            switch (action)
+            {
+                case Asteroid.AsteroidAction.O1:
+                    asteroidMovesText.text += " <sprite=\"AsteroidMoves\" index=0>|";
+                    break;
+                case Asteroid.AsteroidAction.O2:
+                    asteroidMovesText.text += " <sprite=\"AsteroidMoves\" index=1>|";
+                    break;
+                case Asteroid.AsteroidAction.O3:
+                    asteroidMovesText.text += " <sprite=\"AsteroidMoves\" index=2>|";
+                    break;
+                case Asteroid.AsteroidAction.O4:
+                    asteroidMovesText.text += " <sprite=\"AsteroidMoves\" index=3>|";
+                    break;
+                case Asteroid.AsteroidAction.O5:
+                    asteroidMovesText.text += " <sprite=\"AsteroidMoves\" index=4>|";
+                    break;
+                case Asteroid.AsteroidAction.O6:
+                    asteroidMovesText.text += " <sprite=\"AsteroidMoves\" index=5>|";
+                    break;
+                default:
+                    break;
+            }
+            
+        }
+    }
+
+
 
     #region GameEnded
 
@@ -189,7 +229,6 @@ public class LevelManager : MonoBehaviour
     private void playGame(){
 
         Debug.Log("Launching Game");
-        InputManager inputManager = FindObjectOfType<InputManager>();
         UserInput userInput = FindObjectOfType<UserInput>();
 
         // Remove asteroid remaining actions

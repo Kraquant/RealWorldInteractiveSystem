@@ -63,6 +63,12 @@ MonoBehaviour:
     m_Scale: 2
     m_Name: turn
     m_HashCode: 4045149
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 4
+    m_Scale: 2
+    m_Name: gui_arrow_0
+    m_HashCode: -1591998414
   m_SpriteGlyphTable:
   - m_Index: 0
     m_Metrics:
@@ -124,6 +130,21 @@ MonoBehaviour:
     m_Scale: 1
     m_AtlasIndex: 0
     sprite: {fileID: 2137491441, guid: 2fdebb1a20df2894b92376677973d173, type: 3}
+  - m_Index: 4
+    m_Metrics:
+      m_Width: 86
+      m_Height: 94
+      m_HorizontalBearingX: -6
+      m_HorizontalBearingY: 100
+      m_HorizontalAdvance: 57
+    m_GlyphRect:
+      m_X: 177
+      m_Y: 231
+      m_Width: 86
+      m_Height: 94
+    m_Scale: 1
+    m_AtlasIndex: 0
+    sprite: {fileID: -1610677858, guid: 2fdebb1a20df2894b92376677973d173, type: 3}
   spriteInfoList: []
   fallbackSpriteAssets: []
 --- !u!21 &3742169924680599414
