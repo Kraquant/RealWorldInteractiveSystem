@@ -20,25 +20,25 @@ MonoBehaviour:
   _calledFunc:
     myMatrix:
     - myList:
-      - 
-      - 
-      - 
-      - 
+      - Bump
+      - Hold
+      - Hold
+      - Hold
+    - myList:
+      - DashThrough
+      - DashThrough
+      - DashThrough
+      - Hold
     - myList:
       - 
       - 
       - 
       - 
     - myList:
-      - 
-      - 
-      - 
-      - 
-    - myList:
-      - 
-      - 
-      - 
-      - 
+      - Destroy
+      - Destroy
+      - Destroy
+      - Destroy
   _callOrder:
     myMatrix:
     - myList:
