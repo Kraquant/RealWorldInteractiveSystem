@@ -34,6 +34,11 @@ public class LevelManager : MonoBehaviour
     private void Awake()
     {
         loadLevel();
+        victoryUI.SetActive(false);
+        editingUI.SetActive(false);
+        gameOverUI.SetActive(false);
+        resetUI.SetActive(false);
+        gameOnGoing = false;
     }
 
     private void Start()
@@ -86,8 +91,6 @@ public class LevelManager : MonoBehaviour
         }
 
         putAsteroidMovements(inputManager.asteroidsActions);
-
-        gameOnGoing = false;
     }
 
     private void Update()

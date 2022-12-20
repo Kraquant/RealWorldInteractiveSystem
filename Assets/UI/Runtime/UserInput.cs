@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using System.Collections;
 using TMPro;
 using System;
+using UnityEngine.UI;
 
 public class UserInput : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class UserInput : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI movementsList;
     [SerializeField] TextMeshProUGUI moveNumberText;
+    [SerializeField] GameObject warningUI;
     private int movesLeft;
 
     // Swipe area
@@ -23,6 +25,11 @@ public class UserInput : MonoBehaviour
     private Single minY, maxY;
 
     private float startTime;
+
+    private void Awake()
+    {
+        warningUI.SetActive(false);
+    }
 
     private void Start()
     {
@@ -76,6 +83,8 @@ public class UserInput : MonoBehaviour
                 {
                     if (playerInputs.Count >= inputManager.TurnNumber){
                         Debug.Log("Too much inputs");
+                        // Show message with saying too much inputs.
+                        StartCoroutine(ShowMessage(warningUI, 1));
                     }
                     else{
                         SpaceObject.Action playerAction = SwipeInputIs(startTouchPosition, endTouchPosition);
@@ -87,7 +96,7 @@ public class UserInput : MonoBehaviour
         }
     }
 
-
+    #region Input functions
     private SpaceObject.Action SwipeInputIs(Vector2 start, Vector2 end)
     {
         SpaceObject.Action action;
@@ -135,6 +144,17 @@ public class UserInput : MonoBehaviour
         }
     }
 
+    IEnumerator ShowMessage(GameObject warningMessage, float delay)
+    {
+        warningMessage.SetActive(true);
+
+        warningMessage.transform.GetComponentInChildren<TextMeshProUGUI>().CrossFadeAlpha(0, delay, false);
+        warningMessage.GetComponent<Image>().CrossFadeAlpha(0, delay, false);
+        yield return new WaitForSeconds(delay);
+        warningMessage.SetActive(false);
+    }
+
+    #endregion
     public void removeText()
     {
         movementsList.text = movementsList.text.Substring(0, movementsList.text.Length - 12);
