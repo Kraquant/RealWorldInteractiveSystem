@@ -22,7 +22,7 @@ public class GhostAsteroid : Asteroid, IInteractiveSpaceObject
             case "Hold":
                 break;
             case "Destroy":
-                base.DestroyAsteroid();
+                base.DestroySpaceObject();
                 break;
             case "GetPushed":
                 Center = collision.gameObject.GetComponent<HeavyAsteroid>().GetPushed();
