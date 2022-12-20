@@ -36,13 +36,14 @@ public class InteractionList : ScriptableObject
             .Where(p => type.IsAssignableFrom(p))
             .Where(t => t != type);
 
-        List<string> newInteractiveTypes = new List<string>(
-            types.Select(t => t.FullName)
-            .ToList()
-            .RemoveAll(x => !_interactiveTypes.Any(y => y == x)));
+        var test = types.Select(t => t.FullName).ToList();
+        test.RemoveAll(x => _interactiveTypes.Any(y => y == x));
+
+        List<string> newInteractiveTypes = types.Select(t => t.FullName).ToList();
+        newInteractiveTypes.RemoveAll(x => _interactiveTypes.Any(y => y == x));
 
         if (newInteractiveTypes.Count == 0) return;
-        
+
         _interactiveTypes.AddRange(newInteractiveTypes);
 
         CalledFunc.Expand(newInteractiveTypes.Count, "");
@@ -55,6 +56,7 @@ public class InteractionList : ScriptableObject
         typeof(Spaceship).FullName,
         typeof(GhostAsteroid).FullName,
         typeof(HeavyAsteroid).FullName,
+        typeof(LevelGoal).FullName,
     };
 
     public readonly string[][] knownTypesReactionFunctions = new string[][]
@@ -63,6 +65,7 @@ public class InteractionList : ScriptableObject
         Spaceship.ReactionFunctions,
         GhostAsteroid.ReactionFunctions,
         HeavyAsteroid.ReactionFunctions,
+        LevelGoal.ReactionFunctions,
     };
 
     public List<string> InteractiveTypes { get => _interactiveTypes; set => _interactiveTypes = value; }

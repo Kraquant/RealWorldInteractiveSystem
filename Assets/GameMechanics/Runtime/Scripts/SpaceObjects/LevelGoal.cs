@@ -7,7 +7,7 @@ public class LevelGoal : SpaceObject, IInteractiveSpaceObject
 {
     [SerializeField] InteractionList _interactionList;
     public InteractionList ReferencedList { get => _interactionList; set => _interactionList = value; }
-    public static string[] ReactionFunctions { get => new string[] { "Win", "Destroy" }; }
+    public static string[] ReactionFunctions { get => new string[] { "Hold", "Destroy", "GetPushed" }; }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -15,7 +15,9 @@ public class LevelGoal : SpaceObject, IInteractiveSpaceObject
 
         switch (interaction.Item1)
         {
-            case "Win":
+            case "GetPushed":
+                throw new System.NotImplementedException();
+            case "Hold":
                 break;
             case "Destroy":
                 base.DestroySpaceObject();
