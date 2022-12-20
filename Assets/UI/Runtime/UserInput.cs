@@ -53,15 +53,31 @@ public class UserInput : MonoBehaviour
     {
         if (levelManager.swipeAllowed && !levelManager.gameOnGoing)
         {
-            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began){
-                startTouchPosition = Input.GetTouch(0).position;
+            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began || Input.GetMouseButtonDown(0))
+            {
+                
+                if (Input.GetMouseButtonDown(0))
+                {
+                    startTouchPosition = Input.mousePosition;
+                }
+                else
+                {
+                    startTouchPosition = Input.GetTouch(0).position;
+                }
                 startTime = Time.time;
             }
 
-            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended){
-                endTouchPosition = Input.GetTouch(0).position;
-
-                if (inTheBox(startTouchPosition) && Time.time - startTime > 0.1 && (Mathf.Abs(startTouchPosition.x - endTouchPosition.x) > 50 || (startTouchPosition.y - endTouchPosition.y) > 50))
+            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended || Input.GetMouseButtonUp(0))
+            {
+                if (Input.GetMouseButtonUp(0))
+                {
+                    endTouchPosition = Input.mousePosition;
+                }
+                else
+                {
+                    endTouchPosition = Input.GetTouch(0).position;
+                }
+                if (inTheBox(startTouchPosition) && Time.time - startTime > 0.1)// && (Mathf.Abs(startTouchPosition.x - endTouchPosition.x) > 50 || (startTouchPosition.y - endTouchPosition.y) > 50))
                 {
                     if (playerInputs.Count >= inputManager.TurnNumber){
                         Debug.Log("Too much inputs");
