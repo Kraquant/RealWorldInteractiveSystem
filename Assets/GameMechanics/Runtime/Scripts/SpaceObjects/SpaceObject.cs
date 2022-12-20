@@ -45,6 +45,7 @@ public class SpaceObject : MonoBehaviour
     public Orientation ObjectOrientation { get => _orientation; set => _orientation = value; }
     #endregion
 
+    public virtual void DestroySpaceObject() => Destroy(this.gameObject);
 
     public void MoveCoordinate(Action direction)
     {

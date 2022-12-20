@@ -101,14 +101,14 @@ public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer, IInteractiveSpa
         switch (interaction.Item1)
         {
             case "Destroy":
-                Destroy();
+                DestroySpaceObject();
                 break;
             default:
                 throw new System.NotImplementedException();
         }
     }
 
-    private void Destroy()
+    public override void DestroySpaceObject()
     {
         OnPlayerDeath?.Invoke();
         Destroy(gameObject);

@@ -74,11 +74,6 @@ public class Asteroid : SpaceObject, ITurnBasedObject
         }
     }
 
-    protected void DestroyAsteroid()
-    {
-        Destroy(gameObject);
-    }
-
     #region ActionType Conversion
     protected Action AsteroidActionToSpaceAction(int asteroidAction)
     {
