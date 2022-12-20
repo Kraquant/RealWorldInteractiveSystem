@@ -231,16 +231,17 @@ public class LevelManager : MonoBehaviour
         Debug.Log("Launching Game");
         UserInput userInput = FindObjectOfType<UserInput>();
         InputManager inputManager = FindObjectOfType<InputManager>();
-
+        
         // Remove asteroid remaining actions
-        //int turnRemaning = inputManager.TurnNumber - userInput.playerInputs.Count;
-        //for (int i = 0; i < turnRemaning; i++)
-        //{
-        //    //inputManager.asteroidsActions.RemoveAt(inputManager.asteroidsActions.Count - 1); // TBD Morgan : Hold action for Asteroid
-        //}
+        int turnRemaning = inputManager.TurnNumber - userInput.playerInputs.Count;
+        for (int i = 0; i < turnRemaning; i++)
+        {
+            inputManager.asteroidsActions.RemoveAt(inputManager.asteroidsActions.Count - 1); // TBD Morgan : Hold action for Asteroid
+        }
 
         while (userInput.playerInputs.Count < inputManager.TurnNumber){
             userInput.playerInputs.Add(SpaceObject.Action.Hold);
+            inputManager.asteroidsActions.Add(Asteroid.AsteroidAction.OO);
         }
         inputManager.playerActions = userInput.playerInputs;
 
