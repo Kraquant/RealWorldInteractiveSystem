@@ -8,6 +8,8 @@ public class HeavyAsteroid : Asteroid, IInteractiveSpaceObject
     public InteractionList ReferencedList { get => _interactionList; set => _interactionList = value; }
     public static string[] ReactionFunctions { get => new string[] { "Hold", "Destroy" }; }
 
+    public override int TurnPriority { get => 1; set => throw new System.NotImplementedException(); }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         (string, string) interaction = SpaceUtilities.Utilities.GetReaction(this, collision.gameObject.GetComponent<IInteractiveSpaceObject>());
