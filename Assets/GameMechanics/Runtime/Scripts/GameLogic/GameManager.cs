@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
 
             await _turnManager.PlayTurnAsync();
             OnTurnOver?.Invoke();
-            await SpaceUtilities.WaitUntilAsync(() => !IsPaused, 100, cts.Token);
+            await SpaceUtilities.Utilities.WaitUntilAsync(() => !IsPaused, 100, cts.Token);
             await Task.Delay(delayBetweenTurns);
         }
 

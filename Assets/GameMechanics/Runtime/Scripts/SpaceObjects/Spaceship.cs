@@ -2,7 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer
+public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer, IInteractiveSpaceObject
 {
     public event IPlayer.playerStateEvent OnPlayerDeath;
     public event IPlayer.playerStateEvent OnPlayerWin;
@@ -12,10 +12,15 @@ public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer
     public SpaceObject.Action NextAction { get; set; }
     public bool IsAlive => _isAlive;
     public bool HasWon => _hasWon;
+
+    public static string[] ReactionFunctions { get => new string[] { "Destroy" };}
+    public InteractionList ReferencedList { get => _interactionList; set => _interactionList = value; }
     #endregion
 
     #region Private Attributes
     //State attributes
+    [SerializeField] InteractionList _interactionList;
+
     private bool _isAlive;
     private bool _hasWon;
 
@@ -26,11 +31,14 @@ public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer
     private Vector3 _targetPos;
     private Quaternion _targetRot;
     #endregion
+
+
     private void Awake()
     {
         _hasWon = false;
         _isAlive = true;
     }
+    #region Play Turn
     public async Task<bool> PlayTurnAsync(TurnManager turnManager)
     {
         //Check for possible movement
@@ -46,7 +54,7 @@ public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer
                 break;
             case TurnManager.CollisionType.Terrain: //The space ship does not move
                 break;
-            
+
             default:
                 break;
         }
@@ -65,7 +73,7 @@ public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer
         CancellationTokenSource cts = new CancellationTokenSource();
         _spaceshipMoving = true;
 
-        await SpaceUtilities.WaitUntilAsync(() => _spaceshipMoving == false, 100, cts.Token);
+        await SpaceUtilities.Utilities.WaitUntilAsync(() => _spaceshipMoving == false, 100, cts.Token);
 
         return true;
     }
@@ -83,19 +91,27 @@ public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer
             else _spaceshipMoving = false;
         }
     }
+    #endregion
 
+    #region Collisions
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Goal"))
-        {
-            _hasWon = true;
-            OnPlayerWin?.Invoke();
-        }
+        (string, string) interaction = SpaceUtilities.Utilities.GetReaction(this, collision.gameObject.GetComponent<IInteractiveSpaceObject>());
 
-        else if (collision.gameObject.CompareTag("Goal"))
+        switch (interaction.Item1)
         {
-            _hasWon = true;
-            OnPlayerDeath?.Invoke();
+            case "Destroy":
+                Destroy();
+                break;
+            default:
+                throw new System.NotImplementedException();
         }
     }
+
+    private void Destroy()
+    {
+        OnPlayerDeath?.Invoke();
+        Destroy(gameObject);
+    }
+    #endregion
 }

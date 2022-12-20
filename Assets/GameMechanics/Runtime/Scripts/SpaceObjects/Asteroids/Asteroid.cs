@@ -6,6 +6,7 @@ public class Asteroid : SpaceObject, ITurnBasedObject
 {
     public enum AsteroidAction
     {
+        OO,
         O1,
         O2,
         O3,
@@ -14,16 +15,20 @@ public class Asteroid : SpaceObject, ITurnBasedObject
         O6
     };
 
-    private AsteroidAction _nextAsteroidAction = AsteroidAction.O1;
+    #region Protected Attributes
+    
+    protected AsteroidAction _nextAsteroidAction = AsteroidAction.O1;
 
     protected bool _asteroidMoving;
     protected float _targetPosSpeed;
     protected Vector3 _targetPos;
 
     protected float _currentTerrainCellsize;
-    protected float _asteroidSpeed = 0.5f; //Time that it takes for the asteroid to move
+    protected float _asteroidSpeed = 0.5f; //Time that it takes for the asteroid to move 
+    #endregion
 
-    public int TurnPriority { get => 1; set => throw new System.NotImplementedException(); }
+    public virtual int TurnPriority { get => 1; set => throw new System.NotImplementedException(); }
+
     public AsteroidAction NextAsteroidAction
     {
         get => _nextAsteroidAction;
@@ -45,7 +50,7 @@ public class Asteroid : SpaceObject, ITurnBasedObject
         Center = PreviewNextCoordinate(spaceAction).Item1;
         CancellationTokenSource cts = new CancellationTokenSource();
         UpdateAsteroidTransform(_currentTerrainCellsize, _asteroidSpeed);
-        await SpaceUtilities.WaitUntilAsync(() => _asteroidMoving == false, 100, cts.Token);
+        await SpaceUtilities.Utilities.WaitUntilAsync(() => _asteroidMoving == false, 100, cts.Token);
 
         return true;
     }
@@ -68,10 +73,18 @@ public class Asteroid : SpaceObject, ITurnBasedObject
             else _asteroidMoving = false;
         }
     }
+
+    protected void DestroyAsteroid()
+    {
+        Destroy(gameObject);
+    }
+
+    #region ActionType Conversion
     protected Action AsteroidActionToSpaceAction(int asteroidAction)
     {
         return asteroidAction switch
         {
+            0 => Action.Hold,
             1 => Action.Front,
             2 => Action.Right,
             3 => Action.RightBehind,
@@ -84,7 +97,8 @@ public class Asteroid : SpaceObject, ITurnBasedObject
 
     protected Action AsteroidActionToSpaceAction(AsteroidAction asteroidAction)
     {
-        return AsteroidActionToSpaceAction((int)asteroidAction + 1);
-    }
+        return AsteroidActionToSpaceAction((int)asteroidAction);
+    } 
+    #endregion
 
 }

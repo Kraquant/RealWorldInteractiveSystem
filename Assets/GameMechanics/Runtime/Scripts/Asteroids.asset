@@ -13,4 +13,8 @@ MonoBehaviour:
   m_Name: Asteroids
   m_EditorClassIdentifier: 
   listName: Asteroids
-  prefabs: []
+  prefabs:
+  - {fileID: 798698954457690578, guid: d9c8aa8363495de4ab7ef853dc96d9d0, type: 3}
+  - {fileID: 798698954457690578, guid: 08571ff6b79b4734eaec4a2998ab3080, type: 3}
+  - {fileID: 798698954457690578, guid: d7acb3dfb5971994faee48ed76d385f3, type: 3}
+  - {fileID: 798698954457690578, guid: 6d53f57a57a313d42887953cc7bf0587, type: 3}
