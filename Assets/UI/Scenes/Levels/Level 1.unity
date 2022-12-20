@@ -3365,6 +3365,10 @@ PrefabInstance:
       propertyPath: _center._s
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 798698954457690605, guid: 78feb8ee9626c9b4f86b020b8b5ab0d2, type: 3}
+      propertyPath: _interactionList
+      value: 
+      objectReference: {fileID: 11400000, guid: 8e8726c6b0495bd40a688f882ac22833, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78feb8ee9626c9b4f86b020b8b5ab0d2, type: 3}
 --- !u!4 &733507916 stripped
@@ -6508,6 +6512,10 @@ PrefabInstance:
       propertyPath: _orientation
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 3553106942611707635, guid: d9c8aa8363495de4ab7ef853dc96d9d0, type: 3}
+      propertyPath: _interactionList
+      value: 
+      objectReference: {fileID: 11400000, guid: 8e8726c6b0495bd40a688f882ac22833, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9c8aa8363495de4ab7ef853dc96d9d0, type: 3}
 --- !u!4 &1308962824 stripped

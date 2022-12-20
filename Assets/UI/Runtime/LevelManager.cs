@@ -67,7 +67,7 @@ public class LevelManager : MonoBehaviour
             {
                 button.onClick.AddListener(editingScreen);
             }
-            else if (button.name.Contains("Yes") || button.name.Contains("Retry tton"))
+            else if (button.name.Contains("Yes") || button.name.Contains("Retry"))
             {
                 button.onClick.AddListener(resetLevel);
             }
@@ -169,7 +169,8 @@ public class LevelManager : MonoBehaviour
         else{
             gameOverText.text = "Are you alive ? The calculation were a bit odd";
         }
-        gameOverUI.SetActive(true);
+        //gameOverUI.SetActive(true);
+        victoryUI.SetActive(!victoryUI.activeSelf);
     }
 
     private void closeGameOverScreen()
