@@ -22,18 +22,18 @@ MonoBehaviour:
     - myList:
       - Bump
       - Hold
-      - Hold
-      - Hold
-    - myList:
-      - DashThrough
-      - DashThrough
-      - DashThrough
+      - GetPushed
       - Hold
     - myList:
-      - 
-      - 
-      - 
-      - 
+      - DashThrough
+      - DashThrough
+      - GetPushed
+      - Hold
+    - myList:
+      - Hold
+      - Hold
+      - Destroy
+      - Hold
     - myList:
       - Destroy
       - Destroy

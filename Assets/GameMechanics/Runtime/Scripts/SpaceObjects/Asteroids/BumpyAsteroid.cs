@@ -36,8 +36,9 @@ public class BumpyAsteroid : Asteroid, IInteractiveSpaceObject
             case "Destroy":
                 base.DestroyAsteroid();
                 break;
-            case "Get Pushed":
+            case "GetPushed":
                 Center = collision.gameObject.GetComponent<HeavyAsteroid>().GetPushed();
+                if (-_currentTerrainCellsize == 0.0f) _currentTerrainCellsize = FindObjectOfType<SpaceTerrain>().CellSize;
                 UpdateAsteroidTransform(_currentTerrainCellsize, _asteroidSpeed);
                 break;
             default:

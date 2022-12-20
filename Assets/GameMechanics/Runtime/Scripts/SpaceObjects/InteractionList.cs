@@ -54,6 +54,7 @@ public class InteractionList : ScriptableObject
         typeof(BumpyAsteroid).FullName,
         typeof(Spaceship).FullName,
         typeof(GhostAsteroid).FullName,
+        typeof(HeavyAsteroid).FullName,
     };
 
     public readonly string[][] knownTypesReactionFunctions = new string[][]
@@ -61,6 +62,7 @@ public class InteractionList : ScriptableObject
         BumpyAsteroid.ReactionFunctions,
         Spaceship.ReactionFunctions,
         GhostAsteroid.ReactionFunctions,
+        HeavyAsteroid.ReactionFunctions,
     };
 
     public List<string> InteractiveTypes { get => _interactiveTypes; set => _interactiveTypes = value; }
