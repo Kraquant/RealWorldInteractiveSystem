@@ -234,7 +234,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &44645097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73ff94dce031ec947badc2fea7eb014a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayBetweenTurns: 100
+  delayBetweenTurns: 20
 --- !u!114 &44645098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,7 +268,7 @@ MonoBehaviour:
   - {fileID: 458086291}
   - {fileID: 242252028}
   - {fileID: 1919578660}
-  turnCellTime: 100
+  turnCellTime: 20
   turnCellMat: {fileID: 2100000, guid: 0ef6aa917b87d974ca834fcab5d45e2b, type: 2}
 --- !u!114 &44645099
 MonoBehaviour:
@@ -1773,7 +1773,7 @@ MonoBehaviour:
   - {fileID: -1026180292, guid: 18c8020e45bcca74b8a5b1defe4cb0f8, type: 3}
   swipeAllowed: 0
   cameraManager: {fileID: 60355666}
-  gameManager: {fileID: 1315057946}
+  gameManager: {fileID: 44645097}
   gameOverText: {fileID: 259701250}
   asteroidMovesText: {fileID: 430832176}
   gameButtons:
@@ -6538,7 +6538,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1315057945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6556,7 +6556,7 @@ MonoBehaviour:
   - {fileID: 733507917}
   - {fileID: 1308962825}
   - {fileID: 1196110959}
-  turnCellTime: 20
+  turnCellTime: 1000
   turnCellMat: {fileID: 2100000, guid: 0ef6aa917b87d974ca834fcab5d45e2b, type: 2}
 --- !u!114 &1315057946
 MonoBehaviour:
@@ -6570,7 +6570,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73ff94dce031ec947badc2fea7eb014a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayBetweenTurns: 20
+  delayBetweenTurns: 50
 --- !u!114 &1315057947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8316,7 +8316,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: LEVEL 1
+  m_text: 'LEVEL 3
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}

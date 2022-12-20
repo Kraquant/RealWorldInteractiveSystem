@@ -28,12 +28,12 @@ public class SceneLoader : MonoBehaviour
     }
     void ButtonClicked(int buttonNo)
     {
-        //Debug.Log("You have clicked the button!");
         LoadScene(sceneName[buttonNo], buttonList[buttonNo].name);
     }
 
     private void LoadScene(string sceneName, string buttonName)
     {
+        Debug.Log("Loading scene");
         StartCoroutine(LoadLevel(sceneName, buttonName));
     }
 
@@ -48,6 +48,7 @@ public class SceneLoader : MonoBehaviour
         // Load Scene
         if (PlayerPrefs.GetInt("LoadSaved") == 1)
         {
+            Debug.Log("Loading previous level");
             if (buttonName == "Start Button")
             {
                 SceneManager.LoadScene(PlayerPrefs.GetInt("SavedScene"));

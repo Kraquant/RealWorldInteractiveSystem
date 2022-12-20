@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
-using Unity.Android.Types;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -171,7 +169,7 @@ public class LevelManager : MonoBehaviour
         else{
             gameOverText.text = "Are you alive ? The calculation were a bit odd";
         }
-        //gameOverUI.SetActive(true);
+        gameOverUI.SetActive(true);
     }
 
     private void closeGameOverScreen()
@@ -204,11 +202,13 @@ public class LevelManager : MonoBehaviour
         int nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;
         if(nextLevelIndex < SceneManager.sceneCountInBuildSettings)
         {
-            SceneManager.LoadScene("MainMenu");
+            Debug.Log("Loading next level");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
         else
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+            Debug.Log("No next level");
+            SceneManager.LoadScene("MainMenu");
         }
     }
 

@@ -1,13 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEditor.Graphs;
-using Codice.Client.Common.GameUI;
-using UnityEngine.InputSystem.EnhancedTouch;
 using System;
-using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 
 public class UserInput : MonoBehaviour
 {
