@@ -234,7 +234,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &44645097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1773,7 +1773,7 @@ MonoBehaviour:
   - {fileID: -1026180292, guid: 18c8020e45bcca74b8a5b1defe4cb0f8, type: 3}
   swipeAllowed: 0
   cameraManager: {fileID: 60355666}
-  gameManager: {fileID: 44645097}
+  gameManager: {fileID: 881072603}
   gameOverText: {fileID: 259701250}
   asteroidMovesText: {fileID: 430832176}
   gameButtons:
@@ -4348,7 +4348,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &881072603
 MonoBehaviour:
   m_ObjectHideFlags: 0

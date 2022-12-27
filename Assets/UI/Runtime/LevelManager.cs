@@ -172,8 +172,8 @@ public class LevelManager : MonoBehaviour
         else{
             gameOverText.text = "Are you alive ? The calculation were a bit odd";
         }
-        //gameOverUI.SetActive(true);
-        victoryUI.SetActive(!victoryUI.activeSelf);
+        gameOverUI.SetActive(true);
+        //victoryUI.SetActive(!victoryUI.activeSelf);
     }
 
     private void closeGameOverScreen()
