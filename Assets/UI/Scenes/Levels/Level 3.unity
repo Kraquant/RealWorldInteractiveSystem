@@ -282,7 +282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b999a143b2b0ab6488e47c3c19d9f1dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnNumber: 1
+  _turnNumber: 13
   playerActions: 
   asteroidsActions: 01000000010000000300000001000000030000000100000005000000020000000600000004000000060000000400000002000000
 --- !u!4 &44645100
