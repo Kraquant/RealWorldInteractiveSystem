@@ -90,7 +90,7 @@ MonoBehaviour:
     _q: 0
     _s: 0
   _orientation: 0
-  _interactionList: {fileID: 0}
+  _interactionList: {fileID: 11400000, guid: 8e8726c6b0495bd40a688f882ac22833, type: 2}
 --- !u!1 &3791388087405761533
 GameObject:
   m_ObjectHideFlags: 0

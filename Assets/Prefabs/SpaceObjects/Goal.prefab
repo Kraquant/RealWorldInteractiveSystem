@@ -52,6 +52,7 @@ MonoBehaviour:
     _q: 0
     _s: 0
   _orientation: 0
+  _interactionList: {fileID: 11400000, guid: 8e8726c6b0495bd40a688f882ac22833, type: 2}
 --- !u!58 &2211735000832626512
 CircleCollider2D:
   m_ObjectHideFlags: 0

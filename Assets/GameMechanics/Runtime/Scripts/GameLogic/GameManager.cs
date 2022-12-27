@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviour
         //The game is done playing the turns. If the win condition hasn't alreedy been called: the player lost
         IsPlaying = false;
         CurrentTurn = 0;
-        OnGameEnded?.Invoke(EndGameCondition.playerMissedGoal);
+        if (!IsGameOver) OnGameEnded?.Invoke(EndGameCondition.playerMissedGoal);
     }
     public void RequestLevelAbort()
     {

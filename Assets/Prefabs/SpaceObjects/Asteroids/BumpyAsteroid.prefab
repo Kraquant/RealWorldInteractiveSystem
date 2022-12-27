@@ -69,6 +69,7 @@ MonoBehaviour:
     _q: 0
     _s: 0
   _orientation: 0
+  _interactionList: {fileID: 11400000, guid: 8e8726c6b0495bd40a688f882ac22833, type: 2}
 --- !u!50 &2342535259511243306
 Rigidbody2D:
   serializedVersion: 4
