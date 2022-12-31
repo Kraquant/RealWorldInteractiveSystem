@@ -64,11 +64,10 @@ public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer, IInteractiveSpa
     public async Task<bool> UpdateSpaceObjectTransformAsync(float cellSize, float moveTime)
     {
         _targetPos = 2 * cellSize * Center.GetVector3Position();
-        _targetRot = Quaternion.FromToRotation(Vector3.right, HexCoordinates.direction_vectors[(int)ObjectOrientation].GetVector3Position());
+        _targetRot = OrientationToQuaternion(ObjectOrientation);
 
         _targetPosSpeed = Vector3.Distance(this.transform.position, _targetPos) / moveTime;
         _targetRotSpeed = Quaternion.Angle(this.transform.rotation, _targetRot) / moveTime;
-
 
         CancellationTokenSource cts = new CancellationTokenSource();
         _spaceshipMoving = true;
