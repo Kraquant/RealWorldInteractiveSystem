@@ -24,6 +24,9 @@ public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer, IInteractiveSpa
     private bool _isAlive;
     private bool _hasWon;
 
+    //Animation Controller
+    private Animator animator;
+
     //Spaceship movement
     private bool _spaceshipMoving;
     private float _targetPosSpeed;
@@ -38,6 +41,12 @@ public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer, IInteractiveSpa
         _hasWon = false;
         _isAlive = true;
     }
+
+    private void Start()
+    {
+        animator = GetComponentInChildren<Animator>();
+    }
+
     #region Play Turn
     public async Task<bool> PlayTurnAsync(TurnManager turnManager)
     {
@@ -53,8 +62,22 @@ public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer, IInteractiveSpa
                 await UpdateSpaceObjectTransformAsync(turnManager.Terrain.CellSize, .5f); // CellSizeToDefine;
                 break;
             case TurnManager.CollisionType.Terrain: //The space ship does not move
+                // Animation for Collide with Terrain
+                switch (NextAction)
+                {
+                    case Action.Front:
+                        animator.SetTrigger("collideTerrainFront");
+                        break;
+                    case Action.Left:
+                        animator.SetTrigger("collideTerrainLeft");
+                        break;
+                    case Action.Right:
+                        animator.SetTrigger("collideTerrainRight");
+                        break;
+                    default:
+                        throw new System.Exception("NextAction must be in [Front, Left, Right] when spaceship collide with terrain");
+                }
                 break;
-
             default:
                 break;
         }
@@ -89,6 +112,8 @@ public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer, IInteractiveSpa
             }
             else _spaceshipMoving = false;
         }
+
+        animator.SetBool("moving", _spaceshipMoving);
     }
     #endregion
 
