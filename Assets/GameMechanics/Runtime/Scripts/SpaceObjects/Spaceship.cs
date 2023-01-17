@@ -128,7 +128,10 @@ public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer, IInteractiveSpa
                 OnPlayerWin?.Invoke(); 
                 break;
             case "Destroy":
-                DestroySpaceObject();
+                GameManager gameManager = FindObjectOfType<GameManager>();
+                gameManager.IsPaused = true;
+                animator.SetTrigger("collideAsteroid");
+                // DestroySpaceObject();
                 break;
             default:
                 throw new System.NotImplementedException();
