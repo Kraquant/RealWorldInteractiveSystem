@@ -123,7 +123,7 @@ public class InteractionListEditor : Editor
         else
         {
             GUILayout.Label("Now editing : " + _reacOrderSelectedIndex.x + ";" + _reacOrderSelectedIndex.y);
-            string[] options = new string[] { "First", "Last", "Same" };
+            string[] options = new string[] { "First", "Last", "Same", ""};
             int popUpIndex = Array.FindIndex(options, t => t == _currentReacOrderOption);
             if (popUpIndex < 0) throw new System.NotImplementedException();
 

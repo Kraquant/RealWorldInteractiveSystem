@@ -50,7 +50,6 @@ public class TurnManager : MonoBehaviour
         IsPlayingTurn = true;
 
         ITurnBasedObject[][] itemsByPriority = SortItemsByPriority();
-
         foreach (ITurnBasedObject[] itemsList in itemsByPriority)
         {
             await ShowSpacePositionAsync(itemsList, turnCellTime);
@@ -69,7 +68,7 @@ public class TurnManager : MonoBehaviour
             });
             await Task.WhenAll(tasks);
         }
-
+        DestroyOutOfTerrainObjects();
         IsPlayingTurn = false;
         Debug.Log("Turn is over");
         return true;
@@ -106,6 +105,19 @@ public class TurnManager : MonoBehaviour
         //No collision found
         collision = CollisionType.None;
         collidedObject=null;
+    }
+    
+    private void DestroyOutOfTerrainObjects()
+    {
+        foreach (var so in _objects)
+        {
+            SpaceObject SOScript = (SpaceObject)so;
+            if (SOScript != null)
+            {
+                if (!Terrain.TerrainShape.Contains(SOScript.Center)) SOScript.DestroySpaceObject();
+            }
+        }
+        _objects = _objects.Where(c => c != null).ToArray(); // Clean List
     }
 
     private async Task<bool> ShowSpacePositionAsync(ITurnBasedObject[] items, int time)

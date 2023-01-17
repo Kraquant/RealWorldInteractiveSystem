@@ -19,7 +19,7 @@ public class HeavyAsteroid : Asteroid, IInteractiveSpaceObject
             case "Hold":
                 break;
             case "Destroy":
-                base.DestroyAsteroid();
+                base.DestroySpaceObject();
                 break;
             default:
                 throw new System.NotImplementedException();

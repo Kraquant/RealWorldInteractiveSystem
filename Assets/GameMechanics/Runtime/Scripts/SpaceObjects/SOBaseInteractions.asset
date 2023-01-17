@@ -17,28 +17,39 @@ MonoBehaviour:
   - GhostAsteroid
   - HeavyAsteroid
   - Spaceship
+  - LevelGoal
   _calledFunc:
     myMatrix:
     - myList:
       - Bump
+      - Bump
+      - Bump
       - Hold
-      - GetPushed
-      - Hold
+      - Bump
     - myList:
       - DashThrough
       - DashThrough
       - GetPushed
       - Hold
+      - DashThrough
     - myList:
       - Hold
       - Hold
       - Destroy
       - Hold
+      - Hold
     - myList:
       - Destroy
       - Destroy
       - Destroy
       - Destroy
+      - Win
+    - myList:
+      - Hold
+      - Hold
+      - GetPushed
+      - Hold
+      - Hold
   _callOrder:
     myMatrix:
     - myList:
@@ -46,18 +57,28 @@ MonoBehaviour:
       - Same
       - Same
       - Same
-    - myList:
-      - Same
-      - Same
-      - Same
       - Same
     - myList:
       - Same
       - Same
       - Same
       - Same
+      - Same
     - myList:
       - Same
       - Same
       - Same
       - Same
+      - Same
+    - myList:
+      - Same
+      - Same
+      - Same
+      - Same
+      - Same
+    - myList:
+      - Same
+      - Same
+      - Same
+      - Same
+      - 

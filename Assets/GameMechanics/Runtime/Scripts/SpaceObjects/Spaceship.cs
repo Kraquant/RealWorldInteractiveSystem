@@ -13,7 +13,7 @@ public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer, IInteractiveSpa
     public bool IsAlive => _isAlive;
     public bool HasWon => _hasWon;
 
-    public static string[] ReactionFunctions { get => new string[] { "Destroy" };}
+    public static string[] ReactionFunctions { get => new string[] { "Destroy", "Win" };}
     public InteractionList ReferencedList { get => _interactionList; set => _interactionList = value; }
     #endregion
 
@@ -100,15 +100,18 @@ public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer, IInteractiveSpa
 
         switch (interaction.Item1)
         {
+            case "Win":
+                OnPlayerWin?.Invoke(); 
+                break;
             case "Destroy":
-                Destroy();
+                DestroySpaceObject();
                 break;
             default:
                 throw new System.NotImplementedException();
         }
     }
 
-    private void Destroy()
+    public override void DestroySpaceObject()
     {
         OnPlayerDeath?.Invoke();
         Destroy(gameObject);
