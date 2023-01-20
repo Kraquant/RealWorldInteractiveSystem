@@ -49,6 +49,7 @@ public class BumpyAsteroid : Asteroid, IInteractiveSpaceObject
 
     private void Bump()
     {
+        if (!_asteroidMoving) return;
         Action spaceAction = InvertAction(AsteroidActionToSpaceAction(NextAsteroidAction));
         Center = PreviewNextCoordinate(spaceAction).Item1;
         UpdateAsteroidTransform(_currentTerrainCellsize, _asteroidSpeed);

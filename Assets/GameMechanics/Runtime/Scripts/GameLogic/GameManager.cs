@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 [RequireComponent(typeof(InputManager))]
@@ -23,8 +24,10 @@ public class GameManager : MonoBehaviour
     private TurnManager _turnManager;
     private bool _isPaused;
     private IPlayer _player;
+    private TaskCompletionSource<bool> _tcs;
 
     [Range(0, 1000)] public int delayBetweenTurns;
+    [SerializeField] bool _autoPlay = true;
     
     #endregion
     #region Properties
@@ -41,6 +44,9 @@ public class GameManager : MonoBehaviour
             OnGamePaused?.Invoke();
         }
     }
+
+    public bool AutoPlay { get => _autoPlay; }
+
     #endregion
     #region Events
     // Declare the event.
@@ -108,6 +114,12 @@ public class GameManager : MonoBehaviour
                 return;
             }
 
+            if (AutoPlay)
+            {
+                _tcs = new TaskCompletionSource<bool>();
+                await _tcs.Task;
+            }
+
             _inputManager.SetActions(CurrentTurn);
 
             await _turnManager.PlayTurnAsync();
@@ -121,6 +133,16 @@ public class GameManager : MonoBehaviour
         CurrentTurn = 0;
         if (!IsGameOver) OnGameEnded?.Invoke(EndGameCondition.playerMissedGoal);
     }
+
+    public void PlayGameTurn()
+    {
+        if (!IsPlaying) throw new System.Exception("There is no game currently playing");
+        if (IsGameOver) throw new System.Exception("The game is already over");
+        if (AutoPlay) throw new System.Exception("The game has been set to autoplay so you can not use this function");
+
+        _tcs.SetResult(true);
+    }
+
     public void RequestLevelAbort()
     {
         if (!IsPlaying) return;
