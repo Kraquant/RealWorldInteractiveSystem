@@ -20,8 +20,6 @@ public class LevelManager : MonoBehaviour
     // Scripts
     [SerializeField] ResponsiveCamera cameraManager;
     [SerializeField] GameManager gameManager;
-    private InputManager inputManager;
-
     // text
     [SerializeField] TextMeshProUGUI gameOverText;
     [SerializeField] TextMeshProUGUI asteroidMovesText;
@@ -33,72 +31,21 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
-        loadLevel();
+        ConfigureCamera();
         victoryUI.SetActive(false);
         editingUI.SetActive(false);
         gameOverUI.SetActive(false);
         resetUI.SetActive(false);
         gameOnGoing = false;
-    }
-
-    private void Start()
-    {
+  
         InputManager inputManager = FindObjectOfType<InputManager>();
-        GameManager GM = FindObjectOfType<GameManager>();
-        GM.OnGameEnded += GM_OnGameEnded;
-        //GM.OnGameStarted 
-
-        foreach (Button button in gameButtons)
-        {
-            if (button.name.Contains("Play Button"))
-            {
-                button.onClick.AddListener(playGame);
-            }
-            else if (button.name.Contains("Cancel"))
-            {
-                button.onClick.AddListener(cancelMovement);
-            }
-            else if (button.name.Contains("Reset") || (button.name.Contains("No")) || (button.name.Contains("Redo")))
-            {
-                button.onClick.AddListener(resetScreenOnOff);
-            }
-            else if (button.name.Contains("Activate"))
-            {
-                button.onClick.AddListener(() => allowSwipe(gameButtons.IndexOf(button)));
-                button.GetComponent<Image>().sprite = isOff[0];
-                swipeAllowed = false;
-            }
-            else if (button.name.Contains("Edit") || button.name.Contains("CloseEdit"))
-            {
-                button.onClick.AddListener(editingScreen);
-            }
-            else if (button.name.Contains("Yes") || button.name.Contains("Retry"))
-            {
-                button.onClick.AddListener(resetLevel);
-            }
-            else if (button.name.Contains("Continue"))
-            {
-                button.onClick.AddListener(nextLevel);
-            }
-            else if (button.name.Contains("CloseGameOver"))
-            {
-                button.onClick.AddListener(closeGameOverScreen);
-            }
-            else
-            {
-                Debug.Log("Cannot recognize button");
-            }
-        }
-
-        putAsteroidMovements(inputManager.asteroidsActions);
+        gameManager ??= FindObjectOfType<GameManager>();
+        gameManager.OnGameEnded += GM_OnGameEnded;
+        ConfigureButtons();
+        PutAsteroidMovements(inputManager.asteroidsActions);
     }
 
-    private void Update()
-    {
-        
-    }
-
-    private void putAsteroidMovements(List<Asteroid.AsteroidAction> asteroidActions)
+    private void PutAsteroidMovements(List<Asteroid.AsteroidAction> asteroidActions)
     {
         asteroidMovesText.text = "<sprite=\"Asteroids\" index=0>:";
 
@@ -130,8 +77,50 @@ public class LevelManager : MonoBehaviour
             
         }
     }
-
-
+    private void ConfigureButtons()
+    {
+        foreach (Button button in gameButtons)
+        {
+            if (button.name.Contains("Play Button"))
+            {
+                button.onClick.AddListener(PlayGame);
+            }
+            else if (button.name.Contains("Cancel"))
+            {
+                button.onClick.AddListener(CancelMovement);
+            }
+            else if (button.name.Contains("Reset") || (button.name.Contains("No")) || (button.name.Contains("Redo")))
+            {
+                button.onClick.AddListener(ResetScreenOnOff);
+            }
+            else if (button.name.Contains("Activate"))
+            {
+                button.onClick.AddListener(() => AllowSwipe(gameButtons.IndexOf(button)));
+                button.GetComponent<Image>().sprite = isOff[0];
+                swipeAllowed = false;
+            }
+            else if (button.name.Contains("Edit") || button.name.Contains("CloseEdit"))
+            {
+                button.onClick.AddListener(EditingScreen);
+            }
+            else if (button.name.Contains("Yes") || button.name.Contains("Retry"))
+            {
+                button.onClick.AddListener(ResetLevel);
+            }
+            else if (button.name.Contains("Continue"))
+            {
+                button.onClick.AddListener(NextLevel);
+            }
+            else if (button.name.Contains("CloseGameOver"))
+            {
+                button.onClick.AddListener(closeGameOverScreen);
+            }
+            else
+            {
+                Debug.Log("Cannot recognize button");
+            }
+        }
+    }
 
     #region GameEnded
 
@@ -185,9 +174,9 @@ public class LevelManager : MonoBehaviour
     #endregion
 
     #region Loading & Resetting Level
-    private void loadLevel()
+    private void ConfigureCamera()
     {
-        Debug.Log("Loading Level : Adapting Camera");
+        //Debug.Log("Loading Level : Adapting Camera");
         SpaceTerrain terrain = FindObjectOfType<SpaceTerrain>();
         Bounds terrainBounds = HexCoordinatesUtilities.GetBoundingBox(terrain.TerrainShape, terrain.CellSize);
         float extent = Mathf.Max(terrainBounds.extents.x, terrainBounds.extents.y);
@@ -196,12 +185,12 @@ public class LevelManager : MonoBehaviour
         cameraManager.AdaptCameraToTerrain(terrainBounds, 0.8f);
     }
 
-    private void resetLevel()
+    private void ResetLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    private void nextLevel()
+    private void NextLevel()
     {
         int nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;
         if(nextLevelIndex < SceneManager.sceneCountInBuildSettings)
@@ -219,7 +208,7 @@ public class LevelManager : MonoBehaviour
     #endregion
 
 
-    private void editingScreen(){
+    private void EditingScreen(){
         if (gameOnGoing)
         {
             Debug.Log("Tried to edit movements but game is on going");
@@ -230,7 +219,7 @@ public class LevelManager : MonoBehaviour
         }     
     }
 
-    private void playGame(){
+    private void PlayGame(){
 
         Debug.Log("Launching Game");
         UserInput userInput = FindObjectOfType<UserInput>();
@@ -253,31 +242,24 @@ public class LevelManager : MonoBehaviour
         gameManager.PlayGameAsync();
     }
 
-    private void resetScreenOnOff()
+    private void ResetScreenOnOff()
     {
         resetUI.SetActive(!resetUI.activeSelf);
     }
 
-    private void resetMovements(){
-        // Reset playerInputsList + Text
-        if (gameOnGoing)
-        {
-            Debug.Log("TBD");
-        }
-    }
-    private void allowSwipe(int buttonNo)
+    private void AllowSwipe(int buttonNo)
     {
         Button button = gameButtons[buttonNo];
         if (!swipeAllowed){
-            changeSpriteState(isOn, button);
+            ChangeSpriteState(isOn, button);
         }
         else {
-            changeSpriteState(isOff, button);
+            ChangeSpriteState(isOff, button);
         }
         swipeAllowed = !swipeAllowed;
     }
 
-    private void changeSpriteState(List<Sprite> sprites, Button button)
+    private void ChangeSpriteState(List<Sprite> sprites, Button button)
     {
         SpriteState myState;
         myState.pressedSprite = sprites[1];
@@ -285,7 +267,7 @@ public class LevelManager : MonoBehaviour
         button.spriteState = myState;
     }
 
-    private void cancelMovement(){
+    private void CancelMovement(){
         UserInput userInput = FindObjectOfType<UserInput>();
         if(gameOnGoing)
         {
