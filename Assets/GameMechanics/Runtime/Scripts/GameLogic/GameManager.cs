@@ -114,7 +114,7 @@ public class GameManager : MonoBehaviour
                 return;
             }
 
-            if (AutoPlay)
+            if (!AutoPlay)
             {
                 _tcs = new TaskCompletionSource<bool>();
                 await _tcs.Task;

@@ -248,6 +248,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delayBetweenTurns: 100
+  _autoPlay: 1
 --- !u!114 &44645098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1103,6 +1104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delayBetweenTurns: 100
+  _autoPlay: 1
 --- !u!114 &244608297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4612,6 +4614,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delayBetweenTurns: 50
+  _autoPlay: 1
 --- !u!114 &881072604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6828,6 +6831,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delayBetweenTurns: 20
+  _autoPlay: 1
 --- !u!114 &1315057947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8105,6 +8109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delayBetweenTurns: 100
+  _autoPlay: 1
 --- !u!4 &1569356110
 Transform:
   m_ObjectHideFlags: 0
@@ -8575,8 +8580,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: LEVEL 1
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7ebda50db7c33ca4886f0c928abbe063, type: 2}
+  m_sharedMaterial: {fileID: -6089451410726680732, guid: 7ebda50db7c33ca4886f0c928abbe063, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

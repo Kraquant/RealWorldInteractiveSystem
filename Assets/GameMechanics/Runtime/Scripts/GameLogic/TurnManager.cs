@@ -30,7 +30,7 @@ public class TurnManager : MonoBehaviour
     private void Start()
     {
         CreateInterfaceList();
-        Debug.Log("Number of objects: " + _objects.Length);
+        //Debug.Log("Number of objects: " + _objects.Length);
 
         _visualizerGO = new GameObject();
         _visualizerGO.name = "Turn Manager Visualizer";
