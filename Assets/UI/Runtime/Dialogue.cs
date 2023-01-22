@@ -136,56 +136,56 @@ public class Dialogue : MonoBehaviour
 
     #region Dialogue
 
-
+    
     private void loadText()
     {
         if(tutorialScene == 1)
         {
-            lines.Add("Welcome to Hamsteroid. I am your guide in this game, Ham. Let me explain you the game."); //0
-            lines.Add("In this game, you will be the spaceship and your goal will be to get to this planet."); //1
-            lines.Add("To get to the planet, you will have to move your spaceship in this kind of map where a cell is an hexagon."); //2
-            lines.Add("Your spaceship can move in FOUR possible way depending on ITS ORIENTATION. It can move ..."); //3
-            lines.Add("Forward ... By swiping up."); //4
-            lines.Add("On its left ... By swiping left."); //5
-            lines.Add("On its right ... By swiping right."); //6
-            lines.Add("And turn around. By swiping down."); //7
-            lines.Add("You should have also noticed that the spaceship orientation changes when you turn left, right or turn around. Remember that, this is an important aspect of the game."); //8
-            lines.Add("Now let's finish this level. Can you see how to end it ? "); //9
-            lines.Add("You have to move forward ..."); //10
+            lines.Add("Welcome to <color=#ff0000ff>Hamsteroid</color>. I am your <color=#ff0000ff>guide</color> in this game, <color=#ff0000ff>Ham</color>. Let me explain you the game."); //0
+            lines.Add("In this game, you will be the <color=#ff0000ff>spaceship</color> and your goal is to <color=#ff0000ff>get to the planet</color>."); //1
+            lines.Add("To get to the planet, you will have to <color=#ff0000ff>move your spaceship</color> in this kind of map where a cell is an <color=#ff0000ff>hexagon</color>."); //2
+            lines.Add("Your spaceship can move in <color=#ff0000ff>four</color> possible way depending on <color=#ff0000ff>its orientation</color>. It can move ..."); //3
+            lines.Add("<color=#ff0000ff>Forward</color> ... By swiping up."); //4
+            lines.Add("On <color=#ff0000ff>its left</color> ... By swiping left."); //5
+            lines.Add("On <color=#ff0000ff>its right</color> ... By swiping right."); //6
+            lines.Add("And <color=#ff0000ff>rotate by 180°</color>. By swiping down."); //7
+            lines.Add("You should have noticed that the spaceship <color=#ff0000ff>orientation changes</color> when you move. Remember that, this is an <color=#ff0000ff>important aspect</color> of the game."); //8
+            lines.Add("Now let's finish this level. Can you see how to get to the goal in color=#ff0000ff>just 2 moves</color> ?"); //9
+            lines.Add("First move forward ..."); //10
             lines.Add("Then turn right ... "); //11
             lines.Add("Easy, right ?"); //12
-            lines.Add("However, when you will be playing the game, it will not be like how I showed you."); //13
-            lines.Add("You will have a limited amount of moves and will have to plan all your movements ahead."); //14
+            lines.Add("However, when you will be playing the game, it's going to be <color=#ff0000ff>slightly different</color>."); //13
+            lines.Add("You will have a <color=#ff0000ff>limited amount of moves</color> and will have to <color=#ff0000ff>plan</color> all your movements ahead."); //14
 
-            lines.Add("In this game, you will also have to face some obstacles on your way called Asteroid"); //15
-            lines.Add("Until now, three of them have been discovered. Bumpy, Ghost and Heavy."); //16
-            lines.Add("I forgot what are their specificity but we have a manual that should guide you."); //17
+            lines.Add("In this game, you will also have to face some obstacles on your way called <color=#ff0000ff>Hamsteroid</color>."); //15
+            lines.Add("Until now, three of them have been discovered. <color=#ff0000ff>Bumpy</color>, <color=#ff0000ff>Ghost</color> and <color=#ff0000ff>Heavy</color>."); //16
+            lines.Add("I forgot what their <color=#ff0000ff>specificities</color> are but a <color=#ff0000ff>manual</color> explaining everything available through the main menu."); //17
 
-            lines.Add("They will be on your way to the goal and will move slightly differently."); // 18
-            lines.Add("Unlike the spaceship, the asteroids can move in its 6 direction detailed by numbered dots."); //19
+            lines.Add("They will be on your way to the goal and will move <color=#ff0000ff>slightly differently</color> than your spaceship."); // 18
+            lines.Add("Unlike the spaceship, the asteroids can move in its 6 direction detailed by <color=#ff0000ff>numbered dots</color>."); //19
             lines.Add("The position of the numbered dots will be the same, but depending on asteroids, it may rotate."); //20
 
-            lines.Add("Moreover, thanks to our super technology, all their movements can be analyzed. The number of dots explains the directon they will go. Here their movements are : 2, 4, 5, 6, 1, 3."); //21
+            lines.Add("Moreover, thanks to our <color=#ff0000ff>super technology</color>, all their movements can be analyzed. The number of dots explains the directon they will go. Here their movements are : 2, 4, 5, 6, 1, 3."); //21
             lines.Add("Let's see in action ..."); //22
 
 
-            lines.Add("I hope this has been clear. You can replay this guide if needed through the manual."); //23
+            lines.Add("I hope this has been clear. You can <color=#ff0000ff>replay</color> this guide if needed through the <color=#ff0000ff>manual</color>."); //23
             lines.Add("See you later"); // 24
         }
         if(tutorialScene == 2)
         {
-            lines.Add("This is the screen level you will be in. I will go through everything and explain how it works.");
+            lines.Add("This is the <color=#ff0000ff>screen level</color> you will be in. I will go through everything and explain how it <color=#ff0000ff>works</color>.");
             lines.Add("Above, you have the level number in the middle. You have two buttons. <color=#ff0000ff> Left </color>to go to the <color=#ff0000ff> Level Selector </color>and <color=#800080ff> Right </color>to go to the <color=#800080ff> Main Menu</color>.");
             lines.Add("Just below me is the <color=#ff0000ff> map level </color>. You should be able to recognize your <color=#ff0000ff> spaceship </color>and our <color=#ff0000ff> futur goal</color>.");
-            lines.Add("This panel allows you to know your current displacements and asteroids' movements.");
+            lines.Add("This panel allows you to know your <color=#ff0000ff>current displacements</color>, <color=#ff0000ff>plan</color> and <color=#ff0000ff>asteroids' movements</color>.");
             lines.Add("<color=#ff0000ff>Yours </color>are represented by <color=#ff0000ff> arrows </color>detailing the direction chosen. When swipipng, it will be registered here.");
             lines.Add("<color=#ff0000ff>Asteroids' </color>are reprented by <color=#ff0000ff> dots between 1 and 6 </color>also detailing how they are going to move.");
-            lines.Add("The small panel on the bottom left tells you how <color=#ff0000ff> many moves </color>left you have. For example, you have a total of 6 moves available.");
+            lines.Add("The small panel on the bottom left tells you how <color=#ff0000ff> many moves </color>left you have. For example, you have a total of <color=#ff0000ff>6 moves remaining</color> or <color=#ff0000ff>available</color>.");
             lines.Add("Below here are three other buttons.");
             lines.Add("The one on the <color=#ff0000ff>right </color>is to <color=#ff0000ff>reset </color>the level. If you are lost in your calculations, press it and restard again.");
             lines.Add("The <color=#ff0000ff>middle </color>one is to <color=#ff0000ff>caccel your last input</color> .");
             lines.Add("The last one on the <color=#ff0000ff>left </color>is to <color=#ff0000ff>start </color>the game. <color=#ff0000ff>After planning</color> ahead your movements, press this button to see if you got it right.");
-            lines.Add("Well I hope my explanations alone were clear ! If not, ask the creators directly !");
+            lines.Add("Well I hope my <color=#ff0000ff>explanations</color> alone were clear ! If not, ask the <color=#ff0000ff>creators</color> directly or replay the guide through the <color=#ff0000ff>manual</color>!");
             lines.Add("I wish you good luck and don't get us killed. I'd very thanksfull for that !");
         }
     }
