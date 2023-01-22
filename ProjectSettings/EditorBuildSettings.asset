@@ -15,12 +15,9 @@ EditorBuildSettings:
     path: Assets/UI/Scenes/Manual.unity
     guid: c80dec6f0d72fc84b932ded01d42869c
   - enabled: 1
-    path: Assets/UI/Scenes/Asteroids.unity
-    guid: b9d0030ba9cc601438eb8126fa4c5c96
-  - enabled: 0
     path: Assets/Scenes/Levels/Archives/LevelUI Old.unity
     guid: 0dca27c6540acad44bdaef461485e91e
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Levels/Archives/Background.unity
     guid: 13e9a1e3e87604f45bb30c548096974c
   - enabled: 1
