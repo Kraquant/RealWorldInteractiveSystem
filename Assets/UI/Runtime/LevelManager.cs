@@ -37,7 +37,8 @@ public class LevelManager : MonoBehaviour
         gameOverUI.SetActive(false);
         resetUI.SetActive(false);
         gameOnGoing = false;
-  
+        swipeAllowed = true;
+
         InputManager inputManager = FindObjectOfType<InputManager>();
         gameManager ??= FindObjectOfType<GameManager>();
         gameManager.OnGameEnded += GM_OnGameEnded;

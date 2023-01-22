@@ -23,6 +23,8 @@ public class ResponsiveCamera : MonoBehaviour
     [SerializeField] float cameraSpeed = 0.2f;
     private LevelManager _levelManager;
 
+    public bool tutorial;
+
     private void Awake()
     {
         _lerpFactor = 1.0f;
@@ -105,46 +107,51 @@ public class ResponsiveCamera : MonoBehaviour
             _lerpFactor += Time.deltaTime / _adaptTime;
         }
 
-        if (!_levelManager.swipeAllowed){
-            if (Input.touchCount == 2)
-            {
-                Touch firstTouch = Input.GetTouch(0);
-                Touch secondTouch = Input.GetTouch(1);
-
-                firstTouchPrevPos = firstTouch.position - firstTouch.deltaPosition;
-                secondTouchPrevPos = secondTouch.position - secondTouch.deltaPosition;
-
-                touchesPrevPosDifference = (firstTouchPrevPos - secondTouchPrevPos).magnitude;
-                touchesCurPosDifference = (firstTouch.position - secondTouch.position).magnitude;
-
-                zoomModifier = (firstTouch.deltaPosition - secondTouch.deltaPosition).magnitude * zoomModifierSpeed;
-
-                if (touchesPrevPosDifference > touchesCurPosDifference)
-                    _camera.orthographicSize += zoomModifier;
-                if (touchesPrevPosDifference < touchesCurPosDifference)
-                    _camera.orthographicSize -= zoomModifier;
-
-                _camera.orthographicSize = Mathf.Clamp(_camera.orthographicSize, 2f, 10f);
-            }
-            else if (Input.touchCount == 1)
-            {
-                Touch singleTouch = Input.GetTouch(0);
-                if(singleTouch.phase == TouchPhase.Began)
-                {
-                    lastPos = new Vector2(singleTouch.position.x, singleTouch.position.y);
-                }
-                if(singleTouch.phase == TouchPhase.Moved)
-                {
-                    newPos = new Vector2(singleTouch.position.x, singleTouch.position.y);
-                    movingDist = new Vector3(Mathf.Sign(lastPos.x - newPos.x)*cameraSpeed, Mathf.Sign(lastPos.y - newPos.y)*cameraSpeed, 0);
-                    Direction();
-                    _camera.transform.position += movingDist;
-                }
-            }
-        }
-        else
+        if(!tutorial)
         {
-            //_camera.transform.position = cameraInitPos;
+            if (!_levelManager.swipeAllowed)
+            {
+                if (Input.touchCount == 2)
+                {
+                    Touch firstTouch = Input.GetTouch(0);
+                    Touch secondTouch = Input.GetTouch(1);
+
+                    firstTouchPrevPos = firstTouch.position - firstTouch.deltaPosition;
+                    secondTouchPrevPos = secondTouch.position - secondTouch.deltaPosition;
+
+                    touchesPrevPosDifference = (firstTouchPrevPos - secondTouchPrevPos).magnitude;
+                    touchesCurPosDifference = (firstTouch.position - secondTouch.position).magnitude;
+
+                    zoomModifier = (firstTouch.deltaPosition - secondTouch.deltaPosition).magnitude * zoomModifierSpeed;
+
+                    if (touchesPrevPosDifference > touchesCurPosDifference)
+                        _camera.orthographicSize += zoomModifier;
+                    if (touchesPrevPosDifference < touchesCurPosDifference)
+                        _camera.orthographicSize -= zoomModifier;
+
+                    _camera.orthographicSize = Mathf.Clamp(_camera.orthographicSize, 2f, 10f);
+                }
+                else if (Input.touchCount == 1)
+                {
+                    Touch singleTouch = Input.GetTouch(0);
+                    if (singleTouch.phase == TouchPhase.Began)
+                    {
+                        lastPos = new Vector2(singleTouch.position.x, singleTouch.position.y);
+                    }
+                    if (singleTouch.phase == TouchPhase.Moved)
+                    {
+                        newPos = new Vector2(singleTouch.position.x, singleTouch.position.y);
+                        movingDist = new Vector3(Mathf.Sign(lastPos.x - newPos.x) * cameraSpeed, Mathf.Sign(lastPos.y - newPos.y) * cameraSpeed, 0);
+                        Direction();
+                        _camera.transform.position += movingDist;
+                    }
+                }
+            }
+            else
+            {
+                //_camera.transform.position = cameraInitPos;
+            }
         }
+        
     }
 }

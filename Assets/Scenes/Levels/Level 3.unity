@@ -358,7 +358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7eba2626ce6baf40911a84fd5f63d0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayMat: {fileID: 0}
+  displayMat: {fileID: 2100000, guid: 474bca73050c7614fb54b003bef9ce7e, type: 2}
 --- !u!114 &1569549582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -508,7 +508,7 @@ MonoBehaviour:
   _objectsGO:
   - {fileID: 399077971}
   turnCellTime: 100
-  turnCellMat: {fileID: 0}
+  turnCellMat: {fileID: 2100000, guid: 0ef6aa917b87d974ca834fcab5d45e2b, type: 2}
 --- !u!114 &2126908782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -523,4 +523,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _turnNumber: 8
   playerActions: 
-  asteroidsActions: 
+  asteroidsActions: 0000000000000000000000000000000000000000000000000000000000000000
