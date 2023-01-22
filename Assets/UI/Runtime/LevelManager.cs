@@ -54,22 +54,22 @@ public class LevelManager : MonoBehaviour
             switch (action)
             {
                 case Asteroid.AsteroidAction.O1:
-                    asteroidMovesText.text += " <sprite=\"AsteroidMoves\" index=0>|";
+                    asteroidMovesText.text += " <sprite=\"AsteroidMoves\" index=0>| ";
                     break;
                 case Asteroid.AsteroidAction.O2:
-                    asteroidMovesText.text += " <sprite=\"AsteroidMoves\" index=1>|";
+                    asteroidMovesText.text += " <sprite=\"AsteroidMoves\" index=1>| ";
                     break;
                 case Asteroid.AsteroidAction.O3:
-                    asteroidMovesText.text += " <sprite=\"AsteroidMoves\" index=2>|";
+                    asteroidMovesText.text += " <sprite=\"AsteroidMoves\" index=2>| ";
                     break;
                 case Asteroid.AsteroidAction.O4:
-                    asteroidMovesText.text += " <sprite=\"AsteroidMoves\" index=3>|";
+                    asteroidMovesText.text += " <sprite=\"AsteroidMoves\" index=3>| ";
                     break;
                 case Asteroid.AsteroidAction.O5:
-                    asteroidMovesText.text += " <sprite=\"AsteroidMoves\" index=4>|";
+                    asteroidMovesText.text += " <sprite=\"AsteroidMoves\" index=4>| ";
                     break;
                 case Asteroid.AsteroidAction.O6:
-                    asteroidMovesText.text += " <sprite=\"AsteroidMoves\" index=5>|";
+                    asteroidMovesText.text += " <sprite=\"AsteroidMoves\" index=5>| ";
                     break;
                 default:
                     break;

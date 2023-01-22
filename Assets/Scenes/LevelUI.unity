@@ -1601,10 +1601,10 @@ RectTransform:
   m_Father: {fileID: 1534809302}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.05, y: 0.10327596}
-  m_AnchorMax: {x: 0.95, y: 0.65000004}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0.000002861023}
+  m_AnchorMin: {x: 0.05, y: 0.036724042}
+  m_AnchorMax: {x: 0.95, y: 0.44025815}
+  m_AnchoredPosition: {x: 0, y: -1}
+  m_SizeDelta: {x: 0, y: -1.9999542}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &430832176
 MonoBehaviour:
@@ -1626,9 +1626,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '
-
-    <sprite="Asteroids" index=0>: '
+  m_text: '<sprite="Asteroids" index=0>: '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2473,10 +2471,10 @@ RectTransform:
   m_Father: {fileID: 1534809302}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.05, y: 0.723319}
-  m_AnchorMax: {x: 0.95, y: 0.84}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: -0.000002861023}
+  m_AnchorMin: {x: 0.05, y: 0.606724}
+  m_AnchorMax: {x: 0.95, y: 0.7968101}
+  m_AnchoredPosition: {x: 0, y: 1}
+  m_SizeDelta: {x: 0, y: 0.75370026}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &589431796
 MonoBehaviour:
