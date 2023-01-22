@@ -1299,7 +1299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73ff94dce031ec947badc2fea7eb014a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayBetweenTurns: 400
+  delayBetweenTurns: 100
   _autoPlay: 0
 --- !u!114 &645555524
 MonoBehaviour:
@@ -2269,7 +2269,7 @@ MonoBehaviour:
   - {fileID: 2092182060}
   - {fileID: 2092182060}
   - {fileID: 2092182060}
-  - {fileID: 1522532323}
+  - {fileID: 2092182060}
   - {fileID: 1522532323}
   movement: {fileID: 365164121}
   playerMap: {fileID: 622587988}

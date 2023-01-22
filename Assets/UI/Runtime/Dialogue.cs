@@ -156,7 +156,7 @@ public class Dialogue : MonoBehaviour
             lines.Add("Then turn right ... "); //11
             lines.Add("Easy, right ?"); //12
             lines.Add("However, when you will be playing the game, it's going to be <color=#ff0000ff>slightly different</color>. You will have a <color=#ff0000ff>limited amount of moves</color> and will have to <color=#ff0000ff>plan</color> all your movements ahead."); //13
-            lines.Add("Our spaceship neesd all the coordonate first before moving. Meaning that the spaceship <color=#ff0000ff>won't move as you swipe</color>. "); //14
+            lines.Add("Our spaceship needs all the coordonate first before moving. Meaning that the spaceship <color=#ff0000ff>won't move as you swipe</color>. "); //14
             lines.Add("You will need to <color=#ff0000ff>register all</color> your movements and <color=#ff0000ff>validate</color> your trajectory. Keep that in mind."); //15
             
             lines.Add("In this game, you will also have to face some obstacles on your way called <color=#ff0000ff>Hamsteroid</color>. Until now, three of them have been discovered. <color=#ff0000ff>Bumpy</color>, <color=#ff0000ff>Ghost</color> and <color=#ff0000ff>Heavy</color>."); //16
@@ -179,7 +179,6 @@ public class Dialogue : MonoBehaviour
 
 
             lines.Add("I hope this has been clear. You can <color=#ff0000ff>replay</color> this guide if needed through the <color=#ff0000ff>manual</color>."); //30
-            lines.Add("See you later"); // 31
         }
         if(tutorialScene == 2)
         {
@@ -237,7 +236,7 @@ public class Dialogue : MonoBehaviour
 
             if ((index <= 30) && (index >= 24))
             {
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(1.0f);
                 asteroidMap.PlayGameTurn();
                 yield return new WaitForSeconds(0.5f);
             }
