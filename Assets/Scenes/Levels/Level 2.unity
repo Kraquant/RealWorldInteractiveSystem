@@ -492,7 +492,7 @@ GameObject:
   - component: {fileID: 881072604}
   - component: {fileID: 881072603}
   m_Layer: 0
-  m_Name: Level test 2
+  m_Name: 'Level test 2 : New challenger appeared'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

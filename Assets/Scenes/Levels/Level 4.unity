@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 201467386}
   - component: {fileID: 201467385}
   m_Layer: 0
-  m_Name: New level
+  m_Name: 'Level 4 : Symphony'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
