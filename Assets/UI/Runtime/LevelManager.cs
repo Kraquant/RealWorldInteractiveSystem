@@ -8,7 +8,6 @@ public class LevelManager : MonoBehaviour
 {
     // UI
     [SerializeField] GameObject victoryUI;
-    [SerializeField] GameObject editingUI;
     [SerializeField] GameObject gameOverUI;
     [SerializeField] GameObject resetUI;
 
@@ -33,7 +32,6 @@ public class LevelManager : MonoBehaviour
     {
         ConfigureCamera();
         victoryUI.SetActive(false);
-        editingUI.SetActive(false);
         gameOverUI.SetActive(false);
         resetUI.SetActive(false);
         gameOnGoing = false;
@@ -98,10 +96,6 @@ public class LevelManager : MonoBehaviour
                 button.onClick.AddListener(() => AllowSwipe(gameButtons.IndexOf(button)));
                 button.GetComponent<Image>().sprite = isOff[0];
                 swipeAllowed = false;
-            }
-            else if (button.name.Contains("Edit") || button.name.Contains("CloseEdit"))
-            {
-                button.onClick.AddListener(EditingScreen);
             }
             else if (button.name.Contains("Yes") || button.name.Contains("Retry"))
             {
@@ -206,19 +200,6 @@ public class LevelManager : MonoBehaviour
     }
 
     #endregion
-
-
-    private void EditingScreen(){
-        if (gameOnGoing)
-        {
-            Debug.Log("Tried to edit movements but game is on going");
-        }
-        else
-        {
-            editingUI.SetActive(!editingUI.activeSelf);
-        }     
-    }
-
     private void PlayGame(){
 
         Debug.Log("Launching Game");

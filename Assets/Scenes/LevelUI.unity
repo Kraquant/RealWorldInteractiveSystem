@@ -1285,7 +1285,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   victoryUI: {fileID: 1839685560}
-  editingUI: {fileID: 0}
   gameOverUI: {fileID: 1547014548}
   resetUI: {fileID: 1012601604}
   isOn:
@@ -5148,8 +5147,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7ebda50db7c33ca4886f0c928abbe063, type: 2}
-  m_sharedMaterial: {fileID: -6089451410726680732, guid: 7ebda50db7c33ca4886f0c928abbe063, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
