@@ -2,14 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEditor.MPE;
-using Codice.Client.Common.GameUI;
-using UnityEngine.UI;
-using UnityEditorInternal;
-using static System.TimeZoneInfo;
-using static UnityEngine.UI.Selectable;
 using UnityEngine.SceneManagement;
-using UnityEngine.Windows.Speech;
 
 public class Dialogue : MonoBehaviour
 {
