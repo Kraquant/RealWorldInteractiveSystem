@@ -6,6 +6,10 @@ using UnityEditor.MPE;
 using Codice.Client.Common.GameUI;
 using UnityEngine.UI;
 using UnityEditorInternal;
+using static System.TimeZoneInfo;
+using static UnityEngine.UI.Selectable;
+using UnityEngine.SceneManagement;
+using UnityEngine.Windows.Speech;
 
 public class Dialogue : MonoBehaviour
 {
@@ -14,15 +18,29 @@ public class Dialogue : MonoBehaviour
     [SerializeField] GameObject pressText;
     [SerializeField] GameObject[] hiddenAnimations;
     [SerializeField] Animator movement;
+    [SerializeField] GameManager playerMap;
+    [SerializeField] GameManager asteroidMap;
 
+    [SerializeField] List<string> lines;
+
+    [SerializeField] Animator transition;
+    [SerializeField] GameObject mapAst;
+    [SerializeField] GameObject mapPlayer;
+
+
+    public float transitionTime;
     public float textSpeed;
-    public string[] lines;
+    public bool hasAnimation;
+    public bool noPlayer;
+    public int tutorialScene;
+
+
 
     private int index;
     private bool proceedNext = false;
     private bool fadingIn, fadingOut;
     private bool animating;
-    private bool Up, UpToDown, DownToCenter;
+    private bool Up, CenterToDown, DownToCenter, UpToCenter;
 
     // Start is called before the first frame update
     void Start()
@@ -31,8 +49,20 @@ public class Dialogue : MonoBehaviour
         fadingOut = false;
         text.text = string.Empty;
         animating = false;
-        Up = false; UpToDown = false; DownToCenter = false;
+        Up = false; CenterToDown = false; DownToCenter = false; UpToCenter = false;
+
+        asteroidMap.OnGameEnded += GM_OnGameEnded;
+        playerMap.OnGameEnded += GM_OnGameEnded;
+        if (noPlayer)
+        {
+            playerMap.PlayGameAsync();
+        }
         startDialogue();
+    }
+
+    private void GM_OnGameEnded(GameManager.EndGameCondition endCondition)
+    {
+        Debug.Log("Game Ended");
     }
 
     // Update is called once per frame
@@ -47,14 +77,21 @@ public class Dialogue : MonoBehaviour
                 fadingIn = true;
                 animating = false;
             }
-            else if(movement.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f && (movement.GetCurrentAnimatorStateInfo(0).IsName("ExplanationUpToDown")) && !UpToDown){
-                UpToDown = true;
+            else if (movement.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f && (movement.GetCurrentAnimatorStateInfo(0).IsName("ExplanationCenterToDown")) && !CenterToDown)
+            {
+                CenterToDown = true;
                 fadingIn = true;
                 animating = false;
             }
-            else if(movement.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f && (movement.GetCurrentAnimatorStateInfo(0).IsName("ExplanationDownToCenter")) && !DownToCenter)
+            else if (movement.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f && (movement.GetCurrentAnimatorStateInfo(0).IsName("ExplanationDownToCenter")) && !DownToCenter)
             {
                 DownToCenter = true;
+                fadingIn = true;
+                animating = false;
+            }
+            else if (movement.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f && (movement.GetCurrentAnimatorStateInfo(0).IsName("ExplanationUpToCenter")) && !UpToCenter)
+            {
+                UpToCenter = true;
                 fadingIn = true;
                 animating = false;
             }
@@ -78,37 +115,33 @@ public class Dialogue : MonoBehaviour
             if (bubble.alpha > 0)
             {
                 bubble.alpha -= Time.deltaTime;
-                if(bubble.alpha == 0)
+                if (bubble.alpha == 0)
                 {
                     fadingOut = false;
-                    elementsManager();
-                    if (text.text == lines[index])
-                    {
-                        nextLine();
-                    }
-                    else
-                    {
-                        StopAllCoroutines();
-                        text.text = lines[index];
-                    }
+                    loadNextLine();
                 }
             }
         }
 
         if (Input.GetMouseButtonDown(0) && proceedNext && !animating)
         {
-            fadingOut = true;
+            if (hasAnimation)
+            {
+                fadingOut = true; ;
+            }
+            else
+            {
+                loadNextLine();
+            }
         }
     }
 
     #region Dialogue
 
-<<<<<<< HEAD
-=======
-    
+
     private void loadText()
     {
-        if(tutorialScene == 1)
+        if (tutorialScene == 1)
         {
             lines.Add("Welcome to <color=#800080ff>Hamsteroid</color>. My name is <color=#800080ff>Ham</color> and I'll be your guide in this adventure"); //0
             lines.Add("In this game, you will be the <color=#800080ff>spaceship</color> and your goal is to <color=#800080ff>get to the planet</color>."); //1
@@ -126,10 +159,10 @@ public class Dialogue : MonoBehaviour
             lines.Add("However, when you will be playing, it's going to be <color=#800080ff>slightly different</color>. You will have a <color=#800080ff>limited amount of moves</color>."); //13
             lines.Add("Plus the spaceship <color=#800080ff>won't move as you swipe</color>. "); //14
             lines.Add("You will need to <color=#800080ff>register all</color> your movements and <color=#800080ff>validate</color> your trajectory. Keep that in mind."); //15
-            
+
             lines.Add("In this game, you will also have to face some obstacles on your way called <color=#800080ff>Steroids</color>. Until now, three of them have been discovered. <color=#800080ff>Bumpy</color>, <color=#800080ff>Ghost</color> and <color=#800080ff>Heavy</color>."); //16
             lines.Add("I forgot what their <color=#800080ff>specificities</color> are but a <color=#800080ff>manual</color> explaining everything is available through the main menu."); //17
-            
+
             lines.Add("They will be in your way to the goal and will move <color=#800080ff>slightly differently</color> than your spaceship."); // 18
             lines.Add("Unlike the spaceship, the steroids can move in 6 directions detailed by <color=#800080ff>numbered dots</color>."); //19
             lines.Add("The position of the numbered dots will be the same, but steroids way be rotated."); //20
@@ -148,7 +181,7 @@ public class Dialogue : MonoBehaviour
 
             lines.Add("I hope this has been clear. You can <color=#800080ff>replay</color> this guide if needed through the <color=#800080ff>manual</color>."); //30
         }
-        if(tutorialScene == 2)
+        if (tutorialScene == 2)
         {
             lines.Add("This is the <color=#800080ff>screen level</color> you will be in. I will go through everything and explain how it <color=#800080ff>works</color>.");
             lines.Add("Above, you have the level number in the middle. You have two buttons. <color=#800080ff> Left </color>to go to the <color=#800080ff> Level Selector </color>and <color=#800080ff> Right </color>to go to the <color=#800080ff> Main Menu</color>.");
@@ -166,9 +199,9 @@ public class Dialogue : MonoBehaviour
         }
     }
 
->>>>>>> master
     void startDialogue()
     {
+        loadText();
         index = 0;
         StartCoroutine(TypeLine());
     }
@@ -181,15 +214,65 @@ public class Dialogue : MonoBehaviour
             text.text += c;
             yield return new WaitForSeconds(textSpeed);
         }
+
+        if (noPlayer)
+        {
+            if ((index <= 7) && (index >= 4) || (index == 10) || (index == 11))
+            {
+                yield return new WaitForSeconds(0.5f);
+                playerMap.PlayGameTurn();
+                yield return new WaitForSeconds(0.5f);
+            }
+
+            if (index == 13)
+            {
+                mapPlayer.SetActive(false);
+                mapAst.SetActive(true);
+            }
+
+            if (index == 22)
+            {
+                asteroidMap.PlayGameAsync();
+            }
+
+            if ((index <= 30) && (index >= 24))
+            {
+                yield return new WaitForSeconds(1.0f);
+                asteroidMap.PlayGameTurn();
+                yield return new WaitForSeconds(0.5f);
+            }
+        }
+
         proceedNext = true;
         pressText.SetActive(true);
     }
     void nextLine()
     {
-        if (index < lines.Length - 1)
+        if (index < lines.Count - 1)
         {
             index++;
             text.text = string.Empty;
+            if (!hasAnimation)
+            {
+                StartCoroutine(TypeLine());
+            }
+        }
+        else
+        {
+            nextScene();
+        }
+    }
+
+    void loadNextLine()
+    {
+        elementsManager();
+        if (text.text == lines[index])
+        {
+            nextLine();
+        }
+        else
+        {
+            StopAllCoroutines();
         }
     }
     #endregion
@@ -199,31 +282,74 @@ public class Dialogue : MonoBehaviour
     private void elementsManager()
     {
         pressText.SetActive(false);
-        hiddenAnimations[index].SetActive(false);
-        animating = true;
-
-        switch (index)
+        if (index < lines.Count - 1)
         {
-            case 0:
-                movement.SetInteger("Position", 1);
-                break;
-            case 2:
-                movement.SetInteger("Position", 2);
-                break;
-            default:
-                fadingIn = true;
-                animating = false;
-                break;
+            if (!(hiddenAnimations[index].name == hiddenAnimations[index + 1].name))
+            {
+                hiddenAnimations[index].SetActive(false);
+            }
+        }
+        if (hasAnimation)
+        {
+            animating = true;
+
+            switch (index)
+            {
+                case 0:
+                    movement.SetInteger("Position", 1);
+                    break;
+                case 2:
+                    movement.SetInteger("Position", 2);
+                    break;
+                case 6:
+                    movement.SetInteger("Position", 3);
+                    break;
+                case 10:
+                    movement.SetInteger("Position", 4);
+                    break;
+                default:
+                    fadingIn = true;
+                    animating = false;
+                    break;
+            }
+        }
+        else
+        {
+            fadingIn = true;
+        }
+
+    }
+
+    public void nextScene()
+    {
+        Debug.Log("Loading scene");
+        StartCoroutine(LoadLevel());
+    }
+
+    IEnumerator LoadLevel()
+    {
+        // Play Animation
+        transition.SetTrigger("Start");
+
+        // Wait
+        yield return new WaitForSeconds(transitionTime);
+
+        // Load Scene
+        int nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        if (nextLevelIndex < SceneManager.sceneCountInBuildSettings)
+        {
+            Debug.Log("Loading next level");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+        else
+        {
+            Debug.Log("No next level");
+            SceneManager.LoadScene("MainMenu");
         }
     }
 
-    void startFadeIn()
-    {
-    }
-    void startFadeOut(){
-    }
-
     #endregion
+
 }
 
 
