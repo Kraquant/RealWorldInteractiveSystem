@@ -104,7 +104,7 @@ public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer, IInteractiveSpa
     {
         if (_spaceshipMoving)
         {
-            if (transform.position != _targetPos || transform.rotation != _targetRot)
+            if (transform.position != _targetPos || !(transform.rotation == _targetRot || transform.rotation == new Quaternion(-_targetRot.x, -_targetRot.y, -_targetRot.z, -_targetRot.w)))
             {
                 transform.SetPositionAndRotation(
                     Vector3.MoveTowards(transform.position, _targetPos, _targetPosSpeed * Time.deltaTime),

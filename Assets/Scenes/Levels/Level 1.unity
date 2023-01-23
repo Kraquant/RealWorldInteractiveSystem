@@ -366,7 +366,7 @@ MonoBehaviour:
   _terrain: {fileID: 299647808}
   _objectsGO:
   - {fileID: 475868810}
-  turnCellTime: 100
+  turnCellTime: 200
   turnCellMat: {fileID: 2100000, guid: 0ef6aa917b87d974ca834fcab5d45e2b, type: 2}
 --- !u!114 &643729427
 MonoBehaviour:

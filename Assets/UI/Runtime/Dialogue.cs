@@ -125,6 +125,7 @@ public class Dialogue : MonoBehaviour
             else
             {
                 loadNextLine();
+                
             }
         }
     }

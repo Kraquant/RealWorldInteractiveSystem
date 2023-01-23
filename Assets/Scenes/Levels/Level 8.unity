@@ -1170,7 +1170,7 @@ MonoBehaviour:
   - {fileID: 1770375467}
   - {fileID: 752637932}
   - {fileID: 1271748899}
-  turnCellTime: 100
+  turnCellTime: 200
   turnCellMat: {fileID: 2100000, guid: 0ef6aa917b87d974ca834fcab5d45e2b, type: 2}
 --- !u!114 &2013734201
 MonoBehaviour:
