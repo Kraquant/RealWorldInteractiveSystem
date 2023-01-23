@@ -181,7 +181,11 @@ public class TurnManager : MonoBehaviour
         int currentOrder = sortedObjects.First().TurnPriority;
         foreach (ITurnBasedObject item in sortedObjects)
         {
-            if (item.TurnPriority != currentOrder) itemsByPriority.Add(new List<ITurnBasedObject>());
+            if (item.TurnPriority != currentOrder)
+            {
+                itemsByPriority.Add(new List<ITurnBasedObject>());
+                currentOrder= item.TurnPriority;
+            }
             itemsByPriority.Last().Add(item);
         }
         return Utilities.ToArrayArray(itemsByPriority);
