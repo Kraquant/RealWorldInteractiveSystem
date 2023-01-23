@@ -52,9 +52,10 @@ public class TurnManager : MonoBehaviour
         ITurnBasedObject[][] itemsByPriority = SortItemsByPriority();
         foreach (ITurnBasedObject[] itemsList in itemsByPriority)
         {
-            await ShowSpacePositionAsync(itemsList, turnCellTime);
+            var itemsListC = itemsList.Where(c => c != null).ToArray();// Cleaned items list
 
-            IEnumerable<Task> tasks = itemsList.Select(async item =>
+            await ShowSpacePositionAsync(itemsListC, turnCellTime);
+            IEnumerable<Task> tasks = itemsListC.Select(async item =>
             {
                 try
                 {
@@ -67,6 +68,7 @@ public class TurnManager : MonoBehaviour
                 }
             });
             await Task.WhenAll(tasks);
+            DestroyOutOfTerrainObjects();
         }
         DestroyOutOfTerrainObjects();
         IsPlayingTurn = false;
