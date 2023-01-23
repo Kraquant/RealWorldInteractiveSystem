@@ -2,14 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEditor.MPE;
-using Codice.Client.Common.GameUI;
-using UnityEngine.UI;
-using UnityEditorInternal;
-using static System.TimeZoneInfo;
-using static UnityEngine.UI.Selectable;
 using UnityEngine.SceneManagement;
-using UnityEngine.Windows.Speech;
 
 public class Dialogue : MonoBehaviour
 {
@@ -34,7 +27,7 @@ public class Dialogue : MonoBehaviour
     public bool noPlayer;
     public int tutorialScene;
 
-
+    
 
     private int index;
     private bool proceedNext = false;
@@ -65,7 +58,7 @@ public class Dialogue : MonoBehaviour
         Debug.Log("Game Ended");
     }
 
-    // Update is called once per frame
+        // Update is called once per frame
     void Update()
     {
         if (animating)
@@ -77,13 +70,13 @@ public class Dialogue : MonoBehaviour
                 fadingIn = true;
                 animating = false;
             }
-            else if (movement.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f && (movement.GetCurrentAnimatorStateInfo(0).IsName("ExplanationCenterToDown")) && !CenterToDown)
+            else if(movement.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f && (movement.GetCurrentAnimatorStateInfo(0).IsName("ExplanationCenterToDown")) && !CenterToDown)
             {
                 CenterToDown = true;
                 fadingIn = true;
                 animating = false;
             }
-            else if (movement.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f && (movement.GetCurrentAnimatorStateInfo(0).IsName("ExplanationDownToCenter")) && !DownToCenter)
+            else if(movement.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f && (movement.GetCurrentAnimatorStateInfo(0).IsName("ExplanationDownToCenter")) && !DownToCenter)
             {
                 DownToCenter = true;
                 fadingIn = true;
@@ -125,9 +118,9 @@ public class Dialogue : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && proceedNext && !animating)
         {
-            if (hasAnimation)
-            {
-                fadingOut = true; ;
+            proceedNext = false;
+            if (hasAnimation) {
+                fadingOut = true;
             }
             else
             {
@@ -138,10 +131,10 @@ public class Dialogue : MonoBehaviour
 
     #region Dialogue
 
-
+    
     private void loadText()
     {
-        if (tutorialScene == 1)
+        if(tutorialScene == 1)
         {
             lines.Add("Welcome to <color=#800080ff>Hamsteroid</color>. My name is <color=#800080ff>Ham</color> and I'll be your guide in this adventure"); //0
             lines.Add("In this game, you will be the <color=#800080ff>spaceship</color> and your goal is to <color=#800080ff>get to the planet</color>."); //1
@@ -159,10 +152,10 @@ public class Dialogue : MonoBehaviour
             lines.Add("However, when you will be playing, it's going to be <color=#800080ff>slightly different</color>. You will have a <color=#800080ff>limited amount of moves</color>."); //13
             lines.Add("Plus the spaceship <color=#800080ff>won't move as you swipe</color>. "); //14
             lines.Add("You will need to <color=#800080ff>register all</color> your movements and <color=#800080ff>validate</color> your trajectory. Keep that in mind."); //15
-
+            
             lines.Add("In this game, you will also have to face some obstacles on your way called <color=#800080ff>Steroids</color>. Until now, three of them have been discovered. <color=#800080ff>Bumpy</color>, <color=#800080ff>Ghost</color> and <color=#800080ff>Heavy</color>."); //16
             lines.Add("I forgot what their <color=#800080ff>specificities</color> are but a <color=#800080ff>manual</color> explaining everything is available through the main menu."); //17
-
+            
             lines.Add("They will be in your way to the goal and will move <color=#800080ff>slightly differently</color> than your spaceship."); // 18
             lines.Add("Unlike the spaceship, the steroids can move in 6 directions detailed by <color=#800080ff>numbered dots</color>."); //19
             lines.Add("The position of the numbered dots will be the same, but steroids way be rotated."); //20
@@ -181,7 +174,7 @@ public class Dialogue : MonoBehaviour
 
             lines.Add("I hope this has been clear. You can <color=#800080ff>replay</color> this guide if needed through the <color=#800080ff>manual</color>."); //30
         }
-        if (tutorialScene == 2)
+        if(tutorialScene == 2)
         {
             lines.Add("This is the <color=#800080ff>screen level</color> you will be in. I will go through everything and explain how it <color=#800080ff>works</color>.");
             lines.Add("Above, you have the level number in the middle. You have two buttons. <color=#800080ff> Left </color>to go to the <color=#800080ff> Level Selector </color>and <color=#800080ff> Right </color>to go to the <color=#800080ff> Main Menu</color>.");
@@ -215,7 +208,7 @@ public class Dialogue : MonoBehaviour
             yield return new WaitForSeconds(textSpeed);
         }
 
-        if (noPlayer)
+        if(noPlayer)
         {
             if ((index <= 7) && (index >= 4) || (index == 10) || (index == 11))
             {
@@ -317,7 +310,7 @@ public class Dialogue : MonoBehaviour
         {
             fadingIn = true;
         }
-
+        
     }
 
     public void nextScene()
