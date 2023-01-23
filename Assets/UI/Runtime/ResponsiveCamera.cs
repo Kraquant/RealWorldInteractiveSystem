@@ -104,7 +104,7 @@ public class ResponsiveCamera : MonoBehaviour
             _lerpFactor += Time.deltaTime / _adaptTime;
         }
 
-        if (!_levelManager.swipeAllowed){
+        /*if (!_levelManager.swipeAllowed){
             if (Input.touchCount == 2)
             {
                 Touch firstTouch = Input.GetTouch(0);
@@ -144,6 +144,6 @@ public class ResponsiveCamera : MonoBehaviour
         else
         {
             //_camera.transform.position = cameraInitPos;
-        }
+        }*/
     }
 }
