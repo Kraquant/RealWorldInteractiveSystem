@@ -152,17 +152,17 @@ public class Dialogue : MonoBehaviour
             lines.Add("And <color=#ff0000ff>rotate by 180 degrees</color>. By swiping down."); //7
             lines.Add("You should have noticed that the spaceship <color=#ff0000ff>orientation changes</color> when you move. Remember that, this is an <color=#ff0000ff>important aspect</color> of the game."); //8
             lines.Add("Now let's finish this level. Can you see how to get to the goal in <color=#ff0000ff>just 2 moves</color> ?"); //9
-            lines.Add("First move forward ..."); //10
-            lines.Add("Then turn right ... "); //11
+            lines.Add("First move forward (swipe up)..."); //10
+            lines.Add("Then turn right (swipe right)... "); //11
             lines.Add("Easy, right ?"); //12
             lines.Add("However, when you will be playing the game, it's going to be <color=#ff0000ff>slightly different</color>. You will have a <color=#ff0000ff>limited amount of moves</color> and will have to <color=#ff0000ff>plan</color> all your movements ahead."); //13
-            lines.Add("Our spaceship needs all the coordonate first before moving. Meaning that the spaceship <color=#ff0000ff>won't move as you swipe</color>. "); //14
+            lines.Add("Our spaceship needs all the displacements first before moving. Meaning that the spaceship <color=#ff0000ff>won't move as you swipe</color>. "); //14
             lines.Add("You will need to <color=#ff0000ff>register all</color> your movements and <color=#ff0000ff>validate</color> your trajectory. Keep that in mind."); //15
             
             lines.Add("In this game, you will also have to face some obstacles on your way called <color=#ff0000ff>Hamsteroid</color>. Until now, three of them have been discovered. <color=#ff0000ff>Bumpy</color>, <color=#ff0000ff>Ghost</color> and <color=#ff0000ff>Heavy</color>."); //16
-            lines.Add("I forgot what their <color=#ff0000ff>specificities</color> are but a <color=#ff0000ff>manual</color> explaining everything available through the main menu."); //17
+            lines.Add("I forgot what their <color=#ff0000ff>specificities</color> are but a <color=#ff0000ff>manual</color> explaining everything is available through the main menu."); //17
             
-            lines.Add("They will be on your way to the goal and will move <color=#ff0000ff>slightly differently</color> than your spaceship."); // 18
+            lines.Add("They will be in your way to the goal and will move <color=#ff0000ff>slightly differently</color> than your spaceship."); // 18
             lines.Add("Unlike the spaceship, the asteroids can move in its 6 direction detailed by <color=#ff0000ff>numbered dots</color>."); //19
             lines.Add("The position of the numbered dots will be the same, but depending on asteroids, it may rotate."); //20
             //2, 4, 5, 6, 1, 3
