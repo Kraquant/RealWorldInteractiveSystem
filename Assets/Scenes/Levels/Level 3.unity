@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 374865842}
   - component: {fileID: 374865841}
   m_Layer: 0
-  m_Name: 'Level 5 : Out of bounds'
+  m_Name: 'Level 3 : Out of bounds'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

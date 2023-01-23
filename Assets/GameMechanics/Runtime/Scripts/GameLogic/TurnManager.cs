@@ -3,6 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using SpaceUtilities;
+using System.Net;
+using UnityEngine.Analytics;
 
 public class TurnManager : MonoBehaviour
 {
@@ -58,8 +60,10 @@ public class TurnManager : MonoBehaviour
             {
                 try
                 {
-                    await item.PlayTurnAsync(this);
-
+                    if(item != null)
+                    {
+                        await item.PlayTurnAsync(this);
+                    }
                 }
                 catch (System.Exception e)
                 {
