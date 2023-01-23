@@ -108,7 +108,7 @@ public class Dialogue : MonoBehaviour
             if (bubble.alpha > 0)
             {
                 bubble.alpha -= Time.deltaTime;
-                if(bubble.alpha == 0)
+                if (bubble.alpha == 0)
                 {
                     fadingOut = false;
                     loadNextLine();
@@ -118,8 +118,9 @@ public class Dialogue : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && proceedNext && !animating)
         {
+            proceedNext = false;
             if (hasAnimation) {
-                fadingOut = true;;
+                fadingOut = true;
             }
             else
             {
