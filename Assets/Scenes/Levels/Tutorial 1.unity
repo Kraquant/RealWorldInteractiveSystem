@@ -465,6 +465,7 @@ GameObject:
   - component: {fileID: 354402989}
   - component: {fileID: 354402992}
   - component: {fileID: 354402991}
+  - component: {fileID: 354402993}
   m_Layer: 5
   m_Name: 'Map : Spaceship & Planet'
   m_TagString: Untagged
@@ -607,6 +608,20 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &354402993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 354402987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaeca28b11bef9a45a853d02511aae6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraManager: {fileID: 429631586}
+  gameManager: {fileID: 622587988}
 --- !u!1 &355720547
 GameObject:
   m_ObjectHideFlags: 0
@@ -2312,7 +2327,7 @@ MonoBehaviour:
   mapAst: {fileID: 645555522}
   mapPlayer: {fileID: 622587987}
   transitionTime: 0.3
-  textSpeed: 0.01
+  textSpeed: 0.001
   hasAnimation: 0
   noPlayer: 1
   tutorialScene: 1
@@ -3295,6 +3310,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1713861331}
+  - component: {fileID: 1713861332}
   m_Layer: 5
   m_Name: Asteroids with dots
   m_TagString: Untagged
@@ -3324,6 +3340,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1713861332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1713861330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaeca28b11bef9a45a853d02511aae6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraManager: {fileID: 429631586}
+  gameManager: {fileID: 645555523}
 --- !u!1 &1792181071
 GameObject:
   m_ObjectHideFlags: 0

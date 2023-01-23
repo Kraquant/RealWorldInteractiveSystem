@@ -14,9 +14,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/UI/Scenes/Manual.unity
     guid: c80dec6f0d72fc84b932ded01d42869c
-  - enabled: 0
-    path: Assets/Scenes/Levels/Archives/Background.unity
-    guid: 13e9a1e3e87604f45bb30c548096974c
   - enabled: 1
     path: Assets/UI/Scenes/Asteroids.unity
     guid: b9d0030ba9cc601438eb8126fa4c5c96
@@ -27,11 +24,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Levels/Tutorial 1.unity
     guid: 177cecaa4ebc0814aada2426a30f41cc
   - enabled: 1
-    path: Assets/Scenes/Levels/Tutorial_Moves.unity
-    guid: 73427747a7452f845ad650314c82dd32
-  - enabled: 1
-    path: Assets/Scenes/Levels/Tutorial_Rules.unity
-    guid: 86246b86d02d11b47b80ad6aa721c8e3
+    path: Assets/Scenes/Levels/Tutorial 2.unity
+    guid: ddbadaaa8936ac444bf6c9c1202a938a
   - enabled: 1
     path: Assets/Scenes/Levels/Level 1.unity
     guid: bc99ab9b6cd39634c96266e14b2ebd4d
@@ -48,12 +42,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Levels/Level 5.unity
     guid: 260d8c72c995b4247a9e3103e56c5a8a
   - enabled: 1
+    path: Assets/Scenes/Levels/Level 6.unity
+    guid: b55d77d565ff2e34b98d59d34b611d34
+  - enabled: 1
     path: Assets/Scenes/Levels/Level 7.unity
     guid: 249bc1ca40b20fa4788e5b74d9160021
   - enabled: 1
     path: Assets/Scenes/Levels/Level 8.unity
     guid: 169c938672bcec84ca8f01938ead987b
-  - enabled: 1
-    path: Assets/Scenes/Levels/Level 6.unity
-    guid: b55d77d565ff2e34b98d59d34b611d34
   m_configObjects: {}
