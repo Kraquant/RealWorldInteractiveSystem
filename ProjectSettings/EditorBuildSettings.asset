@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/Level 3.unity
     guid: e10bf176140cce74e982a163c3620908
+  - enabled: 1
+    path: Assets/UI/Scenes/Asteroids.unity
+    guid: b9d0030ba9cc601438eb8126fa4c5c96
   m_configObjects: {}
