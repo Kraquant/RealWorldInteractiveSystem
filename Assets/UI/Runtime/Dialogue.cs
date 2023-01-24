@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Unity.Android.Types;
 
 public class Dialogue : MonoBehaviour
 {
@@ -27,8 +28,8 @@ public class Dialogue : MonoBehaviour
     public bool noPlayer;
     public int tutorialScene;
 
-    
-
+    private bool speedUp;
+    private bool pressToDisplayText;
     private int index;
     private bool proceedNext = false;
     private bool fadingIn, fadingOut;
@@ -40,8 +41,10 @@ public class Dialogue : MonoBehaviour
     {
         fadingIn = false;
         fadingOut = false;
+        speedUp = false;
         text.text = string.Empty;
         animating = false;
+        pressToDisplayText = false;
         Up = false; CenterToDown = false; DownToCenter = false; UpToCenter = false;
 
         asteroidMap.OnGameEnded += GM_OnGameEnded;
@@ -113,6 +116,14 @@ public class Dialogue : MonoBehaviour
                     fadingOut = false;
                     loadNextLine();
                 }
+            }
+        }
+
+        if(pressToDisplayText)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                speedUp = true;
             }
         }
 
@@ -201,12 +212,29 @@ public class Dialogue : MonoBehaviour
     }
     IEnumerator TypeLine()
     {
+        int numberOfCharacterDisplayed = 0;
         proceedNext = false;
+        speedUp = false;
         hiddenAnimations[index].SetActive(true);
         foreach (char c in lines[index].ToCharArray())
         {
             text.text += c;
-            yield return new WaitForSeconds(textSpeed);
+
+            if(numberOfCharacterDisplayed < 10)
+            {
+                numberOfCharacterDisplayed++;
+                
+            }
+            else
+            {
+                pressToDisplayText = true;
+            }
+
+
+            if(!speedUp)
+            {
+                yield return new WaitForSeconds(textSpeed);
+            }
         }
 
         if(noPlayer)
@@ -329,17 +357,8 @@ public class Dialogue : MonoBehaviour
         yield return new WaitForSeconds(transitionTime);
 
         // Load Scene
-        int nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;
-        if (nextLevelIndex < SceneManager.sceneCountInBuildSettings)
-        {
-            Debug.Log("Loading next level");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        }
-        else
-        {
-            Debug.Log("No next level");
-            SceneManager.LoadScene("MainMenu");
-        }
+        Debug.Log("Loading Manual");
+        SceneManager.LoadScene("Manua");
     }
 
     #endregion
