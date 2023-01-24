@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
-using Unity.Android.Types;
 
 public class Dialogue : MonoBehaviour
 {
