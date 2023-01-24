@@ -357,7 +357,7 @@ public class Dialogue : MonoBehaviour
 
         // Load Scene
         Debug.Log("Loading Manual");
-        SceneManager.LoadScene("Manua");
+        SceneManager.LoadScene("Manual");
     }
 
     #endregion
