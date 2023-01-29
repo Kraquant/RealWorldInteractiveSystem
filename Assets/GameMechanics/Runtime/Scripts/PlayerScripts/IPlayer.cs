@@ -8,5 +8,4 @@ public interface IPlayer
     public event playerStateEvent OnPlayerDeath;
     public event playerStateEvent OnPlayerWin;
     public bool IsAlive { get;}
-    public bool HasWon { get;}
 }

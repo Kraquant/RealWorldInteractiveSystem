@@ -11,7 +11,6 @@ public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer, IInteractiveSpa
     public int TurnPriority { get => 10; set => throw new System.NotImplementedException(); }
     public SpaceObject.Action NextAction { get; set; }
     public bool IsAlive => _isAlive;
-    public bool HasWon => _hasWon;
 
     public static string[] ReactionFunctions { get => new string[] { "Destroy", "Win" };}
     public InteractionList ReferencedList { get => _interactionList; set => _interactionList = value; }
@@ -22,7 +21,6 @@ public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer, IInteractiveSpa
     [SerializeField] InteractionList _interactionList;
 
     private bool _isAlive;
-    private bool _hasWon;
 
     //Animation Controller
     private Animator animator;
@@ -38,7 +36,6 @@ public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer, IInteractiveSpa
 
     private void Awake()
     {
-        _hasWon = false;
         _isAlive = true;
     }
 
@@ -86,6 +83,7 @@ public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer, IInteractiveSpa
 
     public async Task<bool> UpdateSpaceObjectTransformAsync(float cellSize, float moveTime)
     {
+        if (!IsAlive) return true;
         _targetPos = 2 * cellSize * Center.GetVector3Position();
         _targetRot = OrientationToQuaternion(ObjectOrientation);
 
@@ -130,6 +128,7 @@ public class Spaceship : SpaceObject, ITurnBasedObject, IPlayer, IInteractiveSpa
             case "Destroy":
                 GameManager gameManager = FindObjectOfType<GameManager>();
                 gameManager.IsPaused = true;
+                _isAlive = false;
                 animator.SetTrigger("collideAsteroid");
                 // DestroySpaceObject();
                 break;

@@ -173,11 +173,6 @@ public class GameManager : MonoBehaviour
             message = "The player is dead";
             return false;
         }
-        if (_player.HasWon)
-        {
-            message = "The player has already won the game";
-            return false;
-        }
 
         message = "Game is playable";
         return true;
