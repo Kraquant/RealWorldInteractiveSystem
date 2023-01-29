@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -10,6 +12,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] GameObject victoryUI;
     [SerializeField] GameObject gameOverUI;
     [SerializeField] GameObject resetUI;
+    [SerializeField] GameObject notEnoughInputUI;
+    [SerializeField] GameObject tooManyTurnInputs;
 
     // Turn On / Off Button
     [SerializeField] List<Sprite> isOn;
@@ -19,6 +23,7 @@ public class LevelManager : MonoBehaviour
     // Scripts
     [SerializeField] ResponsiveCamera cameraManager;
     [SerializeField] GameManager gameManager;
+
     // text
     [SerializeField] TextMeshProUGUI gameOverText;
     [SerializeField] TextMeshProUGUI asteroidMovesText;
@@ -206,21 +211,42 @@ public class LevelManager : MonoBehaviour
         UserInput userInput = FindObjectOfType<UserInput>();
         InputManager inputManager = FindObjectOfType<InputManager>();
         
-        // Remove asteroid remaining actions
-        int turnRemaning = inputManager.TurnNumber - userInput.playerInputs.Count;
-        for (int i = 0; i < turnRemaning; i++)
+        // Check if inputs are done
+        if(userInput.playerInputs.Count == inputManager.TurnNumber)
         {
-            inputManager.asteroidsActions.RemoveAt(inputManager.asteroidsActions.Count - 1); // TBD Morgan : Hold action for Asteroid
-        }
+            int numberOfTurnsMovements = 0;
+            foreach(SpaceObject.Action action in userInput.playerInputs)
+            {
+                if (action == SpaceObject.Action.Turn)
+                {
+                    numberOfTurnsMovements++;
+                }
+            }
 
-        while (userInput.playerInputs.Count < inputManager.TurnNumber){
-            userInput.playerInputs.Add(SpaceObject.Action.Hold);
-            inputManager.asteroidsActions.Add(Asteroid.AsteroidAction.OO);
+            if((float)numberOfTurnsMovements/(float)inputManager.TurnNumber > 0.5f)
+            {
+                StartCoroutine(ShowMessage(tooManyTurnInputs, 1));
+            }
+            else
+            {
+                inputManager.playerActions = userInput.playerInputs;
+                gameOnGoing = true;
+                gameManager.PlayGameAsync();
+            }
         }
-        inputManager.playerActions = userInput.playerInputs;
+        else
+        {
+            StartCoroutine(ShowMessage(notEnoughInputUI, 1));
+        }
+    }
+    IEnumerator ShowMessage(GameObject warningMessage, float delay)
+    {
+        warningMessage.SetActive(true);
 
-        gameOnGoing = true;
-        gameManager.PlayGameAsync();
+        warningMessage.transform.GetComponentInChildren<TextMeshProUGUI>().CrossFadeAlpha(0, delay, false);
+        warningMessage.GetComponent<Image>().CrossFadeAlpha(0, delay, false);
+        yield return new WaitForSeconds(delay);
+        warningMessage.SetActive(false);
     }
 
     private void ResetScreenOnOff()
