@@ -496,9 +496,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b999a143b2b0ab6488e47c3c19d9f1dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnNumber: 11
+  _turnNumber: 10
   playerActions: 
-  asteroidsActions: 010000000400000001000000040000000100000004000000010000000100000004000000
+  asteroidsActions: 01000000040000000100000004000000010000000400000001000000010000000400000004000000
 --- !u!4 &1110235389
 Transform:
   m_ObjectHideFlags: 0
